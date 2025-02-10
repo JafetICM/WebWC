@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pagos</title>
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* Ajustes para el sidenav fijo y el contenido principal */
+    main {
+      padding: 20px;
+      margin-left: 300px; /* Ancho del sidenav fijo */
+    }
+    .breadcrumb-wrapper {
+      background: transparent;
+      box-shadow: none;
+      margin-bottom: 20px;
+    }
+    /* Opcional: Personaliza la apariencia de las tarjetas */
+    .card-panel p {
+      margin: 0.5rem 0;
+    }
+    /* Ajuste para el área de usuario en el sidenav */
+    .sidenav .user-view {
+      background: url('https://via.placeholder.com/300x200') no-repeat center center;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar superior -->
+  <nav class="blue darken-3">
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo center">Pagos</a>
+      <a href="#" data-target="slide-out" class="sidenav-trigger">
+        <i class="material-icons">menu</i>
+      </a>
+    </div>
+  </nav>
+  
+  <!-- Sidebar (Sidenav) fijo -->
+  <ul id="slide-out" class="sidenav sidenav-fixed">
+    <li>
+      <div class="user-view">
+        <div class="center-align" style="padding: 20px;">
+          <img src="https://via.placeholder.com/80" alt="Profile" class="circle responsive-img">
+          <span class="white-text name">Juan de Dios</span>
+          <div style="margin-top: 10px;">
+            <a href="#!" class="btn-floating btn-small grey">
+              <i class="material-icons">person</i>
+            </a>
+            <a href="#!" class="btn-floating btn-small grey">
+              <i class="material-icons">arrow_back</i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li><a href="#!" class="waves-effect"><i class="material-icons">dashboard</i> Dashboard</a></li>
+    <li><a href="#!" class="waves-effect"><i class="material-icons">assignment</i> Solicitudes</a></li>
+    <li><a href="#!" class="waves-effect"><i class="material-icons">event</i> Agenda</a></li>
+    <li><a href="#!" class="waves-effect"><i class="material-icons">build</i> Servicios</a></li>
+    <li class="active"><a href="#!" class="waves-effect"><i class="material-icons">attach_money</i> Pagos</a></li>
+  </ul>
+  
+  <!-- Contenido principal -->
+  <main>
+    <div class="container">
+      <!-- Breadcrumb de navegación -->
+      <nav class="breadcrumb-wrapper">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="#!" class="breadcrumb">Home</a>
+            <a href="#!" class="breadcrumb">Pagos</a>
+            <a href="#!" class="breadcrumb">Asignaciones</a>
+          </div>
+        </div>
+      </nav>
+      
+      <!-- Sección: Asignaciones Pagadas -->
+      <div class="section">
+        <div class="card">
+          <div class="card-content blue white-text">
+            <span class="card-title">Asignaciones Pagadas</span>
+          </div>
+          <div class="card-content">
+            <div class="row">
+              <!-- Tarjeta 1 -->
+              <div class="col s12 m6">
+                <div class="card-panel white z-depth-2">
+                  <p><strong>No. Asignación:</strong> 2939821871</p>
+                  <p><strong>Nombre:</strong> Carlos Samuel</p>
+                  <p><strong>Cantidad:</strong> 1,110 MXM</p>
+                  <p><strong>Fecha:</strong> 12/11/2024</p>
+                  <p><strong>Hora:</strong> 9:30 a.m</p>
+                  <p><strong>Proveedor:</strong> Gerardo Núñez Colombia</p>
+                </div>
+              </div>
+              <!-- Tarjeta 2 -->
+              <div class="col s12 m6">
+                <div class="card-panel white z-depth-2">
+                  <p><strong>No. Asignación:</strong> 930303290</p>
+                  <p><strong>Nombre:</strong> Luis Samuel</p>
+                  <p><strong>Cantidad:</strong> 1,210 MXM</p>
+                  <p><strong>Fecha:</strong> 11/12/2024</p>
+                  <p><strong>Hora:</strong> 10:30 a.m</p>
+                  <p><strong>Proveedor:</strong> Gerardo Núñez Colombia</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sección: Pagos Pendientes -->
+      <div class="section">
+        <div class="card">
+          <div class="card-content blue-grey darken-3 white-text">
+            <span class="card-title">Pendientes</span>
+          </div>
+          <div class="card-content">
+            <div class="row">
+              <!-- Tarjeta 1 -->
+              <div class="col s12 m6">
+                <div class="card-panel blue darken-2 white-text z-depth-2">
+                  <p><strong>No. Asignación:</strong> 93998320</p>
+                  <p><strong>Nombre:</strong> Carlos Samuel</p>
+                  <p><strong>Cantidad:</strong> 1,110 MXM</p>
+                  <p><strong>Pagar antes:</strong> 12/11/2024</p>
+                  <p><strong>Hora:</strong> 9:30 a.m</p>
+                  <p><strong>Proveedor:</strong> Gerardo Núñez Colombia</p>
+                </div>
+              </div>
+              <!-- Tarjeta 2 -->
+              <div class="col s12 m6">
+                <div class="card-panel blue darken-2 white-text z-depth-2">
+                  <p><strong>No. Asignación:</strong> 49560802</p>
+                  <p><strong>Nombre:</strong> Miguel Chan</p>
+                  <p><strong>Cantidad:</strong> 1,330 MXM</p>
+                  <p><strong>Pagar antes:</strong> 07/11/2024</p>
+                  <p><strong>Hora:</strong> 10:30 a.m</p>
+                  <p><strong>Proveedor:</strong> Gerardo Núñez Colombia</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+  
+  <!-- Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    // Inicialización del sidenav
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      M.Sidenav.init(elems);
+    });
+  </script>
+</body>
+</html>
