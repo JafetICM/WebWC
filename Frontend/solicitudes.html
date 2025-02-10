@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitudes - WhatClean</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .sidebar {
+            width: 250px;
+            background: #2A9DF4;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .profile {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile img {
+            width: 80px;
+            border-radius: 50%;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        nav ul .active {
+            background: #1E7CD6;
+            border-radius: 5px;
+        }
+        .login-button {
+            background: white;
+            color: #2A9DF4;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .requests {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .request-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+        }
+        .request-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .request-info {
+            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .request-button {
+            background: #2A9DF4;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div>
+            <div class="profile">
+                <img src="images/Logo.png" alt="Juan de Dios">
+                <h3>Juan de Dios</h3>
+            </div>
+            <nav>
+                <ul>
+                    <li onclick="navigateTo('dashboard.html')">Dashboard</li>
+                    <li class="active" onclick="navigateTo('solicitudes.html')">Solicitudes</li>
+                    <li onclick="navigateTo('agenda.html')">Agenda</li>
+                    <li onclick="navigateTo('servicios.html')">Servicios</li>
+                    <li onclick="navigateTo('pagos.html')">Pagos</li>
+                </ul>
+            </nav>
+        </div>
+        <div class="login-button" onclick="navigateTo('registro-inicio.html')">Iniciar Sesión</div>
+    </div>
+    <div class="main-content">
+        <header>
+            <div class="breadcrumb">Home > Solicitudes</div>
+            <h1>Solicitudes Urgentes</h1>
+        </header>
+        <section class="requests">
+            <div class="request-item">
+                <img src="user1.jpg" alt="Jimena Cruz">
+                <div class="request-info">
+                    <span><strong>Jimena Cruz</strong> - Servicio de limpieza de cuarto</span>
+                    <span>Fecha: 20/12/24 - 10:00 AM</span>
+                </div>
+                <button class="request-button">Ver</button>
+            </div>
+            <div class="request-item">
+                <img src="user2.jpg" alt="Gabriel Cruz">
+                <div class="request-info">
+                    <span><strong>Gabriel Cruz</strong> - Instalación de nuevo toma corriente</span>
+                    <span>Fecha: 20/12/24 - 11:00 AM</span>
+                </div>
+                <button class="request-button">Ver</button>
+            </div>
+            <div class="request-item">
+                <img src="user3.jpg" alt="Pamela Tuc">
+                <div class="request-info">
+                    <span><strong>Pamela Tuc</strong> - Limpieza de habitación</span>
+                    <span>Fecha: 20/12/24 - 12:00 PM</span>
+                </div>
+                <button class="request-button">Ver</button>
+            </div>
+            <div class="request-item">
+                <img src="user4.jpg" alt="Norman Guy">
+                <div class="request-info">
+                    <span><strong>Norman Guy</strong> - Instalación de losa</span>
+                    <span>Fecha: 20/12/24 - 1:00 PM</span>
+                </div>
+                <button class="request-button">Ver</button>
+            </div>
+        </section>
+    </div>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>
