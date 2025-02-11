@@ -1,73 +1,263 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - WhatClean</title>
-    <link rel="stylesheet" href="/Frontend/style/Style.css">
-    <script>
-        function navigateTo(page) {
-            window.location.href = page;
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - WhatClean</title>
+  <style>
+    /* RESET BÁSICO */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f0f4f7;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background-color: #003366; /* Azul intenso */
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .sidebar > div {
+      padding: 1rem;
+    }
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .profile img {
+      width: 80px; 
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+    .profile h3 {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+    nav ul {
+      list-style: none;
+    }
+    nav li {
+      padding: 0.8rem 0;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    nav li:hover {
+      background-color: #022d5b;
+    }
+    nav li.active {
+      background-color: #022d5b;
+    }
+    .login-button {
+      background-color: #022d5b;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin: 1rem;
+      border-radius: 4px;
+    }
+    .login-button:hover {
+      background-color: #011f42;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #ffffff;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-size: 1.2rem;
+      color: #003366;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #003366;
+    }
+    .user-info img {
+      width: 40px; 
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* SECCIÓN DE STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .stat {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-align: center;
+      padding: 1rem;
+      color: #003366;
+    }
+    .stat span {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #022d5b;
+      margin-bottom: 0.25rem;
+    }
+
+    /* CONTENIDO PRINCIPAL */
+    .content {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+      flex: 1;
+    }
+    .card {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1rem;
+      color: #003366;
+    }
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #003366;
+    }
+    .card p {
+      font-size: 0.9rem;
+      line-height: 1.4rem;
+    }
+    .urgent {
+      border-left: 4px solid #ff6961; /* Rojo para urgentes */
+      padding-left: 0.75rem;
+    }
+    .recent {
+      border-left: 4px solid #f5c518; /* Amarillo para recientes */
+      padding-left: 0.75rem;
+    }
+    .card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .card ul li {
+      padding: 0.25rem 0;
+      font-size: 0.9rem;
+    }
+  </style>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
 </head>
 <body>
-    <div class="sidebar">
-        <div>
-            <div class="profile">
-                <img src="images/Logo.png" alt="Juan de Dios">
-                <h3>Juan de Dios</h3>
-            </div>
-            <nav>
-                <ul>
-                    <li class="active" onclick="navigateTo('dashboard.html')">Dashboard</li>
-                    <li onclick="navigateTo('solicitudes.html')">Solicitudes</li>
-                    <li onclick="navigateTo('agenda.html')">Agenda</li>
-                    <li onclick="navigateTo('servicios.html')">Servicios</li>
-                    <li onclick="navigateTo('pagos.html')">Pagos</li>
-                </ul>
-            </nav>
-        </div>
-        <div class="login-button" onclick="navigateTo('registro-inicio.html')">Iniciar Sesión</div>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="profile">
+        <!-- Tu imagen de perfil o logo -->
+        <img src="images/Logo.png" alt="Juan de Dios">
+        <h3>Juan de Dios</h3>
+      </div>
+      <nav>
+        <ul>
+          <li class="active" onclick="navigateTo('dashboard.html')">Dashboard</li>
+          <li onclick="navigateTo('solicitudes.html')">Solicitudes</li>
+          <li onclick="navigateTo('agenda.html')">Agenda</li>
+          <li onclick="navigateTo('servicios.html')">Servicios</li>
+          <li onclick="navigateTo('pagos.html')">Pagos</li>
+        </ul>
+      </nav>
     </div>
-    <div class="main-content">
-        <header>
-            <h1>Dashboard</h1>
-            <div class="user-info">
-                <span>Juan de Dios</span>
-                <img src="images/image 2.png" alt="Usuario">
-            </div>
-        </header>
-        <section class="stats">
-            <div class="stat"> <span>12</span> Tareas Aprobadas</div>
-            <div class="stat"> <span>20</span> Tareas Pendientes</div>
-            <div class="stat"> <span>5</span> Servicios Activos</div>
-            <div class="stat"> <span>32</span> Notificaciones</div>
-        </section>
-        <section class="content">
-            <div class="card">
-                <h2>¡Felicidades, Juan! 🎉</h2>
-                <p>Has completado 42 servicios y 23 están en proceso.</p>
-            </div>
-            <div class="card">
-                <h2>Resumen Semanal</h2>
-                <div class="chart">[Gráfica aquí]</div>
-            </div>
-            <div class="card urgent">
-                <h2>Solicitudes Urgentes</h2>
-                <ul>
-                    <li>Cliente: Ana Pérez - Limpieza profunda - 10:00 AM</li>
-                    <li>Cliente: Luis Gómez - Desinfección - 12:00 PM</li>
-                </ul>
-            </div>
-            <div class="card recent">
-                <h2>Solicitudes Recientes</h2>
-                <ul>
-                    <li>Diego C. - Limpieza de casa - 9:00 AM</li>
-                    <li>Pamela R. - Limpieza de oficina - 11:00 AM</li>
-                </ul>
-            </div>
-        </section>
-    </div>
+    <div class="login-button" onclick="navigateTo('registro-inicio.html')">Iniciar Sesión</div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main-content">
+    
+    <!-- ENCABEZADO -->
+    <header>
+      <h1>Dashboard</h1>
+      <div class="user-info">
+        <span>Juan de Dios</span>
+        <!-- Imagen del usuario -->
+        <img src="images/image 2.png" alt="Usuario">
+      </div>
+    </header>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="stat">
+        <span>12</span>
+        Tareas Aprobadas
+      </div>
+      <div class="stat">
+        <span>20</span>
+        Tareas Pendientes
+      </div>
+      <div class="stat">
+        <span>5</span>
+        Servicios Activos
+      </div>
+      <div class="stat">
+        <span>32</span>
+        Notificaciones
+      </div>
+    </section>
+
+    <!-- CONTENIDO PRINCIPAL (CARDS) -->
+    <section class="content">
+      <div class="card">
+        <h2>¡Felicidades, Juan! 🎉</h2>
+        <p>Has completado 42 servicios y 23 están en proceso.</p>
+      </div>
+      <div class="card">
+        <h2>Resumen Semanal</h2>
+        <div class="chart">[Gráfica aquí]</div>
+      </div>
+      <div class="card urgent">
+        <h2>Solicitudes Urgentes</h2>
+        <ul>
+          <li>Cliente: Ana Pérez - Limpieza profunda - 10:00 AM</li>
+          <li>Cliente: Luis Gómez - Desinfección - 12:00 PM</li>
+        </ul>
+      </div>
+      <div class="card recent">
+        <h2>Solicitudes Recientes</h2>
+        <ul>
+          <li>Diego C. - Limpieza de casa - 9:00 AM</li>
+          <li>Pamela R. - Limpieza de oficina - 11:00 AM</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
 </body>
 </html>

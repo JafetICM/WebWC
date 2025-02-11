@@ -1,151 +1,308 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Solicitud</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-            display: flex;
-        }
-        .sidebar {
-            width: 250px;
-            background: #2A9DF4;
-            color: white;
-            padding: 20px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-        .profile {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .profile img {
-            width: 80px;
-            border-radius: 50%;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-        nav ul li {
-            padding: 10px;
-            cursor: pointer;
-        }
-        nav ul .active {
-            background: #1E7CD6;
-            border-radius: 5px;
-        }
-        .main-content {
-            margin-left: 270px;
-            padding: 20px;
-            width: calc(100% - 270px);
-        }
-        .container {
-            background: #e3f2fd;
-            padding: 20px;
-            border-radius: 10px;
-            width: 60%;
-            box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
-            margin: auto;
-        }
-        .header {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .info {
-            margin-bottom: 10px;
-        }
-        .button {
-            background: #2A9DF4;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-            display: block;
-            width: 100px;
-            margin-top: 10px;
-            text-decoration: none;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalle de Solicitud - WhatClean</title>
+
+  <!-- Estilos (puedes llevarlos a tu "styles.css") -->
+  <style>
+    /* RESET BÁSICO */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f0f4f7; /* Fondo suave */
+    }
+
+    /********** SIDEBAR **********/
+    .sidebar {
+      background-color: #003366; /* Azul oscuro */
+      color: #ffffff;
+      width: 250px;
+      padding: 1.5rem 1rem; 
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .profile {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .profile img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+    .profile h3 {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+    nav ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    nav ul li {
+      padding: 0.8rem 0;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border-radius: 4px;
+      margin: 0.25rem 0;
+      text-align: left;
+      padding-left: 0.5rem;
+    }
+    nav ul li:hover {
+      background-color: #022d5b;
+    }
+    nav ul .active {
+      background-color: #022d5b;
+    }
+    .login-button {
+      background-color: #022d5b;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+    .login-button:hover {
+      background-color: #011f42;
+    }
+
+    /********** CONTENIDO PRINCIPAL **********/
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ENCABEZADO SUPERIOR */
+    .header-brand {
+      background-color: #ffffff;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .header-left img {
+      height: 40px; /* Ajusta según tu logo */
+    }
+    .header-title {
+      font-size: 1.2rem;
+      color: #003366;
+      margin: 0;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #003366;
+    }
+    .user-info img {
+      width: 40px; 
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb-container {
+      background-color: #ffffff;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .breadcrumb {
+      display: flex;
+      gap: 5px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .breadcrumb a {
+      text-decoration: none;
+      color: #003366;
+    }
+    .breadcrumb .active {
+      color: #555;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .container {
+      background: #fff;
+      margin: 1rem auto;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+      max-width: 800px; /* Ajusta el ancho */
+    }
+    .container .header {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #003366;
+    }
+    .info {
+      margin-bottom: 0.5rem;
+      line-height: 1.4rem;
+      color: #333;
+    }
+    .info strong {
+      color: #003366;
+    }
+    ul {
+      margin-bottom: 1rem;
+      margin-left: 1.2rem;
+      list-style: disc;
+      color: #333;
+    }
+    .button {
+      display: inline-block;
+      background-color: #022d5b;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      transition: background-color 0.2s;
+    }
+    .button:hover {
+      background-color: #011f42;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 999;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      width: 300px;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+      text-align: center;
+      z-index: 1000;
+    }
+    .modal p {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+  </style>
+
+  <!-- Lógica de navegación y modal -->
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+    function showModal() {
+      document.getElementById('modal').style.display = 'block';
+      document.getElementById('modalOverlay').style.display = 'block';
+    }
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('modalOverlay').style.display = 'none';
+    }
+  </script>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="profile">
-            <img src="images/Logo.png" alt="Juan de Dios">
-            <h3>Juan de Dios</h3>
-        </div>
-        <nav>
-            <ul>
-                <li onclick="navigateTo('dashboard.html')">Dashboard</li>
-                <li onclick="navigateTo('solicitudes.html')">Solicitudes</li>
-                <li onclick="navigateTo('agenda.html')">Agenda</li>
-                <li onclick="navigateTo('servicios.html')">Servicios</li>
-                <li onclick="navigateTo('pagos.html')">Pagos</li>
-            </ul>
-        </nav>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="profile">
+        <img src="images/Logo.png" alt="Juan de Dios">
+        <h3>Juan de Dios</h3>
+      </div>
+      <nav>
+        <ul>
+          <!-- Puedes marcar “Solicitudes” como activo si así corresponde -->
+          <li onclick="navigateTo('dashboard.html')">Dashboard</li>
+          <li class="active" onclick="navigateTo('solicitudes.html')">Solicitudes</li>
+          <li onclick="navigateTo('agenda.html')">Agenda</li>
+          <li onclick="navigateTo('servicios.html')">Servicios</li>
+          <li onclick="navigateTo('pagos.html')">Pagos</li>
+        </ul>
+      </nav>
     </div>
-    <div class="main-content">
-        <div class="container">
-            <div class="header">Limpieza de habitación</div>
-            <p class="info"><strong>Dirección:</strong> Calle 14 # 315 65G-55A, Col. Francisco Villa Oriente, Kanasín, Yucatán, 97370</p>
-            <p class="info"><strong>Consideraciones:</strong></p>
-            <ul>
-                <li>La persona debe estar en casa cuando se realice el servicio.</li>
-                <li>Cuando sea pago en efectivo, primero se realiza el servicio y luego se paga.</li>
-            </ul>
-            <p class="info"><strong>Precio:</strong> $1,200 MXN</p>
-            <button class="button" onclick="showModal()">Solicitar</button>
-        </div>
+    <div class="login-button" onclick="navigateTo('registro-inicio.html')">Iniciar Sesión</div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main-content">
+
+    <!-- ENCABEZADO SUPERIOR (marca + usuario) -->
+    <div class="header-brand">
+      <div class="header-left">
+        <!-- Logotipo (puede ser el mismo de la sidebar, o distinto) -->
+        <img src="images/Logo.png" alt="WhatClean">
+        <h2 class="header-title">Detalle de Solicitud</h2>
+      </div>
+      <div class="user-info">
+        <span>Juan de Dios</span>
+        <img src="images/image 2.png" alt="Usuario">
+      </div>
     </div>
-    <div class="modal-overlay" id="modalOverlay"></div>
-    <div class="modal" id="modal">
-        <p>Se ha enviado correctamente la solicitud al proveedor.</p>
-        <p>Se te notificará cuando haya actualizaciones de esta solicitud.</p>
-        <button class="button" onclick="closeModal()">OK</button>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb-container">
+      <nav class="breadcrumb">
+        <a href="#" onclick="navigateTo('dashboard.html')">Home</a>
+        <span>></span>
+        <a href="#" onclick="navigateTo('solicitudes.html')">Solicitudes</a>
+        <span>></span>
+        <span class="active">Detalle de Solicitud</span>
+      </nav>
     </div>
-    <script>
-        function navigateTo(page) {
-            window.location.href = page;
-        }
-        function showModal() {
-            document.getElementById('modal').style.display = 'block';
-            document.getElementById('modalOverlay').style.display = 'block';
-        }
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-    </script>
+
+    <!-- CONTENEDOR PRINCIPAL PARA EL DETALLE -->
+    <div class="container">
+      <div class="header">Limpieza de habitación</div>
+      <p class="info"><strong>Dirección:</strong> Calle 14 # 315 65G-55A, Col. Francisco Villa Oriente, Kanasín, Yucatán, 97370</p>
+      <p class="info"><strong>Consideraciones:</strong></p>
+      <ul>
+        <li>La persona debe estar en casa cuando se realice el servicio.</li>
+        <li>Cuando sea pago en efectivo, primero se realiza el servicio y luego se paga.</li>
+      </ul>
+      <p class="info"><strong>Precio:</strong> $1,200 MXN</p>
+      <button class="button" onclick="showModal()">Solicitar</button>
+    </div>
+  </div>
+
+  <!-- MODAL OVERLAY Y MODAL -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal" id="modal">
+    <p>Se ha enviado correctamente la solicitud al proveedor.</p>
+    <p>Se te notificará cuando haya actualizaciones de esta solicitud.</p>
+    <button class="button" onclick="closeModal()">OK</button>
+  </div>
+
 </body>
 </html>
