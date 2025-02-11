@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mis Servicios - WClean</title>
+  <!-- CSS de Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Iconos de Bootstrap (opcional) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      background-color: #f0f4f7; /* Fondo suave */
+    }
+    .sidebar {
+      background-color: #003366; /* Azul oscuro */
+      min-height: 100vh;
+      color: #fff;
+    }
+    .sidebar .profile-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+    .sidebar .nav-link {
+      color: #ffffff;
+      transition: background-color 0.2s;
+    }
+    .sidebar .nav-link:hover {
+      background-color: #022d5b;
+    }
+    .sidebar .active {
+      background-color: #022d5b;
+    }
+    /* Encabezado de la sección central */
+    .header-brand {
+      background-color: #ffffff;
+      border-bottom: 1px solid #ddd;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-brand img.logo {
+      height: 40px; /* Ajusta a tu preferencia */
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    /* Estilo para la sección de tabs */
+    .nav-tabs .nav-link.active {
+      background-color: #003366;
+      color: #fff !important;
+    }
+    .nav-tabs .nav-link {
+      color: #003366;
+    }
+    .tab-content {
+      background-color: #ffffff;
+      padding: 1rem;
+      border-radius: 0 0 0.25rem 0.25rem;
+      border: 1px solid #ddd;
+      border-top: 0;
+    }
+    /* Tarjetas de servicios */
+    .service-card {
+      border-bottom: 1px solid #ddd;
+      padding: 1rem 0;
+    }
+    .service-card:last-child {
+      border-bottom: none;
+    }
+    .service-card img {
+      width: 100%;
+      border-radius: 0.25rem;
+    }
+    .service-card h5 {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .star-rating {
+      color: #f5c518; /* color de estrellas (doradas) */
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Contenedor principal con fila -->
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- Barra lateral (sidebar) -->
+    <nav class="col-12 col-md-3 col-lg-2 sidebar d-flex flex-column p-3">
+      <!-- Perfil -->
+      <div class="text-center mb-4">
+        <img src="images/auditor-limpieza.png" alt="Foto de perfil" class="profile-img" />
+        <h5 class="mt-2">Juan de Dios</h5>
+      </div>
+      <!-- Navegación -->
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a class="nav-link" href="#">
+            <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" href="#">
+            <i class="bi bi-file-earmark"></i> Solicitudes
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" href="#">
+            <i class="bi bi-calendar"></i> Agenda
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link active" href="#">
+            <i class="bi bi-briefcase"></i> Servicios
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" href="#">
+            <i class="bi bi-cash-stack"></i> Pagos
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="col-12 col-md-9 col-lg-10 px-0">
+
+      <!-- Encabezado principal con el logotipo y el perfil de administrador -->
+      <div class="header-brand">
+        <div>
+          <!-- Tu logotipo, por ejemplo: -->
+          <img src="images/Logo.png" alt="FIXYA" class="logo">
+        </div>
+        <div class="user-info">
+          <i class="bi bi-bell" style="font-size: 1.2rem;"></i>
+          <img src="images/image 2.png" alt="Admin profile" />
+          <div class="text-end">
+            <small>Administrador</small><br>
+            <span class="fw-bold">Juan de Dios</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breadcrumb -->
+      <div class="p-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Servicios</li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Sección Tabs -->
+      <div class="px-3">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="mis-servicios-tab" data-bs-toggle="tab" data-bs-target="#mis-servicios" type="button" role="tab" aria-controls="mis-servicios" aria-selected="true">
+              Mis servicios
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="agregar-servicio-tab" data-bs-toggle="tab" data-bs-target="#agregar-servicio" type="button" role="tab" aria-controls="agregar-servicio" aria-selected="false">
+              Agregar servicio
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="actualizar-servicio-tab" data-bs-toggle="tab" data-bs-target="#actualizar-servicio" type="button" role="tab" aria-controls="actualizar-servicio" aria-selected="false">
+              Actualizar servicio
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="eliminar-servicio-tab" data-bs-toggle="tab" data-bs-target="#eliminar-servicio" type="button" role="tab" aria-controls="eliminar-servicio" aria-selected="false">
+              Eliminar servicio
+            </button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent" style="border:1px solid #ddd; border-top:0; border-radius:0 0 5px 5px;">
+          
+          <!-- Pestaña: Mis servicios -->
+          <div class="tab-pane fade show active p-3" id="mis-servicios" role="tabpanel" aria-labelledby="mis-servicios-tab">
+            <!-- Ejemplo de lista de servicios -->
+            
+            <!-- Servicio 1 -->
+            <div class="service-card row">
+              <div class="col-sm-3">
+                <!-- Imagen de ejemplo -->
+                <img src="images/images cama.jpg" alt="Limpieza de cama">
+              </div>
+              <div class="col-sm-9">
+                <h5>Limpieza de cama</h5>
+                <p>
+                  ¿Tu cama necesita una limpieza a fondo? Los servicios de limpieza de camas 
+                  están diseñados para eliminar ácaros, polvo, manchas y olores, dejando tu colchón 
+                  fresco, higiénico y como nuevo.
+                </p>
+                <div class="star-rating">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <p class="fw-bold">Precio: 1,110 MXM</p>
+              </div>
+            </div>
+            
+            <!-- Servicio 2 -->
+            <div class="service-card row">
+              <div class="col-sm-3">
+                <img src="images/images cocina.jpg" alt="Limpieza de cocina">
+              </div>
+              <div class="col-sm-9">
+                <h5>Limpieza de cocina</h5>
+                <p>
+                  ¿Tu cocina necesita una limpieza a fondo? Los servicios de limpieza de cocina se 
+                  encargan de resolver cualquier necesidad para mantener ese espacio impecable y funcional.
+                </p>
+                <div class="star-rating">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i> <!-- por ejemplo, 4 estrellas y 1 vacía -->
+                </div>
+                <p class="fw-bold">Precio: 1,400 MXM</p>
+              </div>
+            </div>
+
+            <!-- Servicio 3 -->
+            <div class="service-card row">
+              <div class="col-sm-3">
+                <img src="images/images grupo de personas.jpg" alt="Limpieza general">
+              </div>
+              <div class="col-sm-9">
+                <h5>Limpieza</h5>
+                <p>
+                  ¿Necesitas un espacio impecable y ordenado? Ofrecemos soluciones detalladas para 
+                  mantener tus áreas en perfectas condiciones.
+                </p>
+                <div class="star-rating">
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star-fill"></i>
+                  <i class="bi bi-star"></i>
+                  <i class="bi bi-star"></i> <!-- 3 estrellas -->
+                </div>
+                <p class="fw-bold">Precio: 2,110 MXM</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pestaña: Agregar servicio -->
+          <div class="tab-pane fade p-3" id="agregar-servicio" role="tabpanel" aria-labelledby="agregar-servicio-tab">
+            <h5>Agregar Servicio</h5>
+            <hr>
+            <!-- Formulario de ejemplo -->
+            <form>
+              <div class="mb-3">
+                <label for="nombreServicio" class="form-label">Nombre del servicio</label>
+                <input type="text" class="form-control" id="nombreServicio" placeholder="Ej. Limpieza profunda de baño">
+              </div>
+              <div class="mb-3">
+                <label for="descripcionServicio" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcionServicio" rows="3" placeholder="Describe el servicio..."></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="precioServicio" class="form-label">Precio (MXM)</label>
+                <input type="number" class="form-control" id="precioServicio" placeholder="Ej. 500">
+              </div>
+              <button type="submit" class="btn btn-primary">Agregar</button>
+            </form>
+          </div>
+
+          <!-- Pestaña: Actualizar servicio -->
+          <div class="tab-pane fade p-3" id="actualizar-servicio" role="tabpanel" aria-labelledby="actualizar-servicio-tab">
+            <h5>Actualizar Servicio</h5>
+            <hr>
+            <p>Aquí podrías mostrar un formulario o un listado de servicios existentes 
+              que se puedan seleccionar para su edición.</p>
+            <!-- Formulario/tabla de ejemplo... -->
+          </div>
+
+          <!-- Pestaña: Eliminar servicio -->
+          <div class="tab-pane fade p-3" id="eliminar-servicio" role="tabpanel" aria-labelledby="eliminar-servicio-tab">
+            <h5>Eliminar Servicio</h5>
+            <hr>
+            <p>Puedes mostrar un listado de servicios con opción para eliminar.</p>
+            <!-- Ejemplo: listado o formulario de confirmación -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Scripts de Bootstrap (para funcionalidad de tabs, etc.) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
