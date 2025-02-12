@@ -1,173 +1,315 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitudes - WhatClean</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            display: flex;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-        .sidebar {
-            width: 250px;
-            background: #2A9DF4;
-            color: white;
-            padding: 20px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .profile {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .profile img {
-            width: 80px;
-            border-radius: 50%;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-        nav ul li {
-            padding: 12px;
-            cursor: pointer;
-            transition: background 0.3s;
-            border-radius: 5px;
-        }
-        nav ul li:hover, nav ul .active {
-            background: #1E7CD6;
-        }
-        .login-button {
-            background: white;
-            color: #0A3D62;
-            text-align: center;
-            padding: 10px;
-            margin-top: 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .main-content {
-            margin-left: 270px;
-            padding: 20px;
-            width: calc(100% - 270px);
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-        }
-        .breadcrumb {
-            font-size: 14px;
-            color: #666;
-        }
-        .requests {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-        }
-        .request-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-        .request-item:hover {
-            transform: scale(1.02);
-        }
-        .request-item img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .request-info {
-            flex-grow: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
-        }
-        .request-button {
-            background: #0A3D62;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .request-button:hover {
-            background: #1E7CD6;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Solicitudes - WhatClean</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons (opcional) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+  />
+
+  <style>
+    /* ======= Estilos Generales ======= */
+    body {
+      background-color: #f0f4f7; /* Fondo suave */
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    /* Barra lateral (sidebar) */
+    .sidebar {
+      background-color: #003366; /* Azul oscuro */
+      min-height: 100vh;
+      color: #fff;
+    }
+    .sidebar .profile {
+      text-align: center;
+    }
+    .sidebar .profile img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+    .sidebar h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .sidebar .nav-link {
+      color: #ffffff;
+      transition: background-color 0.2s;
+    }
+    .sidebar .nav-link:hover {
+      background-color: #022d5b;
+    }
+    .sidebar .active {
+      background-color: #022d5b;
+    }
+    .login-button {
+      background-color: #022d5b;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+    .login-button:hover {
+      background-color: #011f42;
+    }
+
+    /* Encabezado principal (header-brand) */
+    .header-brand {
+      background-color: #ffffff;
+      border-bottom: 1px solid #ddd;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-brand .breadcrumb-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .header-brand .breadcrumb-container .breadcrumb {
+      margin-bottom: 0;
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+    }
+    .header-brand .breadcrumb-container h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #003366;
+    }
+    .header-brand img {
+      height: 40px; /* Ajusta según tu logo */
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #003366;
+    }
+    .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Contenido principal */
+    .requests-container {
+      margin: 1rem;
+      background-color: #ffffff;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+    .request-item {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 5px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+    }
+    .request-item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .request-info {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      margin-left: 0.75rem;
+      gap: 0.25rem;
+    }
+    .request-info span {
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .request-info strong {
+      color: #003366;
+    }
+    .request-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .request-button {
+      background: #022d5b;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .request-button:hover {
+      background: #011f42;
+    }
+  </style>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
 </head>
 <body>
-    <div class="sidebar">
+  <!-- Contenedor principal (Bootstrap) -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- SIDEBAR -->
+      <nav class="col-12 col-md-3 col-lg-2 sidebar d-flex flex-column p-3">
         <div>
-            <div class="profile">
-                <img src="images/Logo.png" alt="Juan de Dios">
-                <h3>Juan de Dios</h3>
-            </div>
-            <nav>
-                <ul>
-                    <li onclick="navigateTo('dashboard.html')">Dashboard</li>
-                    <li class="active" onclick="navigateTo('solicitudes.html')">Solicitudes</li>
-                    <li onclick="navigateTo('agenda.html')">Agenda</li>
-                    <li onclick="navigateTo('servicios.html')">Servicios</li>
-                    <li onclick="navigateTo('pagos.html')">Pagos</li>
-                </ul>
-            </nav>
+          <div class="profile mb-4">
+            <img src="images/Logo.png" alt="Juan de Dios" />
+            <h3>Juan de Dios</h3>
+          </div>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('dashboard.html')">
+                <i class="bi bi-speedometer2"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link active" onclick="navigateTo('solicitudes.html')">
+                <i class="bi bi-file-earmark"></i> Solicitudes
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('agenda.html')">
+                <i class="bi bi-calendar"></i> Agenda
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('servicios.html')">
+                <i class="bi bi-briefcase"></i> Servicios
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('pagos.html')">
+                <i class="bi bi-cash-stack"></i> Pagos
+              </a>
+            </li>
+          </ul>
         </div>
-        <div class="login-button" onclick="navigateTo('registro-inicio.html')">Iniciar Sesión</div>
-    </div>
-    <div class="main-content">
-        <header>
-            <div class="breadcrumb">Home > Solicitudes</div>
-            <h1>Solicitudes Urgentes</h1>
-        </header>
-        <section class="requests">
-            <div class="request-item">
-                <img src="user1.jpg" alt="Jimena Cruz">
-                <div class="request-info">
-                    <span><strong>Jimena Cruz</strong> - Servicio de limpieza de cuarto</span>
-                    <span>Fecha: 20/12/24 - 10:00 AM</span>
-                </div>
-                <button class="request-button" onclick="navigateTo('detalle.html')">Ver</button>
+        <div 
+          class="login-button mt-auto" 
+          onclick="navigateTo('registro-inicio.html')"
+        >
+          Iniciar Sesión
+        </div>
+      </nav>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <main class="col-12 col-md-9 col-lg-10 px-0">
+
+        <!-- ENCABEZADO SUPERIOR -->
+        <div class="header-brand">
+          <div class="breadcrumb-container d-flex align-items-center">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                  <a href="#" onclick="navigateTo('dashboard.html')">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Solicitudes
+                </li>
+              </ol>
+            </nav>
+            <h1 class="ms-3">Solicitudes Urgentes</h1>
+          </div>
+          <div class="user-info">
+            <i class="bi bi-bell" style="font-size:1.2rem;"></i>
+            <img src="images/image 2.png" alt="Usuario" />
+            <div class="text-end">
+              <small>Administrador</small><br/>
+              <span class="fw-bold">Juan de Dios</span>
             </div>
-            <div class="request-item">
-                <img src="user2.jpg" alt="Gabriel Cruz">
-                <div class="request-info">
-                    <span><strong>Gabriel Cruz</strong> - Instalación de nuevo toma corriente</span>
-                    <span>Fecha: 20/12/24 - 11:00 AM</span>
-                </div>
-                <button class="request-button" onclick="navigateTo('detalle.html')">Ver</button>
+          </div>
+        </div>
+
+        <!-- LISTADO DE SOLICITUDES -->
+        <section class="requests-container">
+          <!-- Item 1 -->
+          <div class="request-item">
+            <img src="user1.jpg" alt="Jimena Cruz" />
+            <div class="request-info">
+              <span><strong>Jimena Cruz</strong> - Servicio de limpieza de cuarto</span>
+              <span>Fecha: 20/12/24 - 10:00 AM</span>
             </div>
+            <div class="request-actions">
+              <button class="request-button">Ver</button>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="request-item">
+            <img src="user2.jpg" alt="Gabriel Cruz" />
+            <div class="request-info">
+              <span><strong>Gabriel Cruz</strong> - Instalación de nuevo toma corriente</span>
+              <span>Fecha: 20/12/24 - 11:00 AM</span>
+            </div>
+            <div class="request-actions">
+              <button class="request-button">Ver</button>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="request-item">
+            <img src="user3.jpg" alt="Pamela Tuc" />
+            <div class="request-info">
+              <span><strong>Pamela Tuc</strong> - Limpieza de habitación</span>
+              <span>Fecha: 20/12/24 - 12:00 PM</span>
+            </div>
+            <div class="request-actions">
+              <button class="request-button">Ver</button>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="request-item">
+            <img src="user4.jpg" alt="Norman Guy" />
+            <div class="request-info">
+              <span><strong>Norman Guy</strong> - Instalación de losa</span>
+              <span>Fecha: 20/12/24 - 1:00 PM</span>
+            </div>
+            <div class="request-actions">
+              <button 
+                class="request-button"
+                onclick="navigateTo('detalle.html')"
+              >
+                Ver
+              </button>
+            </div>
+          </div>
         </section>
-    </div>
-    <script>
-        function navigateTo(page) {
-            window.location.href = page;
-        }
-    </script>
+
+      </main>
+    </div> <!-- Fin row -->
+  </div> <!-- Fin container-fluid -->
+
+  <!-- Bootstrap 5 JS -->
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
 </body>
 </html>
