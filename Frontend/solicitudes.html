@@ -38,16 +38,17 @@
             padding: 0;
         }
         nav ul li {
-            padding: 10px;
+            padding: 12px;
             cursor: pointer;
-        }
-        nav ul .active {
-            background: #1E7CD6;
+            transition: background 0.3s;
             border-radius: 5px;
+        }
+        nav ul li:hover, nav ul .active {
+            background: #1E7CD6;
         }
         .login-button {
             background: white;
-            color: #2A9DF4;
+            color: #0A3D62;
             text-align: center;
             padding: 10px;
             margin-top: 20px;
@@ -65,23 +66,33 @@
             justify-content: space-between;
             align-items: center;
             background: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+        .breadcrumb {
+            font-size: 14px;
+            color: #666;
         }
         .requests {
             background: white;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
         }
         .request-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #fff;
-            padding: 10px;
-            border-radius: 5px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
             margin-bottom: 10px;
             box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .request-item:hover {
+            transform: scale(1.02);
         }
         .request-item img {
             width: 50px;
@@ -94,19 +105,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 16px;
         }
         .request-button {
-            background: #2A9DF4;
+            background: #0A3D62;
             color: white;
             padding: 8px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s;
         }
-        .breadcrumb {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
+        .request-button:hover {
+            background: #1E7CD6;
         }
     </style>
 </head>
@@ -141,29 +152,13 @@
                     <span><strong>Jimena Cruz</strong> - Servicio de limpieza de cuarto</span>
                     <span>Fecha: 20/12/24 - 10:00 AM</span>
                 </div>
-                <button class="request-button">Ver</button>
+                <button class="request-button" onclick="navigateTo('detalle.html')">Ver</button>
             </div>
             <div class="request-item">
                 <img src="user2.jpg" alt="Gabriel Cruz">
                 <div class="request-info">
                     <span><strong>Gabriel Cruz</strong> - Instalación de nuevo toma corriente</span>
                     <span>Fecha: 20/12/24 - 11:00 AM</span>
-                </div>
-                <button class="request-button">Ver</button>
-            </div>
-            <div class="request-item">
-                <img src="user3.jpg" alt="Pamela Tuc">
-                <div class="request-info">
-                    <span><strong>Pamela Tuc</strong> - Limpieza de habitación</span>
-                    <span>Fecha: 20/12/24 - 12:00 PM</span>
-                </div>
-                <button class="request-button">Ver</button>
-            </div>
-            <div class="request-item">
-                <img src="user4.jpg" alt="Norman Guy">
-                <div class="request-info">
-                    <span><strong>Norman Guy</strong> - Instalación de losa</span>
-                    <span>Fecha: 20/12/24 - 1:00 PM</span>
                 </div>
                 <button class="request-button" onclick="navigateTo('detalle.html')">Ver</button>
             </div>

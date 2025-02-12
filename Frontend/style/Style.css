@@ -72,58 +72,6 @@ header {
     color: #666;
     margin-bottom: 10px;
 }
-.calendar {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
-.month-header {
-    background: #1E7CD6;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    display: inline-block;
-    font-weight: bold;
-}
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-top: 10px;
-}
-.day {
-    padding: 15px;
-    background: #f0f0f0;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-}
-.day:hover {
-    background: #d0e1ff;
-}
-.task-list {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    padding: 10px;
-    display: none;
-    text-align: left;
-}
-.task {
-    font-size: 12px;
-    background: #1E7CD6;
-    color: white;
-    padding: 5px;
-    border-radius: 3px;
-    margin-bottom: 5px;
-}
 
 .stats {
     display: flex;
