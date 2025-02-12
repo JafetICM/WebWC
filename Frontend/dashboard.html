@@ -4,6 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard - WhatClean</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons (opcional) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+  />
+
   <style>
     /* RESET BÁSICO */
     * {
@@ -179,32 +191,56 @@
 </head>
 <body>
   <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div>
-      <div class="profile">
-        <!-- Tu imagen de perfil o logo -->
-        <img src="images/Logo.png" alt="Juan de Dios">
-        <h3>Juan de Dios</h3>
-      </div>
-      <nav>
-        <ul>
-          <li class="active" onclick="navigateTo('dashboard.html')">Dashboard</li>
-          <li onclick="navigateTo('solicitudes.html')">Solicitudes</li>
-          <li onclick="navigateTo('agenda.html')">Agenda</li>
-          <li onclick="navigateTo('servicios.html')">Servicios</li>
-          <li onclick="navigateTo('pagos.html')">Pagos</li>
-        </ul>
+    <div class="sidebar">
+        <nav class="col-12 col-md-3 col-lg-2 sidebar d-flex flex-column p-3">
+            <div>
+                <div class="profile mb-4">
+                <img src="images/Logo.png" alt="Juan de Dios" />
+                <h3>Juan de Dios</h3>
+            </div>
+            <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+              <a class="nav-link active" onclick="navigateTo('dashboard.html')">
+                <i class="bi bi-calendar"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('solicitudes.html')">
+                <i class="bi bi-file-earmark"></i> Solicitudes
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('agenda.html')">
+                <i class="bi bi-calendar"></i> Agenda
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('servicios.html')">
+                <i class="bi bi-briefcase"></i> Servicios
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('pagos.html')">
+                <i class="bi bi-cash-stack"></i> Pagos
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div 
+          class="login-button mt-auto" 
+          onclick="navigateTo('registro-inicio.html')"
+        >
+          Iniciar Sesión
+        </div>
       </nav>
     </div>
-    <div class="login-button" onclick="navigateTo('registro-inicio.html')">Iniciar Sesión</div>
-  </div>
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="main-content">
     
     <!-- ENCABEZADO -->
     <header>
-      <h1>Dashboard</h1>
+      <h2>Dashboard</h2>
       <div class="user-info">
         <span>Juan de Dios</span>
         <!-- Imagen del usuario -->

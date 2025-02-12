@@ -1,198 +1,328 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda - WhatClean</title>
-    <link rel="stylesheet" href="/Frontend/style/Style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-            display: flex;
-        }
-        .sidebar {
-            width: 250px;
-            background: #2A9DF4;
-            color: white;
-            padding: 20px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .profile {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .profile img {
-            width: 80px;
-            border-radius: 50%;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-        nav ul li {
-            padding: 10px;
-            cursor: pointer;
-        }
-        nav ul .active {
-            background: #1E7CD6;
-            border-radius: 5px;
-        }
-        .main-content {
-            margin-left: 270px;
-            padding: 20px;
-            width: calc(100% - 270px);
-        }
-        header {
-            display: flex;
-            align-items: center;
-            background: white;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        .breadcrumb {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        .task-list {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-        }
-        .task {
-            background: #1E7CD6;
-            color: white;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .task button {
-            background: #f44336;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 5px;
-        }
-        .task input {
-            border: none;
-            background: transparent;
-            color: white;
-            font-size: 16px;
-            flex-grow: 1;
-            text-align: left;
-        }
-        .controls {
-            margin-bottom: 15px;
-            display: flex;
-            gap: 10px;
-        }
-        .controls input, .controls button {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-        }
-        .controls button {
-            background: #0A3D62;
-            color: white;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agenda - WhatClean</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons (opcional) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+  />
+
+  <style>
+    /* RESET BÁSICO */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f0f4f7;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background-color: #003366; /* Azul intenso */
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .sidebar > div {
+      padding: 1rem;
+    }
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .profile img {
+      width: 80px; 
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+    .profile h3 {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+    nav ul {
+      list-style: none;
+    }
+    nav li {
+      padding: 0.8rem 0;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    nav li:hover {
+      background-color: #022d5b;
+    }
+    nav li.active {
+      background-color: #022d5b;
+    }
+    .login-button {
+      background-color: #022d5b;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin: 1rem;
+      border-radius: 4px;
+    }
+    .login-button:hover {
+      background-color: #011f42;
+    }
+
+    /* CONTENIDO DE LAS TAREAS */
+    .task-list {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .task {
+      background: #1E7CD6;
+      color: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .task button {
+      background: #f44336;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+    .task input {
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 16px;
+      flex-grow: 1;
+      text-align: left;
+    }
+    .controls {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .controls input, .controls button, .controls select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    .controls button {
+      background: #0A3D62;
+      color: white;
+      cursor: pointer;
+    }
+    .form-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+    .form-container input, .form-container select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      flex: 1;
+    }
+    .form-container button {
+      background: #0A3D62;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .form-container {
+        flex-direction: column;
+      }
+      .controls {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
+    <!-- SIDEBAR -->
+     <!-- SIDEBAR -->
     <div class="sidebar">
-        <div>
-            <div class="profile">
-                <img src="images/Logo.png" alt="Juan de Dios">
+        <nav class="col-12 col-md-3 col-lg-2 sidebar d-flex flex-column p-3">
+            <div>
+                <div class="profile mb-4">
+                <img src="images/Logo.png" alt="Juan de Dios" />
                 <h3>Juan de Dios</h3>
             </div>
-            <nav>
-                <ul>
-                    <li onclick="navigateTo('dashboard.html')">Dashboard</li>
-                    <li onclick="navigateTo('solicitudes.html')">Solicitudes</li>
-                    <li class="active" onclick="navigateTo('agenda.html')">Agenda</li>
-                    <li onclick="navigateTo('servicios.html')">Servicios</li>
-                    <li onclick="navigateTo('pagos.html')">Pagos</li>
-                </ul>
-            </nav>
+            <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+              <a class="nav-link active" onclick="navigateTo('dashboard.html')">
+                <i class="bi bi-calendar"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('solicitudes.html')">
+                <i class="bi bi-file-earmark"></i> Solicitudes
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('agenda.html')">
+                <i class="bi bi-calendar"></i> Agenda
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('servicios.html')">
+                <i class="bi bi-briefcase"></i> Servicios
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a class="nav-link" onclick="navigateTo('pagos.html')">
+                <i class="bi bi-cash-stack"></i> Pagos
+              </a>
+            </li>
+          </ul>
         </div>
-        <div class="login-button" onclick="navigateTo('registro-inicio.html')">Iniciar Sesión</div>
+        <div 
+          class="login-button mt-auto" 
+          onclick="navigateTo('registro-inicio.html')"
+        >
+          Iniciar Sesión
+        </div>
+      </nav>
     </div>
-    <div class="main-content">
-        <header>
-            <div class="breadcrumb">Home > Agenda</div>
-        </header>
-        <section class="task-list" id="task-list">
-            <h2>Lista de Trabajos</h2>
-            <div class="controls">
-                <input type="text" id="taskInput" placeholder="Agregar nuevo trabajo">
-                <button onclick="addTask()">Añadir</button>
-                <input type="text" id="searchInput" onkeyup="searchTask()" placeholder="Buscar trabajo">
-            </div>
-            <div id="tasksContainer"></div>
-        </section>
-    </div>
-    <script>
-        function navigateTo(page) {
-            window.location.href = page;
-        }
 
-        function addTask() {
-            const taskInput = document.getElementById("taskInput");
-            if (taskInput.value.trim() === "") return;
-            
-            const tasksContainer = document.getElementById("tasksContainer");
-            let taskElement = document.createElement("div");
-            taskElement.classList.add("task");
-            taskElement.innerHTML = `<input type='text' value='${taskInput.value}' readonly> 
-                <button onclick="editTask(this)">Editar</button> 
-                <button onclick="removeTask(this)">Eliminar</button>`;
-            
-            tasksContainer.appendChild(taskElement);
-            taskInput.value = "";
-        }
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main-content">
+    <header>
+      <div class="breadcrumb">Home > Agenda</div>
+    </header>
+    <section class="task-list" id="task-list">
+      <h2>Agenda</h2>
+      <div class="form-container">
+        <input type="text" id="clientName" placeholder="Nombre del Cliente">
+        <input type="text" id="clientAddress" placeholder="Dirección">
+        <input type="date" id="taskDate">
+        <input type="time" id="taskTime">
+        <select id="taskType">
+          <option value="Limpieza General">Limpieza General</option>
+          <option value="Limpieza Profunda">Limpieza Profunda</option>
+          <option value="Limpieza de Oficina">Limpieza de Oficina</option>
+        </select>
+        <button onclick="addTask()">Añadir Trabajo</button>
+      </div>
+      <div class="controls">
+        <input type="text" id="searchInput" onkeyup="searchTask()" placeholder="Buscar trabajo">
+      </div>
+      <div id="tasksContainer"></div>
+    </section>
+  </div>
 
-        function removeTask(element) {
-            element.parentElement.remove();
-        }
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
 
-        function editTask(element) {
-            let taskInput = element.parentElement.querySelector("input");
-            if (taskInput.readOnly) {
-                taskInput.readOnly = false;
-                taskInput.focus();
-                element.textContent = "Guardar";
-            } else {
-                taskInput.readOnly = true;
-                element.textContent = "Editar";
-            }
-        }
+    function addTask() {
+      const clientName = document.getElementById("clientName").value;
+      const clientAddress = document.getElementById("clientAddress").value;
+      const taskDate = document.getElementById("taskDate").value;
+      const taskTime = document.getElementById("taskTime").value;
+      const taskType = document.getElementById("taskType").value;
 
-        function searchTask() {
-            const searchValue = document.getElementById("searchInput").value.toLowerCase();
-            const tasks = document.querySelectorAll(".task input");
-            
-            tasks.forEach(task => {
-                if (task.value.toLowerCase().includes(searchValue)) {
-                    task.parentElement.style.display = "flex";
-                } else {
-                    task.parentElement.style.display = "none";
-                }
-            });
+      if (!clientName || !clientAddress || !taskDate || !taskTime || !taskType) {
+        alert("Por favor, complete todos los campos.");
+        return;
+      }
+
+      const tasksContainer = document.getElementById("tasksContainer");
+      let taskElement = document.createElement("div");
+      taskElement.classList.add("task");
+      taskElement.innerHTML = `
+        <div>
+          <p><strong>Cliente:</strong> ${clientName}</p>
+          <p><strong>Dirección:</strong> ${clientAddress}</p>
+          <p><strong>Fecha:</strong> ${taskDate}</p>
+          <p><strong>Hora:</strong> ${taskTime}</p>
+          <p><strong>Servicio:</strong> ${taskType}</p>
+        </div>
+        <div>
+          <button onclick="editTask(this)">Editar</button>
+          <button onclick="removeTask(this)">Eliminar</button>
+        </div>
+      `;
+
+      tasksContainer.appendChild(taskElement);
+      clearForm();
+    }
+
+    function removeTask(element) {
+      element.parentElement.parentElement.remove();
+    }
+
+    function editTask(element) {
+      const taskElement = element.parentElement.parentElement;
+      const taskDetails = taskElement.querySelector("div");
+      const clientName = prompt("Nuevo nombre del cliente:", taskDetails.children[0].textContent.split(": ")[1]);
+      const clientAddress = prompt("Nueva dirección:", taskDetails.children[1].textContent.split(": ")[1]);
+      const taskDate = prompt("Nueva fecha (YYYY-MM-DD):", taskDetails.children[2].textContent.split(": ")[1]);
+      const taskTime = prompt("Nueva hora (HH:MM):", taskDetails.children[3].textContent.split(": ")[1]);
+      const taskType = prompt("Nuevo tipo de servicio:", taskDetails.children[4].textContent.split(": ")[1]);
+
+      if (clientName && clientAddress && taskDate && taskTime && taskType) {
+        taskDetails.innerHTML = `
+          <p><strong>Cliente:</strong> ${clientName}</p>
+          <p><strong>Dirección:</strong> ${clientAddress}</p>
+          <p><strong>Fecha:</strong> ${taskDate}</p>
+          <p><strong>Hora:</strong> ${taskTime}</p>
+          <p><strong>Servicio:</strong> ${taskType}</p>
+        `;
+      }
+    }
+
+    function searchTask() {
+      const searchValue = document.getElementById("searchInput").value.toLowerCase();
+      const tasks = document.querySelectorAll(".task");
+
+      tasks.forEach(task => {
+        const taskText = task.textContent.toLowerCase();
+        if (taskText.includes(searchValue)) {
+          task.style.display = "flex";
+        } else {
+          task.style.display = "none";
         }
-    </script>
+      });
+    }
+
+    function clearForm() {
+      document.getElementById("clientName").value = "";
+      document.getElementById("clientAddress").value = "";
+      document.getElementById("taskDate").value = "";
+      document.getElementById("taskTime").value = "";
+      document.getElementById("taskType").value = "Limpieza General";
+    }
+  </script>
 </body>
 </html>

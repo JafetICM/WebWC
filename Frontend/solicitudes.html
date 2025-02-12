@@ -23,36 +23,52 @@
       margin: 0;
       padding: 0;
       font-family: sans-serif;
+      display: flex;
+      min-height: 100vh;
     }
 
     /* Barra lateral (sidebar) */
     .sidebar {
-      background-color: #003366; /* Azul oscuro */
-      min-height: 100vh;
-      color: #fff;
+      width: 240px;
+      background-color: #003366; /* Azul intenso */
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
     }
-    .sidebar .profile {
-      text-align: center;
+    .sidebar > div {
+      padding: 1rem;
     }
-    .sidebar .profile img {
-      width: 80px;
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .profile img {
+      width: 80px; 
       height: 80px;
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 0.5rem;
     }
-    .sidebar h3 {
+    .profile h3 {
       font-size: 1rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0;
     }
-    .sidebar .nav-link {
-      color: #ffffff;
+    nav ul {
+      list-style: none;
+    }
+    nav li {
+      padding: 0.8rem 0;
+      cursor: pointer;
       transition: background-color 0.2s;
     }
-    .sidebar .nav-link:hover {
+    nav li:hover {
       background-color: #022d5b;
     }
-    .sidebar .active {
+    nav li.active {
       background-color: #022d5b;
     }
     .login-button {
@@ -61,8 +77,8 @@
       text-align: center;
       cursor: pointer;
       transition: background-color 0.2s;
+      margin: 1rem;
       border-radius: 4px;
-      margin-top: 1rem;
     }
     .login-button:hover {
       background-color: #011f42;
@@ -185,12 +201,12 @@
           </div>
           <ul class="nav flex-column">
             <li class="nav-item mb-2">
-              <a class="nav-link" onclick="navigateTo('dashboard.html')">
-                <i class="bi bi-speedometer2"></i> Dashboard
+              <a class="nav-link active" onclick="navigateTo('dashboard.html')">
+                <i class="bi bi-calendar"></i> Dashboard
               </a>
             </li>
             <li class="nav-item mb-2">
-              <a class="nav-link active" onclick="navigateTo('solicitudes.html')">
+              <a class="nav-link" onclick="navigateTo('solicitudes.html')">
                 <i class="bi bi-file-earmark"></i> Solicitudes
               </a>
             </li>
@@ -221,7 +237,6 @@
 
       <!-- CONTENIDO PRINCIPAL -->
       <main class="col-12 col-md-9 col-lg-10 px-0">
-
         <!-- ENCABEZADO SUPERIOR -->
         <div class="header-brand">
           <div class="breadcrumb-container d-flex align-items-center">
@@ -230,12 +245,12 @@
                 <li class="breadcrumb-item">
                   <a href="#" onclick="navigateTo('dashboard.html')">Home</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">
+                <li class="breadcrumb-item" aria-current="page">
                   Solicitudes
                 </li>
               </ol>
             </nav>
-            <h1 class="ms-3">Solicitudes Urgentes</h1>
+            <h2>Solicitudes</h2>
           </div>
           <div class="user-info">
             <i class="bi bi-bell" style="font-size:1.2rem;"></i>
