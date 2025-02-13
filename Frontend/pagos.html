@@ -6,78 +6,143 @@
   <title>Pagos - Asignaciones</title>
   <!-- CSS de Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
   <style>
-    /* Ajusta colores y estilos según tu preferencia */
+    /* RESET BÁSICO */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
     body {
-      background-color: #f0f4f7; /* color de fondo suave */
-    }
-    .sidebar {
-      background-color: #003366; /* fondo azul oscuro */
+      display: flex;
       min-height: 100vh;
-      color: #ffffff;
+      background-color: #f0f4f7;
     }
-    .sidebar .profile-img {
-      width: 80px;
+
+    /* SIDEBAR (Nuevo diseño) */
+    .sidebar {
+      width: 240px;
+      background-color: #003366; /* Azul intenso */
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    .sidebar > div {
+      padding: 1rem;
+    }
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .profile img {
+      width: 80px; 
       height: 80px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
-    .sidebar .nav-link {
-      color: #ffffff;
+    .profile h3 {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+    nav ul {
+      list-style: none;
+    }
+    nav li {
+      padding: 0.8rem 0;
+      cursor: pointer;
       transition: background-color 0.2s;
     }
-    .sidebar .nav-link:hover {
+    nav li:hover {
       background-color: #022d5b;
     }
-    .sidebar .active {
+    nav li.active {
       background-color: #022d5b;
     }
+    .login-button {
+      background-color: #022d5b;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin: 1rem;
+      border-radius: 4px;
+    }
+    .login-button:hover {
+      background-color: #011f42;
+    }
+
+    /* CONTENIDO PRINCIPAL */
+    .main-content {
+      margin-left: 240px; /* Ajuste para el sidebar */
+      padding: 20px;
+      width: calc(100% - 240px);
+    }
+
+    /* Estilos adicionales para el contenido */
     .breadcrumb-container {
       background-color: #dfe9f4;
       padding: 1rem;
       border-radius: 0.25rem;
     }
-    .card-header-custom {
-      background-color: #003366;
-      color: #ffffff;
-    }
+
     .card-custom {
       background-color: #fff;
       border: 1px solid #ddd;
       margin-bottom: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
     .card-custom .card-body {
       padding: 1rem;
     }
+
     .card-custom h6 {
       margin: 0;
       font-weight: 600;
     }
+
     .card-custom p {
       margin: 0;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      .main-content {
+        margin-left: 0;
+      }
     }
   </style>
 </head>
 <body>
-
-<!-- Contenedor principal en forma de fila -->
-<div class="container-fluid">
-  <div class="row">
-
-    <!-- Barra lateral (sidebar) -->
+  <!-- SIDEBAR (Nuevo diseño) -->
+  <div class="sidebar">
     <nav class="col-12 col-md-3 col-lg-2 sidebar d-flex flex-column p-3">
-      <!-- Perfil -->
-      <div class="text-center mb-4">
-        <!-- Puedes reemplazar la imagen por otra URL o recurso local -->
-        <img src="images/auditor-limpieza.png" alt="Foto de perfil" class="profile-img" />
-        <h5 class="mt-2">Juan de Dios</h5>
-      </div>
-      <!-- Navegación -->
-      <ul class="nav flex-column">
+        <div>
+            <div class="profile mb-4">
+            <img src="images/Logo.png" alt="Juan de Dios" />
+            <h3>Juan de Dios</h3>
+        </div>
+        <ul class="nav flex-column">
         <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('dashboard.html')">
-            <i class="bi bi-speedometer2"></i> Dashboard
+          <a class="nav-link active" onclick="navigateTo('dashboard.html')">
+            <i class="bi bi-calendar"></i> Dashboard
           </a>
         </li>
         <li class="nav-item mb-2">
@@ -96,111 +161,92 @@
           </a>
         </li>
         <li class="nav-item mb-2">
-          <a class="nav-link active " onclick="navigateTo('pagos.html')">
+          <a class="nav-link" onclick="navigateTo('pagos.html')">
             <i class="bi bi-cash-stack"></i> Pagos
           </a>
         </li>
       </ul>
-    </nav>
-
-    <!-- Contenido principal -->
-    <main class="col-12 col-md-9 col-lg-10 px-4 py-4">
-      
-      <!-- Migas de pan (Breadcrumb) -->
-      <div class="breadcrumb-container mb-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pagos</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Pagos asignaciones</li>
-          </ol>
-        </nav>
-      </div>
-
-      <!-- Sección: Asignaciones Pagadas -->
-      <div class="mb-4">
-        <h4 class="mb-3">Asignaciones pagadas</h4>
-        
-        <!-- Card 1 -->
-        <div class="card-custom">
-          <div class="card-body">
-            <h6>No. Asignación: 2939821871</h6>
-            <p>Nombre: Carlos Samuel</p>
-            <p>Cantidad: 1,110 MXM</p>
-            <p>Fecha: 12/11/2024</p>
-            <p>Hora: 9:30 a.m</p>
-            <p>Proveedor que realizó el servicio: Gerardo nuñez colombia</p>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card-custom">
-          <div class="card-body">
-            <h6>No. Asignación: 930303290</h6>
-            <p>Nombre: Luis Samuel</p>
-            <p>Cantidad: 1,210 MXM</p>
-            <p>Fecha: 11/12/2024</p>
-            <p>Hora: 10:30 a.m</p>
-            <p>Proveedor que realizó el servicio: Gerardo nuñez colombia</p>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="card-custom">
-          <div class="card-body">
-            <h6>No. Asignación: 120397322</h6>
-            <p>Nombre: Pedro Jose</p>
-            <p>Cantidad: 2,110 MXM</p>
-            <p>Fecha: 10/09/2024</p>
-            <p>Hora: 1:30 p.m</p>
-            <p>Proveedor que realizó el servicio: Pedro luis cen</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sección: Pendientes -->
-      <div>
-        <h4 class="mb-3">Pendientes</h4>
-        
-        <!-- Card 1 -->
-        <div class="card-custom">
-          <div class="card-body">
-            <h6>No. Asignación: 93998320</h6>
-            <p>Nombre: Carlos Samuel</p>
-            <p>Cantidad: 1,110 MXM</p>
-            <p>Pagar antes: 12/11/2024</p>
-            <p>Hora: 9:30 a.m</p>
-            <p>Proveedor que realizó el servicio: Gerardo nuñez colombia</p>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card-custom">
-          <div class="card-body">
-            <h6>No. Asignación: 49560802</h6>
-            <p>Nombre: Miguel Chan</p>
-            <p>Cantidad: 1,330 MXM</p>
-            <p>Pagar antes: 07/11/2024</p>
-            <p>Hora: 9:30 a.m</p>
-            <p>Proveedor que realizó el servicio: Gerardo nuñez colombia</p>
-          </div>
-        </div>
-      </div>
-
-    </main>
-
-  </div>
+    </div>
+    <div 
+      class="login-button mt-auto" 
+      onclick="navigateTo('registro-inicio.html')"
+    >
+      Iniciar Sesión
+    </div>
+  </nav>
 </div>
 
-<script>
-  function navigateTo(page) {
-    window.location.href = page;
-  }
-</script>
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main-content">
+    <!-- Migas de pan -->
+    <div class="breadcrumb-container mb-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Pagos</a></li>
+          <li class="breadcrumb-item" aria-current="page">Pagos asignaciones</li>
+        </ol>
+      </nav>
+    </div>
 
-<!-- JavaScript de Bootstrap (opcional si requieres componentes interactivos) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Iconos de Bootstrap (para los <i class="bi ..."></i>), opcional -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <!-- Asignaciones Pagadas -->
+    <div class="mb-4">
+      <h4 class="mb-3">Asignaciones pagadas</h4>
+      <div class="card-custom">
+        <div class="card-body">
+          <h6>No. Asignación: 2939821871</h6>
+          <p>Nombre: Carlos Samuel</p>
+          <p>Cantidad: 1,110 MXM</p>
+          <p>Fecha: 12/11/2024</p>
+          <p>Hora: 9:30 a.m</p>
+          <p>Proveedor que realizó el servicio: Gerardo nuñez colombia</p>
+        </div>
+      </div>
+      <div class="card-custom">
+        <div class="card-body">
+          <h6>No. Asignación: 930303290</h6>
+          <p>Nombre: Luis Samuel</p>
+          <p>Cantidad: 1,210 MXM</p>
+          <p>Fecha: 11/12/2024</p>
+          <p>Hora: 10:30 a.m</p>
+          <p>Proveedor que realizó el servicio: Gerardo nuñez colombia</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pendientes -->
+    <div>
+      <h4 class="mb-3">Pendientes</h4>
+      <div class="card-custom">
+        <div class="card-body">
+          <h6>No. Asignación: 93998320</h6>
+          <p>Nombre: Carlos Samuel</p>
+          <p>Cantidad: 1,110 MXM</p>
+          <p>Pagar antes: 12/11/2024</p>
+          <p>Hora: 9:30 a.m</p>
+          <p>Proveedor que realizó el servicio: Gerardo nuñez colombia</p>
+        </div>
+      </div>
+      <div class="card-custom">
+        <div class="card-body">
+          <h6>No. Asignación: 49560802</h6>
+          <p>Nombre: Miguel Chan</p>
+          <p>Cantidad: 1,330 MXM</p>
+          <p>Pagar antes: 07/11/2024</p>
+          <p>Hora: 9:30 a.m</p>
+          <p>Proveedor que realizó el servicio: Gerardo nuñez colombia</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
+
+  <!-- JavaScript de Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
