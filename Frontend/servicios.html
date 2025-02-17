@@ -14,7 +14,8 @@
       background-color: #f0f4f7; /* Fondo suave */
     }
 
-    /* SIDEBAR */
+    /* Sidebar mejorado */
+    /* SIDEBAR (Diseño del primer HTML) */
     .sidebar {
       width: 240px;
       background-color: #003366; /* Azul intenso */
@@ -23,6 +24,9 @@
       flex-direction: column;
       justify-content: space-between;
       height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
     }
     .sidebar > div {
       padding: 1rem;
@@ -70,6 +74,13 @@
     .login-button:hover {
       background-color: #011f42;
     }
+
+/* Asegurar que el contenido principal no quede oculto detrás del sidebar */
+main {
+  margin-left: 240px; /* Igual al ancho del sidebar */
+  width: calc(100% - 240px);
+}
+
 
     /* Encabezado de la sección central */
     .header-brand {
