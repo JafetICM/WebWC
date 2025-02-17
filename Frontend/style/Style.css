@@ -1,195 +1,514 @@
+/* ========== RESET BÁSICO ========== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-body {
-    display: flex;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
-    display: flex;
-}
-.sidebar {
-    width: 250px;
-    background: #2A9DF4;
-    color: white;
-    padding: 20px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+    font-family: sans-serif;
+  }
+  
+  body {
+    display: flex;             /* Para manejar layout en la mayoría de páginas con sidebar */
+    min-height: 100vh;
+    background-color: #f0f4f7; /* Fondo suave */
+  }
+  
+  
+  /* ========== SIDEBAR (Común a casi todas las páginas) ========== */
+  .sidebar {
+    width: 240px;
+    background-color: #003366; /* Azul oscuro */
+    color: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-.profile {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.profile img {
+    position: fixed;           /* Sidebar fija en la mayoría de diseños */
+    top: 0;
+    left: 0;
+    height: 100vh;             /* Ocupa toda la altura */
+  }
+  .sidebar > div {
+    padding: 1rem;
+  }
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    text-align: center; /* Para que coincida en todas */
+  }
+  .profile img {
     width: 80px;
+    height: 80px;
     border-radius: 50%;
-}
-nav ul {
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+  }
+  .profile h3 {
+    font-size: 1rem;
+    margin-bottom: 0;
+  }
+  nav ul {
     list-style: none;
-    padding: 0;
-}
-nav ul li {
-    padding: 10px;
+  }
+  nav li {
+    padding: 0.8rem 0;
     cursor: pointer;
-}
-nav ul .active {
-    background: #1E7CD6;
-    border-radius: 5px;
-}
-.login-button {
-    background: white;
-    color: #2A9DF4;
+    transition: background-color 0.2s;
+  }
+  nav li:hover {
+    background-color: #022d5b;
+  }
+  nav li.active {
+    background-color: #022d5b;
+  }
+  .login-button {
+    background-color: #022d5b;
+    padding: 0.8rem;
     text-align: center;
-    padding: 10px;
-    margin-top: 20px;
-    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.2s;
+    margin: 1rem;
+    border-radius: 4px;
+  }
+  .login-button:hover {
+    background-color: #011f42;
+  }
+  
+  /* Cuando el sidebar está fijo, dejamos espacio en el main */
+  main, .main-content {
+    margin-left: 240px;         /* Separa contenido del sidebar fijo */
+    width: calc(100% - 240px);  /* Ajusta el ancho */
+    padding: 20px;             /* Espaciado general */
+  }
+  
+  /* ==== Para pantallas pequeñas, si deseas sidebar responsivo ==== */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      position: static; /* Podrías cambiar a absolute si quieres overlay */
+      height: auto;
+    }
+    main, .main-content {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+  
+  /* ========== HEADER (Encabezado principal) ========== */
+  .header-brand {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-brand img.logo {
+    height: 40px; /* Ajusta según tu preferencia */
+  }
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #003366;
+  }
+  .user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* A veces se usa .header-left (por ejemplo, en detalles) */
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .header-left img {
+    height: 40px;
+  }
+  
+  /* Título en el header (páginas de Detalles) */
+  .header-title {
+    font-size: 1.2rem;
+    color: #003366;
+    margin: 0;
+  }
+  
+  
+  /* ========== BREADCRUMB ========== */
+  .breadcrumb-container {
+    background-color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  .breadcrumb {
+    display: flex;
+    gap: 5px;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0;
+    background-color: transparent;
+    padding: 0;
+  }
+  .breadcrumb a {
+    text-decoration: none;
+    color: #003366;
+  }
+  .breadcrumb .active {
+    color: #555;
+  }
+  
+  
+  /* ========== DASHBOARD (stats, content, cards) ========== */
+  /* (Usadas en Dashboard) */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 1rem 0; /* Añadido un poco de espaciado vertical */
+  }
+  .stat {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    padding: 1rem;
+    color: #003366;
+  }
+  .stat span {
+    display: block;
+    font-size: 1.5rem;
     font-weight: bold;
-}
-.main-content {
-    margin-left:250px;
-    padding: 20px;
-    flex-grow: 1;
-    width: calc(100% - 270px);
-}
-header {
+    color: #022d5b;
+    margin-bottom: 0.25rem;
+  }
+  
+  .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+    flex: 1; /* para crecer en altura */
+  }
+  .card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
+    color: #003366;
+  }
+  .card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #003366;
+  }
+  .card p {
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+  }
+  .urgent {
+    border-left: 4px solid #ff6961; /* Rojo para urgentes */
+    padding-left: 0.75rem;
+  }
+  .recent {
+    border-left: 4px solid #f5c518; /* Amarillo para recientes */
+    padding-left: 0.75rem;
+  }
+  .card ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .card ul li {
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+  }
+  
+  
+  /* ========== AGENDA (tasks, form-container) ========== */
+  .task-list {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .task {
+    background: #1E7CD6;
+    color: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
-    padding: 15px;
-    border-radius: 5px;
-}
-.breadcrumb {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 10px;
-}
-.calendar {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
-.month-header {
-    background: #1E7CD6;
+  }
+  .task button {
+    background: #f44336;
     color: white;
-    padding: 10px;
+    border: none;
+    padding: 5px 10px;
     border-radius: 5px;
-    display: inline-block;
-    font-weight: bold;
-}
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-top: 10px;
-}
-.day {
-    padding: 15px;
-    background: #f0f0f0;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
     cursor: pointer;
-    position: relative;
-}
-.day:hover {
-    background: #d0e1ff;
-}
-.task-list {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    padding: 10px;
-    display: none;
-    text-align: left;
-}
-.task {
-    font-size: 12px;
-    background: #1E7CD6;
+    margin-left: 5px;
+  }
+  .task input {
+    border: none;
+    background: transparent;
     color: white;
-    padding: 5px;
-    border-radius: 3px;
-    margin-bottom: 5px;
-}
-
-.stats {
+    font-size: 16px;
+    flex-grow: 1;
+    text-align: left;
+  }
+  
+  .controls {
+    margin-bottom: 15px;
     display: flex;
     gap: 10px;
-    margin-top: 20px;
-}
-.stat {
-    background: #fff;
-    padding: 15px;
-    flex: 1;
-    text-align: center;
-    border-radius: 5px;
-}
-.content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-top: 20px;
-}
-.card {
-    background: white;
-    padding: 35px;
-    border-radius: 5px;
-}
-.urgent {
-    background: #023E8A;
-    color: white;
-}
-
-.requests {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-}
-.request-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
+    flex-wrap: wrap;
+  }
+  .controls input,
+  .controls button,
+  .controls select {
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
-}
-.request-item img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-.request-info {
-    flex-grow: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.request-button {
-    background: #2A9DF4;
+    border: 1px solid #ddd;
+  }
+  .controls button {
+    background: #0A3D62;
     color: white;
-    padding: 8px 15px;
+    cursor: pointer;
+  }
+  
+  .form-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+  .form-container input,
+  .form-container select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    flex: 1;
+  }
+  .form-container button {
+    background: #0A3D62;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .form-container {
+      flex-direction: column;
+    }
+    .controls {
+      flex-direction: column;
+    }
+  }
+  
+  
+  /* ========== DETALLES (container, modal, etc.) ========== */
+  .container {
+    background: #fff;
+    margin: 1rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Ajusta si es necesario */
+  }
+  .container .header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #003366;
+  }
+  .info {
+    margin-bottom: 0.5rem;
+    line-height: 1.4rem;
+    color: #333;
+  }
+  .info strong {
+    color: #003366;
+  }
+  ul {
+    margin-bottom: 1rem;
+    margin-left: 1.2rem;
+    list-style: disc;
+    color: #333;
+  }
+  .button {
+    display: inline-block;
+    background-color: #022d5b;
+    color: white;
+    padding: 0.8rem 1.2rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-.breadcrumb {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 10px;
-}
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    transition: background-color 0.2s;
+  }
+  .button:hover {
+    background-color: #011f42;
+  }
+  
+  /* Modal (usado en la página de “Detalles”) */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    width: 300px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 1000;
+  }
+  .modal p {
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  
+  /* ========== PAGOS (card-custom) ========== */
+  .breadcrumb-container {
+    background-color: #dfe9f4;
+    padding: 1rem;
+    border-radius: 0.25rem;
+  }
+  
+  .card-custom {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  .card-custom .card-body {
+    padding: 1rem;
+  }
+  .card-custom h6 {
+    margin: 0;
+    font-weight: 600;
+    color: #003366;
+  }
+  .card-custom p {
+    margin: 0.25rem 0;
+    color: #555;
+  }
+  
+  
+  /* ========== SERVICIOS (service-card, tabs) ========== */
+  /* Ajuste general en “services” */
+  .nav-tabs .nav-link.active {
+    background-color: #003366;
+    color: #fff !important;
+  }
+  .nav-tabs .nav-link {
+    color: #003366;
+  }
+  .tab-content {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 0 0 0.25rem 0.25rem;
+    border: 1px solid #ddd;
+    border-top: 0;
+  }
+  
+  /* Tarjetas de servicios */
+  .service-card {
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+  }
+  .service-card:last-child {
+    border-bottom: none;
+  }
+  .service-card img {
+    width: 100%;
+    border-radius: 0.25rem;
+  }
+  .service-card h5 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #003366;
+  }
+  .star-rating {
+    color: #f5c518; /* color de estrellas doradas */
+    margin-bottom: 0.5rem;
+  }
+  
+  
+  /* ========== SOLICITUDES (requests-container) ========== */
+  .requests-container {
+    margin: 1rem;
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  }
+  .request-item {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+  }
+  .request-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .request-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 0.75rem;
+    gap: 0.25rem;
+  }
+  .request-info span {
+    font-size: 0.9rem;
+    color: #333;
+  }
+  .request-info strong {
+    color: #003366;
+  }
+  .request-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .request-button {
+    background: #022d5b;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .request-button:hover {
+    background: #011f42;
+  }
+  
