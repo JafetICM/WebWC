@@ -105,34 +105,32 @@
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .task {
+    .task-card {
       background: #1E7CD6;
       color: white;
       padding: 15px;
       margin: 10px 0;
       border-radius: 5px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
     }
 
-    .task button {
+    .task-card .task-details {
+      margin-bottom: 10px;
+    }
+
+    .task-card button {
       background: #f44336;
       color: white;
       border: none;
       padding: 5px 10px;
       border-radius: 5px;
       cursor: pointer;
-      margin-left: 5px;
+      margin-top: 10px;
     }
 
-    .task input {
-      border: none;
-      background: transparent;
-      color: white;
-      font-size: 16px;
-      flex-grow: 1;
-      text-align: left;
+    .task-card button:hover {
+      background: #d32f2f;
     }
 
     .controls {
@@ -223,10 +221,7 @@
         </li>
       </ul>
     </div>
-    <div 
-      class="login-button mt-auto" 
-      onclick="navigateTo('registro-inicio.html')"
-    >
+    <div class="login-button mt-auto" onclick="navigateTo('registro-inicio.html')">
       Iniciar Sesión
     </div>
   </nav>
@@ -276,9 +271,9 @@
 
       const tasksContainer = document.getElementById("tasksContainer");
       let taskElement = document.createElement("div");
-      taskElement.classList.add("task");
+      taskElement.classList.add("task-card");
       taskElement.innerHTML = `
-        <div>
+        <div class="task-details">
           <p><strong>Cliente:</strong> ${clientName}</p>
           <p><strong>Dirección:</strong> ${clientAddress}</p>
           <p><strong>Fecha:</strong> ${taskDate}</p>
@@ -301,7 +296,7 @@
 
     function editTask(element) {
       const taskElement = element.parentElement.parentElement;
-      const taskDetails = taskElement.querySelector("div");
+      const taskDetails = taskElement.querySelector(".task-details");
       const clientName = prompt("Nuevo nombre del cliente:", taskDetails.children[0].textContent.split(": ")[1]);
       const clientAddress = prompt("Nueva dirección:", taskDetails.children[1].textContent.split(": ")[1]);
       const taskDate = prompt("Nueva fecha (YYYY-MM-DD):", taskDetails.children[2].textContent.split(": ")[1]);
@@ -321,12 +316,12 @@
 
     function searchTask() {
       const searchValue = document.getElementById("searchInput").value.toLowerCase();
-      const tasks = document.querySelectorAll(".task");
+      const tasks = document.querySelectorAll(".task-card");
 
       tasks.forEach(task => {
         const taskText = task.textContent.toLowerCase();
         if (taskText.includes(searchValue)) {
-          task.style.display = "flex";
+          task.style.display = "block";
         } else {
           task.style.display = "none";
         }
