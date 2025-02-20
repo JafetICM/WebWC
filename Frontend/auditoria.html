@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auditoría de Limpieza - WhatClean</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+  />
+
+  <style>
+    /* RESET BÁSICO */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    body {
+      background-color: #f0f4f7;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background-color: #003366; /* Azul intenso */
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .sidebar > div {
+      padding: 1rem;
+    }
+
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .profile img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile h3 {
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    nav ul {
+      list-style: none;
+    }
+
+    nav li {
+      padding: 0.8rem 0;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    nav li:hover {
+      background-color: #022d5b;
+    }
+
+    nav li.active {
+      background-color: #022d5b;
+    }
+
+    .login-button {
+      background-color: #022d5b;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin: 1rem;
+      border-radius: 4px;
+    }
+
+    .login-button:hover {
+      background-color: #011f42;
+    }
+
+    /* CONTENIDO PRINCIPAL */
+    .main-content {
+      margin-left: 240px;
+      width: calc(100% - 240px);
+      padding: 20px;
+    }
+
+    /* Secciones */
+    .section-title {
+      color: #003366;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-description {
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1rem;
+    }
+
+    .section-description ul {
+      list-style: disc;
+      margin-left: 2rem;
+      color: #333;
+    }
+
+    .btn-action {
+      background-color: #022d5b;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 1rem;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .btn-action:hover {
+      background-color: #011f42;
+    }
+  </style>
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="profile">
+        <img src="images/Logo.png" alt="Juan de Dios" />
+        <h3>Juan de Dios</h3>
+      </div>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('dashboard.html')">
+            <i class="bi bi-calendar"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('solicitudes.html')">
+            <i class="bi bi-file-earmark"></i> Solicitudes
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('agenda.html')">
+            <i class="bi bi-calendar"></i> Agenda
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('servicios.html')">
+            <i class="bi bi-briefcase"></i> Servicios
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('pagos.html')">
+            <i class="bi bi-cash-stack"></i> Pagos
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('auditoria.html')">
+            <i class="bi bi-check-circle"></i> Auditoría de Limpieza
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="login-button mt-auto" onclick="navigateTo('registro-inicio.html')">
+      Iniciar Sesión
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main-content">
+    <h1 class="section-title">Auditoría de Limpieza</h1>
+
+    <!-- Funciones del Auditor -->
+    <div class="section-description">
+      <h3>Funciones del Auditor de Limpieza</h3>
+      <ul>
+        <li>Verificar que los procedimientos de limpieza se ajustan a los contratos o pliegos.</li>
+        <li>Identificar problemas y corregirlos o prevenirlos.</li>
+        <li>Identificar oportunidades de mejora.</li>
+        <li>Apoyar la revisión y actualización de los procesos.</li>
+        <li>Confirmar que se aplican los procedimientos.</li>
+        <li>Revisar los suministros de limpieza.</li>
+      </ul>
+      <button class="btn-action" onclick="navigateTo('calificar-limpiador.html')">Calificar Trabajo</button>
+    </div>
+
+    <!-- Importancia de la Auditoría -->
+    <div class="section-description">
+      <h3>Importancia de las Auditorías de Limpieza</h3>
+      <ul>
+        <li>Fomentan empresas más limpias y seguras.</li>
+        <li>Sirven como garantía de calidad ante cualquier litigio.</li>
+        <li>Son una prueba imparcial ante diferentes situaciones con la empresa o personas encargadas de la limpieza.</li>
+        <li>Ayudan a cumplir con los estándares más exigentes.</li>
+      </ul>
+      <button class="btn-action" onclick="navigateTo('calificar-limpiador.html')">Calificar Trabajo</button>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+  </script>
+</body>
+</html>

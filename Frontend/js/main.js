@@ -1,3 +1,4 @@
+//Frontend/js/main.js
 // Seleccionamos los radios
 const signupRadio = document.querySelector('input[value="signup"]');
 const signinRadio = document.querySelector('input[value="signin"]');

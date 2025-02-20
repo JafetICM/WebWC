@@ -1,3 +1,4 @@
+<!--Frontend/agenda.html-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -34,7 +35,7 @@
     /* SIDEBAR (Diseño del primer HTML) */
     .sidebar {
       width: 240px;
-      background-color: #003366; /* Azul intenso */
+      background-color: #003366;
       color: #ffffff;
       display: flex;
       flex-direction: column;
@@ -44,40 +45,49 @@
       top: 0;
       left: 0;
     }
+
     .sidebar > div {
       padding: 1rem;
     }
+
     .profile {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 2rem;
     }
+
     .profile img {
-      width: 80px; 
+      width: 80px;
       height: 80px;
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 0.5rem;
     }
+
     .profile h3 {
       font-size: 1rem;
       margin-bottom: 0;
     }
+
     nav ul {
       list-style: none;
     }
+
     nav li {
       padding: 0.8rem 0;
       cursor: pointer;
       transition: background-color 0.2s;
     }
+
     nav li:hover {
       background-color: #022d5b;
     }
+
     nav li.active {
       background-color: #022d5b;
     }
+
     .login-button {
       background-color: #022d5b;
       padding: 0.8rem;
@@ -87,6 +97,7 @@
       margin: 1rem;
       border-radius: 4px;
     }
+
     .login-button:hover {
       background-color: #011f42;
     }
@@ -187,15 +198,15 @@
 </head>
 <body>
   <!-- SIDEBAR (Diseño del primer HTML) -->
-  <nav class="col-12 col-md-3 col-lg-2 sidebar d-flex flex-column p-3">
+  <div class="sidebar">
     <div>
-      <div class="profile mb-4">
+      <div class="profile">
         <img src="images/Logo.png" alt="Juan de Dios" />
         <h3>Juan de Dios</h3>
       </div>
       <ul class="nav flex-column">
         <li class="nav-item mb-2">
-          <a class="nav-link active" onclick="navigateTo('dashboard.html')">
+          <a class="nav-link" onclick="navigateTo('dashboard.html')">
             <i class="bi bi-calendar"></i> Dashboard
           </a>
         </li>
@@ -219,12 +230,17 @@
             <i class="bi bi-cash-stack"></i> Pagos
           </a>
         </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('auditoria.html')">
+            <i class="bi bi-check-circle"></i> Auditoría de Limpieza
+          </a>
+        </li>
       </ul>
     </div>
     <div class="login-button mt-auto" onclick="navigateTo('registro-inicio.html')">
       Iniciar Sesión
     </div>
-  </nav>
+  </div>
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="main-content">
