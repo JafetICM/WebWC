@@ -1,4 +1,3 @@
-<!--Frontend/dashboard.html-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,15 +6,9 @@
   <title>Dashboard - WhatClean</title>
 
   <!-- Bootstrap 5 CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- Bootstrap Icons (opcional) -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
-  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
 
   <style>
     /* RESET BÁSICO */
@@ -35,7 +28,7 @@
     /* SIDEBAR */
     .sidebar {
       width: 240px;
-      background-color: #003366; /* Azul intenso */
+      background-color: #003366;
       color: #ffffff;
       display: flex;
       flex-direction: column;
@@ -133,13 +126,16 @@
       text-align: center;
       padding: 1rem;
       color: #003366;
+      cursor: pointer;
+      transition: transform 0.2s;
     }
-    .stat span {
-      display: block;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #022d5b;
-      margin-bottom: 0.25rem;
+    .stat:hover {
+      transform: scale(1.05);
+    }
+    .stat img {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 0.5rem;
     }
 
     /* CONTENIDO PRINCIPAL */
@@ -167,11 +163,11 @@
       line-height: 1.4rem;
     }
     .urgent {
-      border-left: 4px solid #ff6961; /* Rojo para urgentes */
+      border-left: 4px solid #ff6961;
       padding-left: 0.75rem;
     }
     .recent {
-      border-left: 4px solid #f5c518; /* Amarillo para recientes */
+      border-left: 4px solid #f5c518;
       padding-left: 0.75rem;
     }
     .card ul {
@@ -188,6 +184,23 @@
     function navigateTo(page) {
       window.location.href = page;
     }
+
+    const data = {
+      'Tareas Aprobadas': ['Tarea 1', 'Tarea 2', 'Tarea 3'],
+      'Tareas Pendientes': ['Tarea 4', 'Tarea 5'],
+      'Servicios Activos': ['Servicio 1', 'Servicio 2'],
+      'Notificaciones': ['Notificación 1', 'Notificación 2', 'Notificación 3']
+    };
+
+    function showDetails(title) {
+      const list = data[title] || [];
+      let content = `<h5>${title}</h5><ul>`;
+      list.forEach(item => content += `<li>${item}</li>`);
+      content += '</ul>';
+      document.getElementById('modalBody').innerHTML = content;
+      const myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+      myModal.show();
+    }
   </script>
 </head>
 <body>
@@ -199,36 +212,12 @@
         <h3>Juan de Dios</h3>
       </div>
       <ul class="nav flex-column">
-        <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('dashboard.html')">
-            <i class="bi bi-calendar"></i> Dashboard
-          </a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('solicitudes.html')">
-            <i class="bi bi-file-earmark"></i> Solicitudes
-          </a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('agenda.html')">
-            <i class="bi bi-calendar"></i> Agenda
-          </a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('servicios.html')">
-            <i class="bi bi-briefcase"></i> Servicios
-          </a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('pagos.html')">
-            <i class="bi bi-cash-stack"></i> Pagos
-          </a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('auditoria.html')">
-            <i class="bi bi-check-circle"></i> Auditoría de Limpieza
-          </a>
-        </li>
+        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('dashboard.html')"><i class="bi bi-calendar"></i> Dashboard</a></li>
+        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('solicitudes.html')"><i class="bi bi-file-earmark"></i> Solicitudes</a></li>
+        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('agenda.html')"><i class="bi bi-calendar"></i> Agenda</a></li>
+        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('servicios.html')"><i class="bi bi-briefcase"></i> Servicios</a></li>
+        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('pagos.html')"><i class="bi bi-cash-stack"></i> Pagos</a></li>
+        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('auditoria.html')"><i class="bi bi-check-circle"></i> Auditoría de Limpieza</a></li>
       </ul>
     </div>
     <div class="login-button mt-auto" onclick="navigateTo('registro-inicio.html')">
@@ -238,33 +227,30 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="main-content">
-    
-    <!-- ENCABEZADO -->
     <header>
       <h2>Dashboard</h2>
       <div class="user-info">
         <span>Juan de Dios</span>
-        <!-- Imagen del usuario -->
         <img src="images/image 2.png" alt="Usuario">
       </div>
     </header>
 
     <!-- STATS -->
     <section class="stats">
-      <div class="stat">
-        <span>12</span>
-        Tareas Aprobadas
+      <div class="stat" onclick="showDetails('Tareas Aprobadas')">
+        <img src="images/Aprobadas.png" alt="Aprobadas">
+        Tareas Aprobadas 
       </div>
-      <div class="stat">
-        <span>20</span>
-        Tareas Pendientes
-      </div>
-      <div class="stat">
-        <span>5</span>
+      <div class="stat" onclick="showDetails('Tareas Pendientes')">
+        <img src="images/Tareas pendientes.png" alt="Pendientes">
+        Tareas Pendientes 
+      </div> 
+      <div class="stat" onclick="showDetails('Servicios Activos')">
+        <img src="images/Servicios pendientes.png" alt="Servicios">
         Servicios Activos
       </div>
-      <div class="stat">
-        <span>32</span>
+      <div class="stat" onclick="showDetails('Notificaciones')">
+        <img src="images/Notificaciones.png" alt="Notificaciones">
         Notificaciones
       </div>
     </section>
@@ -294,7 +280,27 @@
         </ul>
       </div>
     </section>
-
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailsModalLabel">Detalles</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- Contenido dinámico -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
