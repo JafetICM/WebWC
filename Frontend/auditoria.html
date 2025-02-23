@@ -101,6 +101,44 @@
       background-color: #011f42;
     }
 
+    /* HEADER BRAND */
+    .header-brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      background-color: #fff;
+      margin-bottom: 1rem;
+    }
+    .header-brand .logo {
+      height: 40px;
+    }
+    .header-brand .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .header-brand .user-info i {
+      font-size: 1.5rem;
+      position: relative;
+    }
+    .header-brand .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .header-brand .user-info .text-end {
+      text-align: right;
+    }
+    .header-brand .user-info small {
+      font-size: 0.8rem;
+    }
+    .header-brand .user-info .fw-bold {
+      font-weight: bold;
+    }
+
     /* CONTENIDO PRINCIPAL */
     .main-content {
       margin-left: 240px;
@@ -195,6 +233,24 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="main-content">
+    <!-- HEADER BRAND INSERTADO -->
+    <div class="header-brand">
+      <div>
+        <img src="images/Logo.png" alt="WhatClean" class="logo">
+      </div>
+      <!-- Se ha eliminado el botón "Ir al Dashboard" del navbar -->
+      <div class="user-info">
+        <i class="bi bi-bell" style="font-size: 1.5rem; position: relative;">
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+        </i>
+        <img src="images/image 2.png" alt="Usuario">
+        <div class="text-end">
+          <small>Administrador</small><br>
+          <span class="fw-bold">Juan de Dios</span>
+        </div>
+      </div>
+    </div>
+
     <h1 class="section-title">Auditoría de Limpieza</h1>
 
     <!-- Funciones del Auditor -->
