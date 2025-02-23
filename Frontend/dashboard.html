@@ -7,14 +7,13 @@
 
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <!-- Bootstrap Icons (opcional) -->
+  <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
 
   <style>
-    /* RESET BÁSICO */
     * {
-      margin: 0; 
-      padding: 0; 
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
       font-family: sans-serif;
     }
@@ -25,7 +24,6 @@
       background-color: #f0f4f7;
     }
 
-    /* SIDEBAR */
     .sidebar {
       width: 240px;
       background-color: #003366;
@@ -33,41 +31,54 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
     }
+
     .sidebar > div {
       padding: 1rem;
     }
+
     .profile {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 2rem;
     }
+
     .profile img {
-      width: 80px; 
+      width: 80px;
       height: 80px;
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 0.5rem;
     }
+
     .profile h3 {
       font-size: 1rem;
       margin-bottom: 0;
     }
+
     nav ul {
       list-style: none;
     }
+
     nav li {
       padding: 0.8rem 0;
       cursor: pointer;
       transition: background-color 0.2s;
     }
+
     nav li:hover {
       background-color: #022d5b;
     }
+
     nav li.active {
       background-color: #022d5b;
     }
+
     .login-button {
       background-color: #022d5b;
       padding: 0.8rem;
@@ -77,129 +88,99 @@
       margin: 1rem;
       border-radius: 4px;
     }
+
     .login-button:hover {
       background-color: #011f42;
     }
 
-    /* MAIN CONTENT */
-    .main-content {
-      flex: 1;
+    main {
+      margin-left: 240px;
+      width: calc(100% - 240px);
       display: flex;
       flex-direction: column;
+      height: 100vh;
     }
-    header {
+
+    .header-brand {
       background-color: #ffffff;
-      padding: 1rem;
       border-bottom: 1px solid #ddd;
+      padding: 1rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
     }
-    header h1 {
-      font-size: 1.2rem;
-      color: #003366;
+
+    .header-brand img.logo {
+      height: 40px;
     }
+
     .user-info {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      color: #003366;
+      gap: 1rem;
     }
+
     .user-info img {
-      width: 40px; 
+      width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
     }
 
-    /* SECCIÓN DE STATS */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
+    .nav-tabs .nav-link.active {
+      background-color: #003366;
+      color: #fff !important;
     }
-    .stat {
-      background-color: #ffffff;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      text-align: center;
-      padding: 1rem;
+
+    .nav-tabs .nav-link {
       color: #003366;
-      cursor: pointer;
-      transition: transform 0.2s;
     }
-    .stat:hover {
-      transform: scale(1.05);
+
+    .tab-content {
+      background-color: #ffffff;
+      padding: 1rem;
+      border-radius: 0 0 0.25rem 0.25rem;
+      border: 1px solid #ddd;
+      border-top: 0;
     }
-    .stat img {
-      width: 40px;
-      height: 40px;
+
+    .service-card {
+      border-bottom: 1px solid #ddd;
+      padding: 1rem 0;
+    }
+
+    .service-card:last-child {
+      border-bottom: none;
+    }
+
+    .service-card h5 {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .star-rating {
+      color: #f5c518;
       margin-bottom: 0.5rem;
     }
 
-    /* CONTENIDO PRINCIPAL */
-    .content {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-      flex: 1;
-    }
-    .card {
-      background-color: #ffffff;
-      border: 1px solid #ddd;
+    /* Estilo personalizado para el botón "Ir al Dashboard" (ahora como pestaña) */
+    .btn-dashboard {
+      background-color: #003366;
+      border: none;
+      color: #ffffff;
+      padding: 0.5rem 1rem;
       border-radius: 4px;
-      padding: 1rem;
-      color: #003366;
+      font-weight: bold;
+      transition: background-color 0.2s;
     }
-    .card h2 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: #003366;
-    }
-    .card p {
-      font-size: 0.9rem;
-      line-height: 1.4rem;
-    }
-    .urgent {
-      border-left: 4px solid #ff6961;
-      padding-left: 0.75rem;
-    }
-    .recent {
-      border-left: 4px solid #f5c518;
-      padding-left: 0.75rem;
-    }
-    .card ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    .card ul li {
-      padding: 0.25rem 0;
-      font-size: 0.9rem;
+    .btn-dashboard:hover {
+      background-color: #022d5b;
     }
   </style>
 
   <script>
     function navigateTo(page) {
       window.location.href = page;
-    }
-
-    const data = {
-      'Tareas Aprobadas': ['Tarea 1', 'Tarea 2', 'Tarea 3'],
-      'Tareas Pendientes': ['Tarea 4', 'Tarea 5'],
-      'Servicios Activos': ['Servicio 1', 'Servicio 2'],
-      'Notificaciones': ['Notificación 1', 'Notificación 2', 'Notificación 3']
-    };
-
-    function showDetails(title) {
-      const list = data[title] || [];
-      let content = `<h5>${title}</h5><ul>`;
-      list.forEach(item => content += `<li>${item}</li>`);
-      content += '</ul>';
-      document.getElementById('modalBody').innerHTML = content;
-      const myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
-      myModal.show();
     }
   </script>
 </head>
@@ -226,79 +207,114 @@
   </div>
 
   <!-- CONTENIDO PRINCIPAL -->
-  <div class="main-content">
-    <header>
-      <h2>Dashboard</h2>
+  <main>
+    <!-- Header -->
+    <div class="header-brand">
+      <div>
+        <img src="images/Logo.png" alt="WhatClean" class="logo">
+      </div>
+      <!-- Se ha eliminado el botón "Ir al Dashboard" del navbar -->
       <div class="user-info">
-        <span>Juan de Dios</span>
+        <i class="bi bi-bell" style="font-size: 1.5rem; position: relative;">
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+        </i>
         <img src="images/image 2.png" alt="Usuario">
-      </div>
-    </header>
-
-    <!-- STATS -->
-    <section class="stats">
-      <div class="stat" onclick="showDetails('Tareas Aprobadas')">
-        <img src="images/Aprobadas.png" alt="Aprobadas">
-        Tareas Aprobadas 
-      </div>
-      <div class="stat" onclick="showDetails('Tareas Pendientes')">
-        <img src="images/Tareas pendientes.png" alt="Pendientes">
-        Tareas Pendientes 
-      </div> 
-      <div class="stat" onclick="showDetails('Servicios Activos')">
-        <img src="images/Servicios pendientes.png" alt="Servicios">
-        Servicios Activos
-      </div>
-      <div class="stat" onclick="showDetails('Notificaciones')">
-        <img src="images/Notificaciones.png" alt="Notificaciones">
-        Notificaciones
-      </div>
-    </section>
-
-    <!-- CONTENIDO PRINCIPAL (CARDS) -->
-    <section class="content">
-      <div class="card">
-        <h2>¡Felicidades, Juan! 🎉</h2>
-        <p>Has completado 42 servicios y 23 están en proceso.</p>
-      </div>
-      <div class="card">
-        <h2>Resumen Semanal</h2>
-        <div class="chart">[Gráfica aquí]</div>
-      </div>
-      <div class="card urgent">
-        <h2>Solicitudes Urgentes</h2>
-        <ul>
-          <li>Cliente: Ana Pérez - Limpieza profunda - 10:00 AM</li>
-          <li>Cliente: Luis Gómez - Desinfección - 12:00 PM</li>
-        </ul>
-      </div>
-      <div class="card recent">
-        <h2>Solicitudes Recientes</h2>
-        <ul>
-          <li>Diego C. - Limpieza de casa - 9:00 AM</li>
-          <li>Pamela R. - Limpieza de oficina - 11:00 AM</li>
-        </ul>
-      </div>
-    </section>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="detailsModalLabel">Detalles</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body" id="modalBody">
-          <!-- Contenido dinámico -->
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <div class="text-end">
+          <small>Administrador</small><br>
+          <span class="fw-bold">Juan de Dios</span>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- Sección Tabs -->
+    <div class="p-3">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <!-- Pestaña "Tareas Aprobadas" -->
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tareas-aprobadas-tab" data-bs-toggle="tab" data-bs-target="#tareas-aprobadas" type="button" role="tab" aria-controls="tareas-aprobadas" aria-selected="true">Tareas Aprobadas</button>
+        </li>
+        <!-- Pestaña "Tareas Pendientes" -->
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tareas-pendientes-tab" data-bs-toggle="tab" data-bs-target="#tareas-pendientes" type="button" role="tab" aria-controls="tareas-pendientes" aria-selected="false">Tareas Pendientes</button>
+        </li>
+        <!-- Pestaña "Servicios Activos" -->
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="servicios-activos-tab" data-bs-toggle="tab" data-bs-target="#servicios-activos" type="button" role="tab" aria-controls="servicios-activos" aria-selected="false">Servicios Activos</button>
+        </li>
+        <!-- Nueva pestaña "Ir al Dashboard" -->
+        <li class="nav-item" role="presentation">
+          <button class="nav-link btn-dashboard" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Ir al Dashboard</button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent" style="border:1px solid #ddd; border-top:0; border-radius:0 0 5px 5px;">
+        <!-- Contenido de "Tareas Aprobadas" -->
+        <div class="tab-pane fade show active p-3" id="tareas-aprobadas" role="tabpanel" aria-labelledby="tareas-aprobadas-tab">
+          <h5>Tareas Aprobadas</h5>
+          <p>Lista de tareas que han sido aprobadas.</p>
+        </div>
+
+        <!-- Contenido de "Tareas Pendientes" -->
+        <div class="tab-pane fade p-3" id="tareas-pendientes" role="tabpanel" aria-labelledby="tareas-pendientes-tab">
+          <h5>Tareas Pendientes</h5>
+          <p>Lista de tareas que están pendientes.</p>
+        </div>
+
+        <!-- Contenido de "Servicios Activos" -->
+        <div class="tab-pane fade p-3" id="servicios-activos" role="tabpanel" aria-labelledby="servicios-activos-tab">
+          <h5>Servicios Activos</h5>
+          <p>Lista de servicios actualmente activos.</p>
+        </div>
+
+        <!-- Contenido de "Ir al Dashboard" -->
+        <div class="tab-pane fade p-3" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+          <h5>Dashboard</h5>
+          <p>Bienvenido al Dashboard. Aquí se muestra el contenido principal.</p>
+          <div class="container mt-4">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                  <div class="card-header">Total de Usuarios</div>
+                  <div class="card-body">
+                    <h5 class="card-title">1,234</h5>
+                    <p class="card-text">Número de usuarios registrados.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                  <div class="card-header">Ventas del Mes</div>
+                  <div class="card-body">
+                    <h5 class="card-title">$12,345</h5>
+                    <p class="card-text">Ingresos generados este mes.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                  <div class="card-header">Proyectos Activos</div>
+                  <div class="card-body">
+                    <h5 class="card-title">5</h5>
+                    <p class="card-text">Proyectos en curso.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card mb-3">
+                  <div class="card-header">Gráfico de Rendimiento</div>
+                  <div class="card-body">
+                    <p>Aquí se mostrará un gráfico de rendimiento.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
