@@ -1,4 +1,3 @@
-<!--Frontend/agenda.html-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -32,7 +31,7 @@
       background-color: #f0f4f7;
     }
 
-    /* SIDEBAR (Diseño del primer HTML) */
+    /* SIDEBAR */
     .sidebar {
       width: 240px;
       background-color: #003366;
@@ -102,20 +101,60 @@
       background-color: #011f42;
     }
 
-    /* CONTENIDO DE LAS TAREAS */
+    /* CONTENIDO PRINCIPAL */
     .main-content {
       margin-left: 240px; /* Ajuste para el sidebar */
       padding: 20px;
       width: calc(100% - 240px);
     }
 
+    /* Header */
+    .header-brand {
+      background-color: #ffffff;
+      border-bottom: 1px solid #ddd;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .header-brand img.logo {
+      height: 40px;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .user-info i {
+      font-size: 1.5rem;
+      position: relative;
+      cursor: pointer;
+    }
+    .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+    .user-info .text-end {
+      text-align: right;
+    }
+    .user-info small {
+      font-size: 0.8rem;
+    }
+    .user-info .fw-bold {
+      font-weight: bold;
+    }
+
+    /* Agenda */
     .task-list {
       background: white;
       padding: 15px;
       border-radius: 10px;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
-
     .task-card {
       background: #1E7CD6;
       color: white;
@@ -125,11 +164,9 @@
       display: flex;
       flex-direction: column;
     }
-
     .task-card .task-details {
       margin-bottom: 10px;
     }
-
     .task-card button {
       background: #f44336;
       color: white;
@@ -139,44 +176,37 @@
       cursor: pointer;
       margin-top: 10px;
     }
-
     .task-card button:hover {
       background: #d32f2f;
     }
-
     .controls {
       margin-bottom: 15px;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
-
     .controls input, .controls button, .controls select {
       padding: 10px;
       border-radius: 5px;
       border: 1px solid #ddd;
     }
-
     .controls button {
       background: #0A3D62;
       color: white;
       cursor: pointer;
     }
-
     .form-container {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
       margin-bottom: 15px;
     }
-
     .form-container input, .form-container select {
       padding: 10px;
       border-radius: 5px;
       border: 1px solid #ddd;
       flex: 1;
     }
-
     .form-container button {
       background: #0A3D62;
       color: white;
@@ -185,7 +215,6 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     @media (max-width: 768px) {
       .form-container {
         flex-direction: column;
@@ -197,7 +226,7 @@
   </style>
 </head>
 <body>
-  <!-- SIDEBAR (Diseño del primer HTML) -->
+  <!-- SIDEBAR -->
   <div class="sidebar">
     <div>
       <div class="profile">
@@ -210,13 +239,11 @@
             <i class="bi bi-calendar"></i> Dashboard
           </a>
         </li>
-        
         <li class="nav-item mb-2">
           <a class="nav-link" onclick="navigateTo('agenda.html')">
             <i class="bi bi-calendar"></i> Agenda
           </a>
         </li>
-        
         <li class="nav-item mb-2">
           <a class="nav-link" onclick="navigateTo('pagos.html')">
             <i class="bi bi-cash-stack"></i> Pagos
@@ -236,9 +263,30 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="main-content">
+    <!-- Header -->
+    <div class="header-brand">
+      <div>
+        <img src="images/Logo.png" alt="WhatClean" class="logo">
+      </div>
+      <!-- Botones de notificaciones y perfil -->
+      <div class="user-info">
+        <i class="bi bi-bell" onclick="mostrarNotificaciones()" style="cursor: pointer;">
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+        </i>
+        <img src="images/image 2.png" alt="Usuario" onclick="mostrarPerfil()" style="cursor: pointer;">
+        <div class="text-end">
+          <small>Administrador</small><br>
+          <span class="fw-bold">Juan de Dios</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- (Opcional) Breadcrumb o título de la sección -->
     <header>
       <div class="breadcrumb">Home > Agenda</div>
     </header>
+
+    <!-- Agenda: Listado de tareas -->
     <section class="task-list" id="task-list">
       <h2>Agenda</h2>
       <div class="form-container">
@@ -258,6 +306,49 @@
       </div>
       <div id="tasksContainer"></div>
     </section>
+  </div>
+
+  <!-- Modal Notificaciones -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationsModalLabel">Notificaciones</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li class="list-group-item">Limpiador Alberto Contreras ha terminado su trabajo.</li>
+            <li class="list-group-item">Limpiadora Laura Martínez ha terminado su trabajo.</li>
+            <!-- Más notificaciones según corresponda -->
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Perfil -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">Información del Auditor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Nombre:</strong> Juan de Dios</p>
+          <p><strong>Email:</strong> juandios@example.com</p>
+          <p><strong>Teléfono:</strong> +123456789</p>
+          <p><strong>Rol:</strong> Auditor</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -343,6 +434,19 @@
       document.getElementById("taskTime").value = "";
       document.getElementById("taskType").value = "Limpieza General";
     }
+
+    function mostrarNotificaciones() {
+      var notificationsModal = new bootstrap.Modal(document.getElementById('notificationsModal'));
+      notificationsModal.show();
+    }
+    
+    function mostrarPerfil() {
+      var profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+      profileModal.show();
+    }
   </script>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
