@@ -17,13 +17,11 @@
       box-sizing: border-box;
       font-family: sans-serif;
     }
-
     body {
       display: flex;
       min-height: 100vh;
       background-color: #f0f4f7;
     }
-
     .sidebar {
       width: 240px;
       background-color: #003366;
@@ -36,18 +34,15 @@
       top: 0;
       left: 0;
     }
-
     .sidebar > div {
       padding: 1rem;
     }
-
     .profile {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-bottom: 2rem;
     }
-
     .profile img {
       width: 80px;
       height: 80px;
@@ -55,30 +50,24 @@
       object-fit: cover;
       margin-bottom: 0.5rem;
     }
-
     .profile h3 {
       font-size: 1rem;
       margin-bottom: 0;
     }
-
     nav ul {
       list-style: none;
     }
-
     nav li {
       padding: 0.8rem 0;
       cursor: pointer;
       transition: background-color 0.2s;
     }
-
     nav li:hover {
       background-color: #022d5b;
     }
-
     nav li.active {
       background-color: #022d5b;
     }
-
     .login-button {
       background-color: #022d5b;
       padding: 0.8rem;
@@ -88,11 +77,9 @@
       margin: 1rem;
       border-radius: 4px;
     }
-
     .login-button:hover {
       background-color: #011f42;
     }
-
     main {
       margin-left: 240px;
       width: calc(100% - 240px);
@@ -100,7 +87,6 @@
       flex-direction: column;
       height: 100vh;
     }
-
     .header-brand {
       background-color: #ffffff;
       border-bottom: 1px solid #ddd;
@@ -109,33 +95,33 @@
       align-items: center;
       justify-content: space-between;
     }
-
     .header-brand img.logo {
       height: 40px;
     }
-
     .user-info {
       display: flex;
       align-items: center;
       gap: 1rem;
     }
-
     .user-info img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
+      cursor: pointer;
     }
-
+    .user-info i {
+      font-size: 1.5rem;
+      position: relative;
+      cursor: pointer;
+    }
     .nav-tabs .nav-link.active {
       background-color: #003366;
       color: #fff !important;
     }
-
     .nav-tabs .nav-link {
       color: #003366;
     }
-
     .tab-content {
       background-color: #ffffff;
       padding: 1rem;
@@ -143,26 +129,21 @@
       border: 1px solid #ddd;
       border-top: 0;
     }
-
     .service-card {
       border-bottom: 1px solid #ddd;
       padding: 1rem 0;
     }
-
     .service-card:last-child {
       border-bottom: none;
     }
-
     .service-card h5 {
       margin-bottom: 0.5rem;
       font-weight: 600;
     }
-
     .star-rating {
       color: #f5c518;
       margin-bottom: 0.5rem;
     }
-
     /* Estilo personalizado para el botón "Ir al Dashboard" (ahora como pestaña) */
     .btn-dashboard {
       background-color: #003366;
@@ -182,6 +163,16 @@
     function navigateTo(page) {
       window.location.href = page;
     }
+    
+    function mostrarNotificaciones() {
+      var notificationsModal = new bootstrap.Modal(document.getElementById('notificationsModal'));
+      notificationsModal.show();
+    }
+    
+    function mostrarPerfil() {
+      var profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+      profileModal.show();
+    }
   </script>
 </head>
 <body>
@@ -193,12 +184,28 @@
         <h3>Juan de Dios</h3>
       </div>
       <ul class="nav flex-column">
-        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('dashboard.html')"><i class="bi bi-calendar"></i> Dashboard</a></li>
-        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('solicitudes.html')"><i class="bi bi-file-earmark"></i> Solicitudes</a></li>
-        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('agenda.html')"><i class="bi bi-calendar"></i> Agenda</a></li>
-        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('servicios.html')"><i class="bi bi-briefcase"></i> Servicios</a></li>
-        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('pagos.html')"><i class="bi bi-cash-stack"></i> Pagos</a></li>
-        <li class="nav-item mb-2"><a class="nav-link" onclick="navigateTo('auditoria.html')"><i class="bi bi-check-circle"></i> Auditoría de Limpieza</a></li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('dashboard.html')">
+            <i class="bi bi-calendar"></i> Dashboard
+          </a>
+        </li>
+       
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('agenda.html')">
+            <i class="bi bi-calendar"></i> Agenda
+          </a>
+        </li>
+        
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('pagos.html')">
+            <i class="bi bi-cash-stack"></i> Pagos
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('auditoria.html')">
+            <i class="bi bi-check-circle"></i> Auditoría de Limpieza
+          </a>
+        </li>
       </ul>
     </div>
     <div class="login-button mt-auto" onclick="navigateTo('registro-inicio.html')">
@@ -213,12 +220,12 @@
       <div>
         <img src="images/Logo.png" alt="WhatClean" class="logo">
       </div>
-      <!-- Se ha eliminado el botón "Ir al Dashboard" del navbar -->
+      <!-- Botones de notificaciones y perfil -->
       <div class="user-info">
-        <i class="bi bi-bell" style="font-size: 1.5rem; position: relative;">
+        <i class="bi bi-bell" onclick="mostrarNotificaciones()" style="cursor: pointer;">
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
         </i>
-        <img src="images/image 2.png" alt="Usuario">
+        <img src="images/image 2.png" alt="Usuario" onclick="mostrarPerfil()" style="cursor: pointer;">
         <div class="text-end">
           <small>Administrador</small><br>
           <span class="fw-bold">Juan de Dios</span>
@@ -229,9 +236,13 @@
     <!-- Sección Tabs -->
     <div class="p-3">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <!-- Pestaña "Ir al Dashboard" (primera y activa) -->
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active btn-dashboard" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</button>
+        </li>
         <!-- Pestaña "Tareas Aprobadas" -->
         <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="tareas-aprobadas-tab" data-bs-toggle="tab" data-bs-target="#tareas-aprobadas" type="button" role="tab" aria-controls="tareas-aprobadas" aria-selected="true">Tareas Aprobadas</button>
+          <button class="nav-link" id="tareas-aprobadas-tab" data-bs-toggle="tab" data-bs-target="#tareas-aprobadas" type="button" role="tab" aria-controls="tareas-aprobadas" aria-selected="false">Tareas Aprobadas</button>
         </li>
         <!-- Pestaña "Tareas Pendientes" -->
         <li class="nav-item" role="presentation">
@@ -241,33 +252,11 @@
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="servicios-activos-tab" data-bs-toggle="tab" data-bs-target="#servicios-activos" type="button" role="tab" aria-controls="servicios-activos" aria-selected="false">Servicios Activos</button>
         </li>
-        <!-- Nueva pestaña "Ir al Dashboard" -->
-        <li class="nav-item" role="presentation">
-          <button class="nav-link btn-dashboard" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Ir al Dashboard</button>
-        </li>
       </ul>
 
       <div class="tab-content" id="myTabContent" style="border:1px solid #ddd; border-top:0; border-radius:0 0 5px 5px;">
-        <!-- Contenido de "Tareas Aprobadas" -->
-        <div class="tab-pane fade show active p-3" id="tareas-aprobadas" role="tabpanel" aria-labelledby="tareas-aprobadas-tab">
-          <h5>Tareas Aprobadas</h5>
-          <p>Lista de tareas que han sido aprobadas.</p>
-        </div>
-
-        <!-- Contenido de "Tareas Pendientes" -->
-        <div class="tab-pane fade p-3" id="tareas-pendientes" role="tabpanel" aria-labelledby="tareas-pendientes-tab">
-          <h5>Tareas Pendientes</h5>
-          <p>Lista de tareas que están pendientes.</p>
-        </div>
-
-        <!-- Contenido de "Servicios Activos" -->
-        <div class="tab-pane fade p-3" id="servicios-activos" role="tabpanel" aria-labelledby="servicios-activos-tab">
-          <h5>Servicios Activos</h5>
-          <p>Lista de servicios actualmente activos.</p>
-        </div>
-
         <!-- Contenido de "Ir al Dashboard" -->
-        <div class="tab-pane fade p-3" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+        <div class="tab-pane fade show active p-3" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
           <h5>Dashboard</h5>
           <p>Bienvenido al Dashboard. Aquí se muestra el contenido principal.</p>
           <div class="container mt-4">
@@ -312,9 +301,70 @@
             </div>
           </div>
         </div>
+
+        <!-- Contenido de "Tareas Aprobadas" -->
+        <div class="tab-pane fade p-3" id="tareas-aprobadas" role="tabpanel" aria-labelledby="tareas-aprobadas-tab">
+          <h5>Tareas Aprobadas</h5>
+          <p>Lista de tareas que han sido aprobadas.</p>
+        </div>
+
+        <!-- Contenido de "Tareas Pendientes" -->
+        <div class="tab-pane fade p-3" id="tareas-pendientes" role="tabpanel" aria-labelledby="tareas-pendientes-tab">
+          <h5>Tareas Pendientes</h5>
+          <p>Lista de tareas que están pendientes.</p>
+        </div>
+
+        <!-- Contenido de "Servicios Activos" -->
+        <div class="tab-pane fade p-3" id="servicios-activos" role="tabpanel" aria-labelledby="servicios-activos-tab">
+          <h5>Servicios Activos</h5>
+          <p>Lista de servicios actualmente activos.</p>
+        </div>
       </div>
     </div>
   </main>
+
+  <!-- Modal Notificaciones -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationsModalLabel">Notificaciones</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li class="list-group-item">Limpiador Alberto Contreras ha terminado su trabajo.</li>
+            <li class="list-group-item">Limpiadora Laura Martínez ha terminado su trabajo.</li>
+            <!-- Se pueden agregar más notificaciones dinámicamente -->
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Perfil -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">Información del Auditor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Nombre:</strong> Juan de Dios</p>
+          <p><strong>Email:</strong> juandios@example.com</p>
+          <p><strong>Teléfono:</strong> +123456789</p>
+          <p><strong>Rol:</strong> Auditor</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
