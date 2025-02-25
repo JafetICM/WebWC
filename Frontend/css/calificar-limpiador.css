@@ -1,0 +1,35 @@
+/* ========== calificar-limpiador.css ========== */
+
+/* Lista de limpiadores */
+#lista-limpiadores .card {
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  #lista-limpiadores .card:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Detalle del limpiador */
+  #detalle-limpiador .card {
+    margin-bottom: 1rem;
+  }
+  
+  /* Widget de estrellas personalizado 
+     (si no quieres esto en main.css, lo dejas aquí) */
+  #star-rating i {
+    font-size: 2rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+    margin-right: 5px;
+  }
+  #star-rating i.hover,
+  #star-rating i.selected {
+    color: #f5c518;
+  }
+  
+  /* Botón para regresar */
+  .btn-regresar {
+    margin-bottom: 1rem;
+  }
+  
