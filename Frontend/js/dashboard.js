@@ -1,4 +1,3 @@
-// dashboard.js
 
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
@@ -8,6 +7,8 @@ document.addEventListener('DOMContentLoaded', async () => {
        navigateTo('registro-inicio.html');
        return;
     }
+
+  
   
     try {
       // 1) Obtener total de usuarios
