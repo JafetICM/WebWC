@@ -39,5 +39,92 @@ async function getServices(token, status = 'active') {
   return resp.json();
 }
 
-// ...
-// Añade aquí más funciones para las peticiones que requieras
+
+// ===========================================================
+// TUS FUNCIONES EXISTENTES (EJ. getAllUsers, getProposals...)
+// ===========================================================
+
+/**
+ * Obtener servicios, opcionalmente filtrados por status.
+ * Por defecto status='active', si tu API lo maneja.
+ * Si tu endpoint /services no filtra status, quita param.
+ */
+async function getServices(token, status = '') {
+  let url = `${BASE_URL}/services`;
+  if (status) {
+    // si tu API /services?status=xxx existe, añade query param
+    url += `?status=${status}`;
+  }
+
+  const resp = await fetch(url, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  if (!resp.ok) {
+    throw new Error(await resp.text());
+  }
+  return resp.json(); // Podría retornar un array o {rows, count}, según tu API
+}
+
+/**
+ * Crear un nuevo servicio (POST /services)
+ * data = { name, description, price, etc. }
+ */
+async function createService(token, data) {
+  const resp = await fetch(`${BASE_URL}/services`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify(data)
+  });
+  if (!resp.ok) {
+    throw new Error(await resp.text());
+  }
+  return resp.json(); // retorna el servicio creado
+}
+
+/**
+ * Ejemplo: obtener un servicio por ID (GET /services/{id})
+ */
+async function getServiceById(token, serviceId) {
+  const resp = await fetch(`${BASE_URL}/services/${serviceId}`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  if (!resp.ok) {
+    throw new Error(await resp.text());
+  }
+  return resp.json();
+}
+
+/**
+ * Actualizar un servicio (PUT /services/{id})
+ */
+async function updateService(token, serviceId, data) {
+  const resp = await fetch(`${BASE_URL}/services/${serviceId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    },
+    body: JSON.stringify(data)
+  });
+  if (!resp.ok) {
+    throw new Error(await resp.text());
+  }
+  return resp.json();
+}
+
+/**
+ * Eliminar un servicio (DELETE /services/{id})
+ */
+async function deleteService(token, serviceId) {
+  const resp = await fetch(`${BASE_URL}/services/${serviceId}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  if (!resp.ok) {
+    throw new Error(await resp.text());
+  }
+  return resp.json();
+}
