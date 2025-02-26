@@ -79,14 +79,8 @@
       </form>
     </div>
   </div>
-  <script>
-    function toggleFields() {
-      const signupMode = document.querySelector('input[name="authMode"]:checked').value === "signup";
-      document.getElementById("nameFields").style.display = signupMode ? "flex" : "none";
-      document.getElementById("signinFields").style.display = signupMode ? "none" : "flex";
-      document.getElementById("submitBtn").textContent = signupMode ? "Crear cuenta" : "Iniciar sesión";
-    }
-    toggleFields();
-  </script>
+
+  <script src="js/main.js"></script>
+
 </body>
 </html>

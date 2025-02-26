@@ -225,3 +225,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* ========== SECCIÓN 6: Lógica específica de PAGOS ========== */
 /* (Igual que Dashboard, las funciones repetidas se han unificado) */
+
+function toggleFields() {
+  const signupMode = document.querySelector('input[name="authMode"]:checked').value === "signup";
+  document.getElementById("nameFields").style.display = signupMode ? "flex" : "none";
+  document.getElementById("signinFields").style.display = signupMode ? "none" : "flex";
+  document.getElementById("submitBtn").textContent = signupMode ? "Crear cuenta" : "Iniciar sesión";
+}
+toggleFields();
