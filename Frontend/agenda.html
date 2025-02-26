@@ -10,10 +10,8 @@
   <!-- Bootstrap Icons (opcional) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
 
-<link rel="stylesheet" href="css/agenda.css">
-
-<link rel="stylesheet" href="css/main.css">
-
+  <link rel="stylesheet" href="css/agenda.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <!-- SIDEBAR -->
@@ -58,6 +56,11 @@
       <div>
         <img src="images/Logo.png" alt="WhatClean" class="logo">
       </div>
+      <!-- Barra de búsqueda -->
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar trabajo">
+        <button onclick="searchTask()"><i class="bi bi-search"></i></button>
+      </div>
       <!-- Botones de notificaciones y perfil -->
       <div class="user-info">
         <i class="bi bi-bell" onclick="mostrarNotificaciones()" style="cursor: pointer;">
@@ -90,9 +93,6 @@
           <option value="Limpieza de Oficina">Limpieza de Oficina</option>
         </select>
         <button onclick="addTask()">Añadir Trabajo</button>
-      </div>
-      <div class="controls">
-        <input type="text" id="searchInput" onkeyup="searchTask()" placeholder="Buscar trabajo">
       </div>
       <div id="tasksContainer"></div>
     </section>
