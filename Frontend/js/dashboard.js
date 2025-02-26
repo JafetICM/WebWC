@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     if (!token) {
       // si no hay token, redirigir a login
-    //   alert('No has iniciado sesión. Redirigiendo...');
-    //   navigateTo('registro-inicio.html');
-    //   return;
+       alert('No has iniciado sesión. Redirigiendo...');
+       navigateTo('registro-inicio.html');
+       return;
     }
   
     try {
