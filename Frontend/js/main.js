@@ -226,10 +226,92 @@ document.addEventListener("DOMContentLoaded", function() {
 /* ========== SECCIÓN 6: Lógica específica de PAGOS ========== */
 /* (Igual que Dashboard, las funciones repetidas se han unificado) */
 
+//inicio de secion o crear cuenta//
+// js/main.js
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Al cargar la página, configuramos los listeners
+  toggleFields(); // Para mostrar/ocultar secciones de signup/signin
+
+  const dynamicForm = document.getElementById('dynamicForm');
+  if (dynamicForm) {
+    dynamicForm.addEventListener('submit', onFormSubmit);
+  }
+});
+
+/**
+ * Alterna qué campos se muestran según si es "Crear cuenta" o "Iniciar sesión".
+ */
 function toggleFields() {
   const signupMode = document.querySelector('input[name="authMode"]:checked').value === "signup";
-  document.getElementById("nameFields").style.display = signupMode ? "flex" : "none";
-  document.getElementById("signinFields").style.display = signupMode ? "none" : "flex";
-  document.getElementById("submitBtn").textContent = signupMode ? "Crear cuenta" : "Iniciar sesión";
+
+  const nameFields = document.getElementById('nameFields');
+  const signinFields = document.getElementById('signinFields');
+  const submitBtn = document.getElementById('submitBtn');
+
+  if (signupMode) {
+    nameFields.style.display = "flex";
+    signinFields.style.display = "none";
+    submitBtn.textContent = "Crear cuenta";
+  } else {
+    nameFields.style.display = "none";
+    signinFields.style.display = "flex";
+    submitBtn.textContent = "Iniciar sesión";
+  }
 }
-toggleFields();
+
+/**
+ * Maneja el submit del formulario (crear cuenta o iniciar sesión).
+ * @param {Event} e 
+ */
+async function onFormSubmit(e) {
+  e.preventDefault();
+  const signupMode = document.querySelector('input[name="authMode"]:checked').value === "signup";
+
+  if (signupMode) {
+    // Crear cuenta
+    try {
+      const nombre = document.getElementById('nombre').value;
+      const apellidoP = document.getElementById('apellidoP').value;
+      const apellidoM = document.getElementById('apellidoM').value;
+      const fullName = `${nombre} ${apellidoP} ${apellidoM}`.trim();
+
+      const correo = document.getElementById('correo').value;
+      const password = document.getElementById('password').value;
+      const confirmPass = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPass) {
+        alert('Las contraseñas no coinciden');
+        return;
+      }
+
+      // Llamamos a la función de auth.js
+      await registerAuditor({ name: fullName, email: correo, password });
+      alert('Cuenta creada con éxito. Ahora inicia sesión');
+      // Cambiamos a modo "signin"
+      document.querySelector('input[name="authMode"][value="signin"]').checked = true;
+      toggleFields();
+
+    } catch (err) {
+      alert('Error al crear cuenta: ' + err.message);
+    }
+  } else {
+    // Iniciar sesión
+    try {
+      const correo = document.getElementById('correo').value;
+      const password = document.getElementById('password').value;
+
+      // Llamamos a la función de auth.js
+      const token = await loginAuditor(correo, password);
+      // Guardamos token en localStorage
+      localStorage.setItem('token', token);
+
+      alert('Sesión iniciada');
+      // Redirigir a dashboard u otra página
+      window.location.href = 'dashboard.html';
+    } catch (err) {
+      alert('Error al iniciar sesión: ' + err.message);
+    }
+  }
+}
+
