@@ -307,7 +307,7 @@ async function onFormSubmit(e) {
 
       alert('Sesión iniciada');
       // Redirigir a dashboard u otra página
-      window.location.href = 'dashboard.html';
+      window.location.href = 'index.html';
     } catch (err) {
       alert('Error al iniciar sesión: ' + err.message);
     }
