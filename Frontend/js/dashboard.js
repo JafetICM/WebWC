@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
   // API para obtener los usuarios registrados
-  const apiUrl = 'https://apifixya.onrender.com/auditors/me/cleaners';
+  const apiUrl = 'https://apifixya.onrender.com/auditors/all';
 
   fetch(apiUrl, {
     method: 'GET',
