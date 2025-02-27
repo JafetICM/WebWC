@@ -24,49 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-<<<<<<< HEAD
   // Se actualiza el endpoint a "cleaners"
   const apiUrl = 'https://apifixya.onrender.com/auditors/all';
-=======
-  // API para obtener la información del auditor
-  const auditorApiUrl = 'https://apifixya.onrender.com/auditors/me';
-
-  fetch(auditorApiUrl, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${token}`
-    }
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(auditor => {
-      console.log('Datos del auditor:', auditor);
-
-      // Guardar datos en localStorage
-      localStorage.setItem('auditor', JSON.stringify(auditor));
-
-      // Mostrar los datos en el Dashboard
-      if (auditorNameElement) auditorNameElement.textContent = auditor.name;
-      if (auditorRoleElement) auditorRoleElement.textContent = auditor.role || "Auditor";
-
-      // Mostrar los datos en el modal de perfil
-      if (auditorProfileName) auditorProfileName.textContent = auditor.name;
-      if (auditorProfileEmail) auditorProfileEmail.textContent = auditor.email;
-      if (auditorProfilePhone) auditorProfilePhone.textContent = auditor.phone || "No disponible";
-      if (auditorProfileRole) auditorProfileRole.textContent = auditor.role || "Auditor";
-    })
-    .catch(error => {
-      console.error('Error al obtener los datos del auditor:', error);
-    });
-
-  // API para obtener los usuarios registrados
-  const apiUrl = 'https://apifixya.onrender.com/auditors/me/cleaners';
->>>>>>> b680f3518845a398363727b4089e6aae1b217243
 
   fetch(apiUrl, {
     method: 'GET',
