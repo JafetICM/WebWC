@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verificar Limpiadores - WhatClean</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons (opcional) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+  
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/agenda.css">
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="profile">
+        <img src="images/Logo.png" alt="Juan de Dios" />
+        <h3>Juan de Dios</h3>
+      </div>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('index.html')">
+            <i class="bi bi-calendar"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('agenda.html')">
+            <i class="bi bi-calendar"></i> Agenda
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('pagos.html')">
+            <i class="bi bi-cash-stack"></i> Pagos
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('auditoria.html')">
+            <i class="bi bi-check-circle"></i> Auditoría de Limpieza
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="login-button mt-auto" onclick="navigateTo('registro-inicio.html')">
+      Iniciar Sesión
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header-brand">
+      <div>
+        <img src="images/Logo.png" alt="WhatClean" class="logo">
+      </div>
+      <!-- Barra de búsqueda -->
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar limpiador">
+        <button onclick="searchCleaner()"><i class="bi bi-search"></i></button>
+      </div>
+      <!-- Botones de notificaciones y perfil -->
+      <div class="user-info">
+        <i class="bi bi-bell" onclick="mostrarNotificaciones()" style="cursor: pointer;">
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+        </i>
+        <img src="images/image 2.png" alt="Usuario" onclick="mostrarPerfil()" style="cursor: pointer;">
+        <div class="text-end">
+          <small>Auditor</small><br>
+          <span class="fw-bold">Juan de Dios</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Breadcrumb / Título -->
+    <header>
+      <div class="breadcrumb">Home > Verificar Limpiadores</div>
+    </header>
+
+    <!-- Sección de Verificación -->
+    <section class="task-list" id="cleanersList">
+      <h2>Limpiadores Pendientes de Verificación</h2>
+      <div id="cleanersContainer">
+        <!-- Se mostrarán aquí los limpiadores -->
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal Notificaciones -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationsModalLabel">Notificaciones</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li class="list-group-item">Notificación de ejemplo 1</li>
+            <li class="list-group-item">Notificación de ejemplo 2</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Perfil -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">Información del Auditor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Nombre:</strong> Juan de Dios</p>
+          <p><strong>Email:</strong> juandios@example.com</p>
+          <p><strong>Teléfono:</strong> +123456789</p>
+          <p><strong>Rol:</strong> Auditor</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    // Funciones globales
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+    function mostrarNotificaciones() {
+      const modalEl = document.getElementById('notificationsModal');
+      if (modalEl && typeof bootstrap !== 'undefined') {
+        const notificationsModal = new bootstrap.Modal(modalEl);
+        notificationsModal.show();
+      } else {
+        alert("No hay notificaciones nuevas.");
+      }
+    }
+    function mostrarPerfil() {
+      const modalEl = document.getElementById('profileModal');
+      if (modalEl && typeof bootstrap !== 'undefined') {
+        const profileModal = new bootstrap.Modal(modalEl);
+        profileModal.show();
+      } else {
+        alert("Nombre: Juan de Dios\nRol: Auditor");
+      }
+    }
+    function searchCleaner() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const items = document.querySelectorAll('.cleaner-card');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(input) ? '' : 'none';
+      });
+    }
+
+    // Cargar los limpiadores pendientes de verificación utilizando el endpoint:
+    // GET https://apifixya.onrender.com/auditors/me/cleaners
+    async function loadCleanersToVerify() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'registro-inicio.html';
+        return;
+      }
+      try {
+        const response = await fetch(`https://apifixya.onrender.com/auditors/me/cleaners`, {
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'accept': 'application/json'
+          }
+        });
+        if (response.ok) {
+          let cleaners = await response.json();
+          // Filtrar para que solo se muestren los que tienen is_verifiqued en false
+          cleaners = cleaners.filter(cleaner => cleaner.is_verifiqued === false);
+          renderCleaners(cleaners);
+        } else {
+          console.error("Error al obtener limpiadores:", response.status);
+        }
+      } catch (e) {
+        console.error("Error al cargar limpiadores:", e);
+      }
+    }
+
+    // Renderiza la lista de limpiadores
+    function renderCleaners(cleaners) {
+      const container = document.getElementById('cleanersContainer');
+      container.innerHTML = '';
+      if (cleaners.length === 0) {
+        container.innerHTML = '<p>No hay limpiadores pendientes de verificación.</p>';
+        return;
+      }
+      cleaners.forEach(cleaner => {
+        const card = document.createElement('div');
+        card.className = 'card mb-3 cleaner-card';
+        card.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">${cleaner.name}</h5>
+            <p class="card-text">Email: ${cleaner.email}</p>
+            <button class="btn btn-primary" onclick="verifyCleaner(${cleaner.cleaner_id})">Verificar</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Función para verificar un limpiador: actualiza 'is_verifiqued' a true
+    async function verifyCleaner(cleanerId) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = 'registro-inicio.html';
+        return;
+      }
+      try {
+        const response = await fetch(`https://apifixya.onrender.com/cleaners/${cleanerId}/verify`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json',
+            'accept': 'application/json'
+          },
+          body: JSON.stringify({
+            is_verifiqued: true
+          })
+        });
+        if (response.ok) {
+          alert('Limpiador verificado correctamente.');
+          loadCleanersToVerify(); // Recargar la lista
+        } else {
+          alert('Error al verificar limpiador: ' + response.status);
+        }
+      } catch (e) {
+        console.error("Error al verificar limpiador:", e);
+      }
+    }
+
+    // Ejecuta la carga de limpiadores al iniciar la página
+    document.addEventListener('DOMContentLoaded', loadCleanersToVerify);
+  </script>
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
