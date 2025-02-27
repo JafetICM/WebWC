@@ -9,171 +9,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+ 
+  <!-- Tus estilos -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/main.css">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: sans-serif;
-    }
-    body {
-      display: flex;
-      min-height: 100vh;
-      background-color: #f0f4f7;
-    }
-    .sidebar {
-      width: 240px;
-      background-color: #003366;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-    .sidebar > div {
-      padding: 1rem;
-    }
-    .profile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-    .profile img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 0.5rem;
-    }
-    .profile h3 {
-      font-size: 1rem;
-      margin-bottom: 0;
-    }
-    nav ul {
-      list-style: none;
-    }
-    nav li {
-      padding: 0.8rem 0;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    nav li:hover {
-      background-color: #022d5b;
-    }
-    nav li.active {
-      background-color: #022d5b;
-    }
-    .login-button {
-      background-color: #022d5b;
-      padding: 0.8rem;
-      text-align: center;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      margin: 1rem;
-      border-radius: 4px;
-    }
-    .login-button:hover {
-      background-color: #011f42;
-    }
-    main {
-      margin-left: 240px;
-      width: calc(100% - 240px);
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-    .header-brand {
-      background-color: #ffffff;
-      border-bottom: 1px solid #ddd;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .header-brand img.logo {
-      height: 40px;
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .user-info img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      cursor: pointer;
-    }
-    .user-info i {
-      font-size: 1.5rem;
-      position: relative;
-      cursor: pointer;
-    }
-    .nav-tabs .nav-link.active {
-      background-color: #003366;
-      color: #fff !important;
-    }
-    .nav-tabs .nav-link {
-      color: #003366;
-    }
-    .tab-content {
-      background-color: #ffffff;
-      padding: 1rem;
-      border-radius: 0 0 0.25rem 0.25rem;
-      border: 1px solid #ddd;
-      border-top: 0;
-    }
-    .service-card {
-      border-bottom: 1px solid #ddd;
-      padding: 1rem 0;
-    }
-    .service-card:last-child {
-      border-bottom: none;
-    }
-    .service-card h5 {
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-    .star-rating {
-      color: #f5c518;
-      margin-bottom: 0.5rem;
-    }
-    /* Estilo personalizado para el botón "Ir al Dashboard" (ahora como pestaña) */
-    .btn-dashboard {
-      background-color: #003366;
-      border: none;
-      color: #ffffff;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      font-weight: bold;
-      transition: background-color 0.2s;
-    }
-    .btn-dashboard:hover {
-      background-color: #022d5b;
-    }
-  </style>
-
-  <script>
-    function navigateTo(page) {
-      window.location.href = page;
-    }
-    
-    function mostrarNotificaciones() {
-      var notificationsModal = new bootstrap.Modal(document.getElementById('notificationsModal'));
-      notificationsModal.show();
-    }
-    
-    function mostrarPerfil() {
-      var profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
-      profileModal.show();
-    }
-  </script>
 </head>
 <body>
   <!-- SIDEBAR -->
@@ -189,13 +29,11 @@
             <i class="bi bi-calendar"></i> Dashboard
           </a>
         </li>
-       
         <li class="nav-item mb-2">
           <a class="nav-link" onclick="navigateTo('agenda.html')">
             <i class="bi bi-calendar"></i> Agenda
           </a>
         </li>
-        
         <li class="nav-item mb-2">
           <a class="nav-link" onclick="navigateTo('pagos.html')">
             <i class="bi bi-cash-stack"></i> Pagos
@@ -255,46 +93,55 @@
       </ul>
 
       <div class="tab-content" id="myTabContent" style="border:1px solid #ddd; border-top:0; border-radius:0 0 5px 5px;">
-        <!-- Contenido de "Ir al Dashboard" -->
+        <!-- Contenido de "Dashboard" -->
         <div class="tab-pane fade show active p-3" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
           <h5>Dashboard</h5>
           <p>Bienvenido al Dashboard. Aquí se muestra el contenido principal.</p>
           <div class="container mt-4">
             <div class="row">
+              <!-- Tarjeta: Total de Usuarios -->
               <div class="col-md-4">
                 <div class="card text-white bg-primary mb-3">
                   <div class="card-header">Total de Usuarios</div>
                   <div class="card-body">
-                    <h5 class="card-title">1,234</h5>
+                    <!-- Agregamos ID para inyectar el número real -->
+                    <h5 class="card-title" id="usersCount">0</h5>
                     <p class="card-text">Número de usuarios registrados.</p>
                   </div>
                 </div>
               </div>
+              <!-- Tarjeta: Ventas del Mes -->
               <div class="col-md-4">
                 <div class="card text-white bg-success mb-3">
                   <div class="card-header">Ventas del Mes</div>
                   <div class="card-body">
-                    <h5 class="card-title">$12,345</h5>
+                    <!-- Agregamos ID para inyectar el monto real -->
+                    <h5 class="card-title" id="salesAmount">$0</h5>
                     <p class="card-text">Ingresos generados este mes.</p>
                   </div>
                 </div>
               </div>
+              <!-- Tarjeta: Proyectos Activos -->
               <div class="col-md-4">
                 <div class="card text-white bg-warning mb-3">
                   <div class="card-header">Proyectos Activos</div>
                   <div class="card-body">
-                    <h5 class="card-title">5</h5>
+                    <!-- Agregamos ID para inyectar la cantidad real -->
+                    <h5 class="card-title" id="projectsActive">0</h5>
                     <p class="card-text">Proyectos en curso.</p>
                   </div>
                 </div>
               </div>
             </div>
+
+            <!-- Gráfico de Rendimiento (podrías inyectar más data) -->
             <div class="row">
               <div class="col-md-12">
                 <div class="card mb-3">
                   <div class="card-header">Gráfico de Rendimiento</div>
                   <div class="card-body">
                     <p>Aquí se mostrará un gráfico de rendimiento.</p>
+                    <!-- Si quisieras inyectar un canvas o algo, podrías darle un id="performanceChart" -->
                   </div>
                 </div>
               </div>
@@ -306,18 +153,24 @@
         <div class="tab-pane fade p-3" id="tareas-aprobadas" role="tabpanel" aria-labelledby="tareas-aprobadas-tab">
           <h5>Tareas Aprobadas</h5>
           <p>Lista de tareas que han sido aprobadas.</p>
+          <!-- Agrega contenedor para inyectar la lista -->
+          <div id="tareasAprobadasContainer"></div>
         </div>
 
         <!-- Contenido de "Tareas Pendientes" -->
         <div class="tab-pane fade p-3" id="tareas-pendientes" role="tabpanel" aria-labelledby="tareas-pendientes-tab">
           <h5>Tareas Pendientes</h5>
           <p>Lista de tareas que están pendientes.</p>
+          <!-- Contenedor para tareas pendientes -->
+          <div id="tareasPendientesContainer"></div>
         </div>
 
         <!-- Contenido de "Servicios Activos" -->
         <div class="tab-pane fade p-3" id="servicios-activos" role="tabpanel" aria-labelledby="servicios-activos-tab">
           <h5>Servicios Activos</h5>
           <p>Lista de servicios actualmente activos.</p>
+          <!-- Contenedor para servicios activos -->
+          <div id="serviciosActivosContainer"></div>
         </div>
       </div>
     </div>
@@ -365,6 +218,12 @@
       </div>
     </div>
   </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+  
 
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

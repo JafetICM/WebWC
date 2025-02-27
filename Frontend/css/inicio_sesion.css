@@ -1,0 +1,195 @@
+/* ========================================= */
+/*            Reset y Estilos Global         */
+/* ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fafafa;
+    color: #333;
+  }
+  
+  /* ========================================= */
+  /*          Contenedor Principal             */
+  /* ========================================= */
+  /* Ocupa el 100% del viewport y utiliza Flexbox */
+  .signup-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* ========================================= */
+  /*         Sección de la Imagen Izquierda    */
+  /* ========================================= */
+  /* Reducir el ancho del contenedor de la imagen (40% del ancho total) */
+  .left-image {
+    flex: 0.4;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* La imagen se ajusta al tamaño del contenedor sin distorsión */
+  .left-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Botón de regreso en la esquina superior izquierda, usando Material Icons */
+  .left-image .btn-back {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: rgba(33, 150, 243, 0.8);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+  }
+  
+  /* Estado hover del botón de regreso */
+  .left-image .btn-back:hover {
+    background-color: rgba(25, 118, 210, 0.8);
+  }
+  
+  /* ========================================= */
+  /*         Sección del Formulario Derecha    */
+  /* ========================================= */
+  /* Ocupa el 60% del ancho total y centra su contenido */
+  .right-form {
+    flex: 0.6;
+    background-color: #fff;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+  
+  /* Título del formulario */
+  .right-form h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #000;
+  }
+  
+  /* ========================================= */
+  /*             Toggle de Modos               */
+  /* ========================================= */
+  /* Contenedor para la selección entre "Crear cuenta" e "Iniciar sesión" */
+  .mode-toggle {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Estilo para cada opción de modo */
+  .mode-option {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  /* Estilo para el input de tipo radio */
+  .mode-option input[type="radio"] {
+    accent-color: #81abcbc6;
+  }
+  
+  /* ========================================= */
+  /*           Formulario Dinámico            */
+  /* ========================================= */
+  /* Contenedor general del formulario */
+  .dynamic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Campos de nombre (mostrar en modo registro) */
+  .name-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Campos de inicio de sesión (ocultos por defecto) */
+  .signin-fields {
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Grupo de cada campo del formulario */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  /* Etiqueta de cada campo */
+  .form-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+  }
+  
+  /* Input de cada campo */
+  .form-group input {
+    padding: 0.6rem 0.8rem;
+    border: 2px solid #90caf9;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  /* ========================================= */
+  /*            Botones del Formulario         */
+  /* ========================================= */
+  /* Contenedor para los botones (Cancelar y Enviar) */
+  .buttons-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  /* Botón de cancelar */
+  .btn-cancel {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  
+  /* Botón primario (Enviar / Crear cuenta) */
+  .btn-primary {
+    background-color: #7c4dff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  

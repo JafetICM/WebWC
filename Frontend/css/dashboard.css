@@ -1,0 +1,19 @@
+/* ========== DASHBOARD ========== */
+
+/* Aquí solo lo particular del dashboard 
+   (mucho de su sidebar, .header-brand, .nav-tabs, etc. ya está en main.css) */
+
+/* Si tienes algo específico, por ejemplo: */
+.btn-dashboard {
+    background-color: #003366;
+    border: none;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+  }
+  .btn-dashboard:hover {
+    background-color: #022d5b;
+  }
+  

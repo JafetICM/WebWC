@@ -6,224 +6,12 @@
   <title>Agenda - WhatClean</title>
 
   <!-- Bootstrap 5 CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- Bootstrap Icons (opcional) -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
-  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
 
-  <style>
-    /* RESET BÁSICO */
-    * {
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box;
-      font-family: sans-serif;
-    }
-
-    body {
-      display: flex;
-      min-height: 100vh;
-      background-color: #f0f4f7;
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 240px;
-      background-color: #003366;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
-
-    .sidebar > div {
-      padding: 1rem;
-    }
-
-    .profile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .profile img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 0.5rem;
-    }
-
-    .profile h3 {
-      font-size: 1rem;
-      margin-bottom: 0;
-    }
-
-    nav ul {
-      list-style: none;
-    }
-
-    nav li {
-      padding: 0.8rem 0;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    nav li:hover {
-      background-color: #022d5b;
-    }
-
-    nav li.active {
-      background-color: #022d5b;
-    }
-
-    .login-button {
-      background-color: #022d5b;
-      padding: 0.8rem;
-      text-align: center;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      margin: 1rem;
-      border-radius: 4px;
-    }
-
-    .login-button:hover {
-      background-color: #011f42;
-    }
-
-    /* CONTENIDO PRINCIPAL */
-    .main-content {
-      margin-left: 240px; /* Ajuste para el sidebar */
-      padding: 20px;
-      width: calc(100% - 240px);
-    }
-
-    /* Header */
-    .header-brand {
-      background-color: #ffffff;
-      border-bottom: 1px solid #ddd;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-    }
-    .header-brand img.logo {
-      height: 40px;
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .user-info i {
-      font-size: 1.5rem;
-      position: relative;
-      cursor: pointer;
-    }
-    .user-info img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      cursor: pointer;
-    }
-    .user-info .text-end {
-      text-align: right;
-    }
-    .user-info small {
-      font-size: 0.8rem;
-    }
-    .user-info .fw-bold {
-      font-weight: bold;
-    }
-
-    /* Agenda */
-    .task-list {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .task-card {
-      background: #1E7CD6;
-      color: white;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 5px;
-      display: flex;
-      flex-direction: column;
-    }
-    .task-card .task-details {
-      margin-bottom: 10px;
-    }
-    .task-card button {
-      background: #f44336;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .task-card button:hover {
-      background: #d32f2f;
-    }
-    .controls {
-      margin-bottom: 15px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .controls input, .controls button, .controls select {
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-    }
-    .controls button {
-      background: #0A3D62;
-      color: white;
-      cursor: pointer;
-    }
-    .form-container {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
-    .form-container input, .form-container select {
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-      flex: 1;
-    }
-    .form-container button {
-      background: #0A3D62;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    @media (max-width: 768px) {
-      .form-container {
-        flex-direction: column;
-      }
-      .controls {
-        flex-direction: column;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/agenda.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <!-- SIDEBAR -->
@@ -268,6 +56,11 @@
       <div>
         <img src="images/Logo.png" alt="WhatClean" class="logo">
       </div>
+      <!-- Barra de búsqueda -->
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar trabajo">
+        <button onclick="searchTask()"><i class="bi bi-search"></i></button>
+      </div>
       <!-- Botones de notificaciones y perfil -->
       <div class="user-info">
         <i class="bi bi-bell" onclick="mostrarNotificaciones()" style="cursor: pointer;">
@@ -300,9 +93,6 @@
           <option value="Limpieza de Oficina">Limpieza de Oficina</option>
         </select>
         <button onclick="addTask()">Añadir Trabajo</button>
-      </div>
-      <div class="controls">
-        <input type="text" id="searchInput" onkeyup="searchTask()" placeholder="Buscar trabajo">
       </div>
       <div id="tasksContainer"></div>
     </section>
@@ -351,100 +141,9 @@
     </div>
   </div>
 
-  <script>
-    function navigateTo(page) {
-      window.location.href = page;
-    }
-
-    function addTask() {
-      const clientName = document.getElementById("clientName").value;
-      const clientAddress = document.getElementById("clientAddress").value;
-      const taskDate = document.getElementById("taskDate").value;
-      const taskTime = document.getElementById("taskTime").value;
-      const taskType = document.getElementById("taskType").value;
-
-      if (!clientName || !clientAddress || !taskDate || !taskTime || !taskType) {
-        alert("Por favor, complete todos los campos.");
-        return;
-      }
-
-      const tasksContainer = document.getElementById("tasksContainer");
-      let taskElement = document.createElement("div");
-      taskElement.classList.add("task-card");
-      taskElement.innerHTML = `
-        <div class="task-details">
-          <p><strong>Cliente:</strong> ${clientName}</p>
-          <p><strong>Dirección:</strong> ${clientAddress}</p>
-          <p><strong>Fecha:</strong> ${taskDate}</p>
-          <p><strong>Hora:</strong> ${taskTime}</p>
-          <p><strong>Servicio:</strong> ${taskType}</p>
-        </div>
-        <div>
-          <button onclick="editTask(this)">Editar</button>
-          <button onclick="removeTask(this)">Eliminar</button>
-        </div>
-      `;
-
-      tasksContainer.appendChild(taskElement);
-      clearForm();
-    }
-
-    function removeTask(element) {
-      element.parentElement.parentElement.remove();
-    }
-
-    function editTask(element) {
-      const taskElement = element.parentElement.parentElement;
-      const taskDetails = taskElement.querySelector(".task-details");
-      const clientName = prompt("Nuevo nombre del cliente:", taskDetails.children[0].textContent.split(": ")[1]);
-      const clientAddress = prompt("Nueva dirección:", taskDetails.children[1].textContent.split(": ")[1]);
-      const taskDate = prompt("Nueva fecha (YYYY-MM-DD):", taskDetails.children[2].textContent.split(": ")[1]);
-      const taskTime = prompt("Nueva hora (HH:MM):", taskDetails.children[3].textContent.split(": ")[1]);
-      const taskType = prompt("Nuevo tipo de servicio:", taskDetails.children[4].textContent.split(": ")[1]);
-
-      if (clientName && clientAddress && taskDate && taskTime && taskType) {
-        taskDetails.innerHTML = `
-          <p><strong>Cliente:</strong> ${clientName}</p>
-          <p><strong>Dirección:</strong> ${clientAddress}</p>
-          <p><strong>Fecha:</strong> ${taskDate}</p>
-          <p><strong>Hora:</strong> ${taskTime}</p>
-          <p><strong>Servicio:</strong> ${taskType}</p>
-        `;
-      }
-    }
-
-    function searchTask() {
-      const searchValue = document.getElementById("searchInput").value.toLowerCase();
-      const tasks = document.querySelectorAll(".task-card");
-
-      tasks.forEach(task => {
-        const taskText = task.textContent.toLowerCase();
-        if (taskText.includes(searchValue)) {
-          task.style.display = "block";
-        } else {
-          task.style.display = "none";
-        }
-      });
-    }
-
-    function clearForm() {
-      document.getElementById("clientName").value = "";
-      document.getElementById("clientAddress").value = "";
-      document.getElementById("taskDate").value = "";
-      document.getElementById("taskTime").value = "";
-      document.getElementById("taskType").value = "Limpieza General";
-    }
-
-    function mostrarNotificaciones() {
-      var notificationsModal = new bootstrap.Modal(document.getElementById('notificationsModal'));
-      notificationsModal.show();
-    }
-    
-    function mostrarPerfil() {
-      var profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
-      profileModal.show();
-    }
-  </script>
+  <script src="js/main.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/agenda.js"></script>
 
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
