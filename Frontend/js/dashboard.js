@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Se actualiza el endpoint a "cleaners"
-  const apiUrl = 'https://apifixya.onrender.com/auditors/me/cleaners';
+  const apiUrl = 'https://apifixya.onrender.com/auditors/all';
 
   fetch(apiUrl, {
     method: 'GET',
