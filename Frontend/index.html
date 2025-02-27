@@ -13,7 +13,6 @@
   <!-- Tus estilos -->
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/main.css">
-
 </head>
 <body>
   <!-- SIDEBAR -->
@@ -71,24 +70,38 @@
       </div>
     </div>
 
+    <!-- Sección para Spinner y Mensaje de Error -->
+    <div id="dashboard-loading" style="display: none; text-align: center; padding: 1rem;">
+      <p>Cargando datos del Dashboard...</p>
+    </div>
+    <div id="dashboard-error" style="display: none; color: red; text-align: center; padding: 1rem;"></div>
+
     <!-- Sección Tabs -->
     <div class="p-3">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <!-- Pestaña "Dashboard" (primera y activa) -->
         <li class="nav-item" role="presentation">
-          <button class="nav-link active btn-dashboard" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">Dashboard</button>
+          <button class="nav-link active btn-dashboard" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">
+            Dashboard
+          </button>
         </li>
         <!-- Pestaña "Tareas Aprobadas" -->
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tareas-aprobadas-tab" data-bs-toggle="tab" data-bs-target="#tareas-aprobadas" type="button" role="tab" aria-controls="tareas-aprobadas" aria-selected="false">Tareas Aprobadas</button>
+          <button class="nav-link" id="tareas-aprobadas-tab" data-bs-toggle="tab" data-bs-target="#tareas-aprobadas" type="button" role="tab" aria-controls="tareas-aprobadas" aria-selected="false">
+            Tareas Aprobadas
+          </button>
         </li>
         <!-- Pestaña "Tareas Pendientes" -->
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="tareas-pendientes-tab" data-bs-toggle="tab" data-bs-target="#tareas-pendientes" type="button" role="tab" aria-controls="tareas-pendientes" aria-selected="false">Tareas Pendientes</button>
+          <button class="nav-link" id="tareas-pendientes-tab" data-bs-toggle="tab" data-bs-target="#tareas-pendientes" type="button" role="tab" aria-controls="tareas-pendientes" aria-selected="false">
+            Tareas Pendientes
+          </button>
         </li>
         <!-- Pestaña "Servicios Activos" -->
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="servicios-activos-tab" data-bs-toggle="tab" data-bs-target="#servicios-activos" type="button" role="tab" aria-controls="servicios-activos" aria-selected="false">Servicios Activos</button>
+          <button class="nav-link" id="servicios-activos-tab" data-bs-toggle="tab" data-bs-target="#servicios-activos" type="button" role="tab" aria-controls="servicios-activos" aria-selected="false">
+            Servicios Activos
+          </button>
         </li>
       </ul>
 
@@ -104,7 +117,6 @@
                 <div class="card text-white bg-primary mb-3">
                   <div class="card-header">Total de Usuarios</div>
                   <div class="card-body">
-                    <!-- Agregamos ID para inyectar el número real -->
                     <h5 class="card-title" id="usersCount">0</h5>
                     <p class="card-text">Número de usuarios registrados.</p>
                   </div>
@@ -115,7 +127,6 @@
                 <div class="card text-white bg-success mb-3">
                   <div class="card-header">Ventas del Mes</div>
                   <div class="card-body">
-                    <!-- Agregamos ID para inyectar el monto real -->
                     <h5 class="card-title" id="salesAmount">$0</h5>
                     <p class="card-text">Ingresos generados este mes.</p>
                   </div>
@@ -126,22 +137,20 @@
                 <div class="card text-white bg-warning mb-3">
                   <div class="card-header">Proyectos Activos</div>
                   <div class="card-body">
-                    <!-- Agregamos ID para inyectar la cantidad real -->
                     <h5 class="card-title" id="projectsActive">0</h5>
                     <p class="card-text">Proyectos en curso.</p>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Gráfico de Rendimiento (podrías inyectar más data) -->
+            <!-- Gráfico de Rendimiento -->
             <div class="row">
               <div class="col-md-12">
                 <div class="card mb-3">
                   <div class="card-header">Gráfico de Rendimiento</div>
                   <div class="card-body">
                     <p>Aquí se mostrará un gráfico de rendimiento.</p>
-                    <!-- Si quisieras inyectar un canvas o algo, podrías darle un id="performanceChart" -->
+                    <!-- Puedes inyectar un canvas con id="performanceChart" si lo necesitas -->
                   </div>
                 </div>
               </div>
@@ -151,26 +160,17 @@
 
         <!-- Contenido de "Tareas Aprobadas" -->
         <div class="tab-pane fade p-3" id="tareas-aprobadas" role="tabpanel" aria-labelledby="tareas-aprobadas-tab">
-          <h5>Tareas Aprobadas</h5>
-          <p>Lista de tareas que han sido aprobadas.</p>
-          <!-- Agrega contenedor para inyectar la lista -->
-          <div id="tareasAprobadasContainer"></div>
+          <!-- Aquí se inyectará dinámicamente el contenido de Tareas Aprobadas -->
         </div>
 
         <!-- Contenido de "Tareas Pendientes" -->
         <div class="tab-pane fade p-3" id="tareas-pendientes" role="tabpanel" aria-labelledby="tareas-pendientes-tab">
-          <h5>Tareas Pendientes</h5>
-          <p>Lista de tareas que están pendientes.</p>
-          <!-- Contenedor para tareas pendientes -->
-          <div id="tareasPendientesContainer"></div>
+          <!-- Aquí se inyectará dinámicamente el contenido de Tareas Pendientes -->
         </div>
 
         <!-- Contenido de "Servicios Activos" -->
         <div class="tab-pane fade p-3" id="servicios-activos" role="tabpanel" aria-labelledby="servicios-activos-tab">
-          <h5>Servicios Activos</h5>
-          <p>Lista de servicios actualmente activos.</p>
-          <!-- Contenedor para servicios activos -->
-          <div id="serviciosActivosContainer"></div>
+          <!-- Aquí se inyectará dinámicamente el contenido de Servicios Activos -->
         </div>
       </div>
     </div>
@@ -188,7 +188,6 @@
           <ul class="list-group">
             <li class="list-group-item">Limpiador Alberto Contreras ha terminado su trabajo.</li>
             <li class="list-group-item">Limpiadora Laura Martínez ha terminado su trabajo.</li>
-            <!-- Se pueden agregar más notificaciones dinámicamente -->
           </ul>
         </div>
         <div class="modal-footer">
@@ -220,11 +219,10 @@
   </div>
 
   <!-- Scripts -->
+  <!-- Asegúrate de incluir api.js antes de dashboard.js -->
   <script src="js/main.js"></script>
   <script src="js/api.js"></script>
   <script src="js/dashboard.js"></script>
-  
-
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

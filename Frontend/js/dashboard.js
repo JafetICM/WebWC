@@ -1,77 +1,89 @@
+/*******************************************************
+ * dashboard.js
+ * Lógica para mostrar datos en el Dashboard
+ *******************************************************/
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      // si no hay token, redirigir a login
-       alert('No has iniciado sesión. Redirigiendo...');
-       navigateTo('registro-inicio.html');
-       return;
-    }
+  // 1. Mostrar spinner de carga
+  const loadingEl = document.getElementById('dashboard-loading');
+  const errorEl = document.getElementById('dashboard-error');
+  if (loadingEl) loadingEl.style.display = 'block';
+  if (errorEl) errorEl.style.display = 'none';
 
-  
-  
-    try {
-      // 1) Obtener total de usuarios
-      const users = await getAllUsers(token); // viene de api.js
-      const totalUsuarios = users.length;
-  
-      // 2) Ventas del mes: supongamos que interpretas
-      // “propuestas” con status="completed" en el mes actual = $$...
-      const proposalsCompleted = await getProposals(token, 'completed');
-      const ventasMes = proposalsCompleted.length * 100; 
-      // (Solo ejemplo, si cada proposal “vale” 100)
-  
-      // 3) Proyectos activos: supongamos /proposals?status=in_progress 
-      const proposalsInProgress = await getProposals(token, 'in_progress');
-      const proyectosActivos = proposalsInProgress.length;
-  
-      // 4) Insertar en el DOM
-      // Cambia las IDs en tu HTML para donde quieras poner los datos
-      document.getElementById('usersCount').textContent = totalUsuarios;
-      document.getElementById('salesAmount').textContent = '$' + ventasMes;
-      document.getElementById('projectsActive').textContent = proyectosActivos.toString();
-  
-      // O podrías mostrar un “Gráfico de Rendimiento” si tu API provee data
-      // ...
-    } catch (error) {
+  // 2. Verificar si hay token en localStorage
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('No has iniciado sesión. Redirigiendo...');
+    navigateTo('registro-inicio.html');
+    return;
+  }
+
+  try {
+    // 3. Llamar a la API de forma concurrente
+    //    Ajusta los endpoints según tu API real:
+    const [users, proposalsCompleted, proposalsInProgress, activeServices] = await Promise.all([
+      getAllUsers(token),
+      getProposals(token, 'completed'),
+      getProposals(token, 'in_progress'),
+      getServices(token)           // Ejemplo: si tienes un endpoint para servicios
+    ]);
+
+    // 4. Procesar los resultados
+    const totalUsuarios = users.length;
+    const ventasMes = proposalsCompleted.length * 100; // Ejemplo: cada proposal completada = $100
+    const proyectosActivos = proposalsInProgress.length;
+
+    // 5. Inyectar datos en el DOM
+    document.getElementById('usersCount').textContent = totalUsuarios;
+    document.getElementById('salesAmount').textContent = '$' + ventasMes;
+    document.getElementById('projectsActive').textContent = proyectosActivos.toString();
+
+    // 6. Renderizar “Tareas Aprobadas” (proposalsCompleted) en el tab "tareas-aprobadas"
+    renderList('tareas-aprobadas', 'Tareas Aprobadas', 'Lista de tareas aprobadas', proposalsCompleted, 'description');
+
+    // 7. Renderizar “Tareas Pendientes” (proposalsInProgress) en el tab "tareas-pendientes"
+    renderList('tareas-pendientes', 'Tareas Pendientes', 'Lista de tareas pendientes', proposalsInProgress, 'description');
+
+    // 8. Renderizar “Servicios Activos” en el tab "servicios-activos"
+    //    Ajusta la propiedad a mostrar (por ejemplo 'name' o 'description') según tu API
+    renderList('servicios-activos', 'Servicios Activos', 'Lista de servicios actualmente activos', activeServices, 'name');
+  } 
+  catch (error) {
+    console.error(error);
+    if (errorEl) {
+      // Muestra un mensaje de error en el DOM (en lugar de alert)
+      errorEl.textContent = `Error en el dashboard: ${error.message}`;
+      errorEl.style.display = 'block';
+    } else {
+      // Fallback: alert si no hay contenedor para errores
       alert('Error en el dashboard: ' + error.message);
     }
-  });
+  }
+  finally {
+    // 9. Ocultar el spinner
+    if (loadingEl) loadingEl.style.display = 'none';
+  }
+});
 
-  /** Ejemplo: renderApprovedTasks */
-function renderApprovedTasks(tasks) {
-    const container = document.getElementById('tareas-aprobadas'); 
-    if (!container) return;
-    // Por tu HTML, "tareas-aprobadas" es la ID del tab content wrapper.
-    // Insertar, p.ej., un <ul> con las tasks
-    let html = `<h5>Tareas Aprobadas</h5>`;
-    html += `<p>Lista de tareas que han sido aprobadas.</p>`;
-    html += `<ul>`;
-    tasks.forEach(t => {
-      html += `<li>${t.description}</li>`; // Ajusta a la estructura de tu proposal
-    });
-    html += `</ul>`;
-    container.innerHTML = html;
-  }
-  
-  function renderPendingTasks(tasks) {
-    const container = document.getElementById('tareas-pendientes');
-    if (!container) return;
-    let html = `<h5>Tareas Pendientes</h5><p>Lista de tareas pendientes:</p><ul>`;
-    tasks.forEach(t => {
-      html += `<li>${t.description}</li>`;
-    });
-    html += `</ul>`;
-    container.innerHTML = html;
-  }
-  
-  function renderActiveServices(services) {
-    const container = document.getElementById('servicios-activos');
-    if (!container) return;
-    let html = `<h5>Servicios Activos</h5><p>Lista de servicios actualmente activos.</p><ul>`;
-    services.forEach(s => {
-      html += `<li>${s.name} - ${s.description}</li>`;
-    });
-    html += `</ul>`;
-    container.innerHTML = html;
-  }
+/**
+ * Función genérica para renderizar una lista de items en el DOM.
+ * @param {string} containerId - ID del elemento contenedor en el HTML.
+ * @param {string} title - Título o encabezado a mostrar.
+ * @param {string} subtitle - Subtítulo o descripción breve.
+ * @param {Array} items - Arreglo de objetos con datos a mostrar.
+ * @param {string} itemKey - Propiedad de cada objeto que se mostrará en la lista.
+ */
+function renderList(containerId, title, subtitle, items, itemKey = 'description') {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  let html = `<h5>${title}</h5>`;
+  html += `<p>${subtitle}</p>`;
+  html += `<ul>`;
+  items.forEach(item => {
+    html += `<li>${item[itemKey] || 'Sin descripción'}</li>`;
+  });
+  html += `</ul>`;
+
+  container.innerHTML = html;
+}
