@@ -1,4 +1,4 @@
-// auth.js
+//Frontend/js/auth.js
 
 // Función para alternar la visibilidad de los campos según el modo
 function toggleFields() {
@@ -106,15 +106,17 @@ function toggleFields() {
           },
           body: JSON.stringify(payload)
         });
-        
         if (response.ok) {
           const data = await response.json();
           console.log('Inicio de sesión exitoso:', data);
-          // Guarda el token en localStorage
+        
+          // Guarda el token y los datos del auditor en localStorage
           localStorage.setItem('token', data.token);
+          localStorage.setItem('auditor', JSON.stringify(data.user));
+        
           // Redirige a index.html
           window.location.href = "index.html";
-        } else {
+        }else {
           console.error('Error en el inicio de sesión');
           alert('Error en el inicio de sesión');
         }
