@@ -231,8 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.addEventListener('DOMContentLoaded', () => {
   // Al cargar la página, configuramos los listeners
-  toggleFields(); // Para mostrar/ocultar secciones de signup/signin
-
+  
   const dynamicForm = document.getElementById('dynamicForm');
   if (dynamicForm) {
     dynamicForm.addEventListener('submit', onFormSubmit);

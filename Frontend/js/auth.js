@@ -11,26 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (mode === "signup") {
           nameFields.style.display = "block";
-          signinFields.style.display = "none";
+          signinFields.style.visibility = "hidden";
+          signinFields.style.height = "0px";
           submitBtn.textContent = "Crear cuenta";
-
-          document.getElementById("register_correo").setAttribute("required", "true");
-          document.getElementById("register_password").setAttribute("required", "true");
-          confirmPasswordField.setAttribute("required", "true");
-
-          document.getElementById("signin_correo").removeAttribute("required");
-          document.getElementById("signin_password").removeAttribute("required");
       } else {
           nameFields.style.display = "none";
-          signinFields.style.display = "block";
+          signinFields.style.visibility = "visible";
+          signinFields.style.height = "auto";
           submitBtn.textContent = "Iniciar sesión";
-
-          document.getElementById("signin_correo").setAttribute("required", "true");
-          document.getElementById("signin_password").setAttribute("required", "true");
-
-          document.getElementById("register_correo").removeAttribute("required");
-          document.getElementById("register_password").removeAttribute("required");
-          confirmPasswordField.removeAttribute("required");
       }
   }
 
@@ -49,12 +37,17 @@ document.addEventListener("DOMContentLoaded", function () {
       let requestBody = {};
 
       if (mode === "signup") {
-          const nombre = document.getElementById("nombre").value.trim();
-          const apellidoP = document.getElementById("apellidoP").value.trim();
-          const apellidoM = document.getElementById("apellidoM").value.trim();
-          const email = document.getElementById("register_correo").value.trim();
-          const password = document.getElementById("register_password").value.trim();
-          const confirmPassword = confirmPasswordField ? confirmPasswordField.value.trim() : "";
+          const nombre = document.getElementById("nombre")?.value.trim() || "";
+          const apellidoP = document.getElementById("apellidoP")?.value.trim() || "";
+          const apellidoM = document.getElementById("apellidoM")?.value.trim() || "";
+          const email = document.getElementById("register_correo")?.value.trim();
+          const password = document.getElementById("register_password")?.value.trim();
+          const confirmPassword = confirmPasswordField?.value.trim();
+
+          if (!email || !password || !confirmPassword) {
+              alert("Todos los campos son obligatorios.");
+              return;
+          }
 
           if (password !== confirmPassword) {
               alert("Las contraseñas no coinciden.");
@@ -62,42 +55,34 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           requestBody = {
-              name: `${nombre} ${apellidoP} ${apellidoM}`,
+              name: `${nombre} ${apellidoP} ${apellidoM}`.trim(),
               email,
               password
           };
       } else {
-          const email = document.getElementById("signin_correo").value.trim();
-          const password = document.getElementById("signin_password").value.trim();
+          const email = document.getElementById("signin_correo")?.value.trim();
+          const password = document.getElementById("signin_password")?.value.trim();
 
-          requestBody = {
-              email,
-              password
-          };
+          if (!email || !password) {
+              alert("Correo y contraseña son obligatorios.");
+              return;
+          }
+
+          requestBody = { email, password };
       }
 
       try {
-          console.log("Enviando solicitud a:", url);
-          console.log("Datos enviados:", requestBody);
-
           const response = await fetch(url, {
               method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify(requestBody),
-              mode: 'cors'  // ✅ Intentar forzar CORS
+              mode: 'cors'
           });
 
-          const text = await response.text();
-          const data = text ? JSON.parse(text) : {};
-
-          if (!response.ok) {
-              throw new Error(data.message || "Error en la autenticación");
-          }
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.message || "Error en autenticación");
 
           if (mode === "signin") {
-              console.log("Token recibido:", data.token);
               localStorage.setItem("token", data.token);
               alert("Inicio de sesión exitoso");
               window.location.href = "dashboard.html";
@@ -106,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
               document.querySelector('input[value="signin"]').click();
           }
       } catch (error) {
-          console.error("Error en la autenticación:", error);
           alert(error.message);
       }
   });
