@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Elementos del DOM
   const usersCountElement = document.getElementById('usersCount');
   const loadingIndicator = document.getElementById('dashboard-loading');
   const errorIndicator = document.getElementById('dashboard-error');
@@ -11,44 +12,84 @@ document.addEventListener('DOMContentLoaded', () => {
   const auditorProfilePhone = document.getElementById('auditorPhone');
   const auditorProfileRole = document.getElementById('auditorRole');
 
-  // Verificar si el usuario está autenticado
+  // Mostramos el indicador de carga
+  if (loadingIndicator) loadingIndicator.style.display = 'block';
+  if (errorIndicator) errorIndicator.style.display = 'none';
+
+  // Obtenemos el token desde localStorage
   const token = localStorage.getItem('token');
   if (!token) {
-      window.location.href = 'registro-inicio.html';
-      return;
+    // Si no hay token, redirigir a la página de inicio de sesión
+    window.location.href = 'registro-inicio.html';
+    return;
   }
 
-  // Obtener datos del auditor desde localStorage
-  const auditorData = localStorage.getItem('auditor');
-  if (auditorData) {
-      const auditor = JSON.parse(auditorData);
+  // API para obtener la información del auditor
+  const auditorApiUrl = 'https://apifixya.onrender.com/auditors/me';
+
+  fetch(auditorApiUrl, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(auditor => {
+      console.log('Datos del auditor:', auditor);
+
+      // Guardar datos en localStorage
+      localStorage.setItem('auditor', JSON.stringify(auditor));
+
+      // Mostrar los datos en el Dashboard
       if (auditorNameElement) auditorNameElement.textContent = auditor.name;
       if (auditorRoleElement) auditorRoleElement.textContent = auditor.role || "Auditor";
 
+      // Mostrar los datos en el modal de perfil
       if (auditorProfileName) auditorProfileName.textContent = auditor.name;
       if (auditorProfileEmail) auditorProfileEmail.textContent = auditor.email;
       if (auditorProfilePhone) auditorProfilePhone.textContent = auditor.phone || "No disponible";
       if (auditorProfileRole) auditorProfileRole.textContent = auditor.role || "Auditor";
-  }
+    })
+    .catch(error => {
+      console.error('Error al obtener los datos del auditor:', error);
+    });
 
-  // Carga de datos del dashboard
-  fetch('https://apifixya.onrender.com/auditors/all', {
-      method: 'GET',
-      headers: { 'Accept': 'application/json', 'Authorization': `Bearer ${token}` }
+  // API para obtener los usuarios registrados
+  const apiUrl = 'https://apifixya.onrender.com/auditors/me/cleaners';
+
+  fetch(apiUrl, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
   })
-      .then(response => response.json())
-      .then(data => {
-          const count = Array.isArray(data) ? data.length : 0;
-          usersCountElement.innerText = count;
-      })
-      .catch(error => {
-          console.error('Error al obtener los datos del endpoint:', error);
-          if (errorIndicator) {
-              errorIndicator.innerText = 'No se pudieron cargar los datos. Inténtalo más tarde.';
-              errorIndicator.style.display = 'block';
-          }
-      })
-      .finally(() => {
-          if (loadingIndicator) loadingIndicator.style.display = 'none';
-      });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Verificamos si la respuesta es un array y actualizamos el contador
+      const count = Array.isArray(data) ? data.length : 0;
+      usersCountElement.innerText = count;
+    })
+    .catch(error => {
+      console.error('Error al obtener los datos del endpoint:', error);
+      if (errorIndicator) {
+        errorIndicator.innerText = 'No se pudieron cargar los datos. Inténtalo más tarde.';
+        errorIndicator.style.display = 'block';
+      }
+    })
+    .finally(() => {
+      // Ocultamos el indicador de carga
+      if (loadingIndicator) loadingIndicator.style.display = 'none';
+    });
 });

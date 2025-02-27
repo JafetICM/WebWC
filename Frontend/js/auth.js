@@ -79,14 +79,20 @@ document.getElementById('dynamicForm').addEventListener('submit', async function
               headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
               body: JSON.stringify(payload)
           });
-
           if (response.ok) {
-              const data = await response.json();
-              console.log('Inicio de sesión exitoso:', data);
-              localStorage.setItem('token', data.token);
-              localStorage.setItem('auditor', JSON.stringify(data.user));
-              window.location.href = "index.html";
-          } else {
+            const data = await response.json();
+            console.log('Inicio de sesión exitoso:', data);
+          
+            // Guarda el token y los datos del auditor en localStorage
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('auditor', JSON.stringify(data.user));
+          
+            // Redirige a index.html
+            window.location.href = "index.html";
+          }
+          
+          
+          else {
               alert('Error en el inicio de sesión');
           }
       } catch (error) {
