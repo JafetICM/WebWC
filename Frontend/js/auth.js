@@ -113,7 +113,7 @@ function toggleFields() {
           // Guarda el token en localStorage
           localStorage.setItem('token', data.token);
           // Redirige a index.html
-          window.location.href = "index.html    ";
+          window.location.href = "index.html";
         } else {
           console.error('Error en el inicio de sesión');
           alert('Error en el inicio de sesión');
