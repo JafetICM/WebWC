@@ -1,99 +1,130 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const API_BASE_URL = "https://apifixya.onrender.com";
-  const form = document.getElementById("dynamicForm");
-  const submitBtn = document.getElementById("submitBtn");
-  const nameFields = document.getElementById("nameFields");
-  const signinFields = document.getElementById("signinFields");
-  const confirmPasswordField = document.getElementById("confirmPassword");
+// auth.js
 
-  function toggleFields() {
-      const mode = document.querySelector('input[name="authMode"]:checked').value;
-
-      if (mode === "signup") {
-          nameFields.style.display = "block";
-          signinFields.style.visibility = "hidden";
-          signinFields.style.height = "0px";
-          submitBtn.textContent = "Crear cuenta";
-      } else {
-          nameFields.style.display = "none";
-          signinFields.style.visibility = "visible";
-          signinFields.style.height = "auto";
-          submitBtn.textContent = "Iniciar sesión";
-      }
+// Función para alternar la visibilidad de los campos según el modo
+function toggleFields() {
+    const authMode = document.querySelector('input[name="authMode"]:checked').value;
+    document.getElementById('nameFields').style.display = authMode === 'signup' ? 'block' : 'none';
+    document.getElementById('signinFields').style.display = authMode === 'signin' ? 'block' : 'none';
+    // Actualiza el texto del botón de envío
+    document.getElementById('submitBtn').textContent = authMode === 'signup' ? 'Crear cuenta' : 'Iniciar sesión';
   }
-
-  document.querySelectorAll('input[name="authMode"]').forEach(input => {
-      input.addEventListener("change", toggleFields);
-  });
-
-  form.addEventListener("submit", async function (event) {
-      event.preventDefault();
-
-      const mode = document.querySelector('input[name="authMode"]:checked').value;
-      const url = mode === "signup" 
-          ? `${API_BASE_URL}/auditors/register` 
-          : `${API_BASE_URL}/auditors/login`;
-
-      let requestBody = {};
-
-      if (mode === "signup") {
-          const nombre = document.getElementById("nombre")?.value.trim() || "";
-          const apellidoP = document.getElementById("apellidoP")?.value.trim() || "";
-          const apellidoM = document.getElementById("apellidoM")?.value.trim() || "";
-          const email = document.getElementById("register_correo")?.value.trim();
-          const password = document.getElementById("register_password")?.value.trim();
-          const confirmPassword = confirmPasswordField?.value.trim();
-
-          if (!email || !password || !confirmPassword) {
-              alert("Todos los campos son obligatorios.");
-              return;
-          }
-
-          if (password !== confirmPassword) {
-              alert("Las contraseñas no coinciden.");
-              return;
-          }
-
-          requestBody = {
-              name: `${nombre} ${apellidoP} ${apellidoM}`.trim(),
-              email,
-              password
-          };
-      } else {
-          const email = document.getElementById("signin_correo")?.value.trim();
-          const password = document.getElementById("signin_password")?.value.trim();
-
-          if (!email || !password) {
-              alert("Correo y contraseña son obligatorios.");
-              return;
-          }
-
-          requestBody = { email, password };
+  
+  // Escucha el evento de envío del formulario
+  document.getElementById('dynamicForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const authMode = document.querySelector('input[name="authMode"]:checked').value;
+  
+    if (authMode === 'signup') {
+      // Recopilamos los datos del registro
+      const name = document.getElementById('nombre').value;
+      const apellidoP = document.getElementById('apellidoP').value;
+      const apellidoM = document.getElementById('apellidoM').value;
+      const email = document.getElementById('register_correo').value;
+      const password = document.getElementById('register_password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validación simple de contraseñas
+      if (password !== confirmPassword) {
+        alert('Las contraseñas no coinciden');
+        return;
       }
-
+      
+      // Preparamos el payload para el registro
+      const payload = {
+        name: name,
+        email: email,
+        password: password
+      };
+      
       try {
-          const response = await fetch(url, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(requestBody),
-              mode: 'cors'
-          });
-
+        const response = await fetch('https://apifixya.onrender.com/auditors/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        if (response.ok) {
           const data = await response.json();
-          if (!response.ok) throw new Error(data.message || "Error en autenticación");
-
-          if (mode === "signin") {
-              localStorage.setItem("token", data.token);
-              alert("Inicio de sesión exitoso");
-              window.location.href = "dashboard.html";
-          } else {
-              alert("Registro exitoso. Ahora puedes iniciar sesión.");
-              document.querySelector('input[value="signin"]').click();
+          console.log('Registro exitoso:', data);
+          
+          // Iniciar sesión automáticamente con los mismos datos
+          const loginPayload = { email, password };
+          try {
+            const loginResponse = await fetch('https://apifixya.onrender.com/auditors/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': '*/*'
+              },
+              body: JSON.stringify(loginPayload)
+            });
+            
+            if (loginResponse.ok) {
+              const loginData = await loginResponse.json();
+              console.log('Inicio de sesión exitoso:', loginData);
+              // Guarda el token en localStorage para usarlo en otras páginas
+              localStorage.setItem('token', loginData.token);
+              // Redirige a index.html
+              window.location.href = "index.html";
+            } else {
+              console.error('Error en el inicio de sesión automático');
+              alert('Registro exitoso, pero no se pudo iniciar sesión automáticamente.');
+            }
+          } catch (error) {
+            console.error('Error en la conexión al iniciar sesión automáticamente:', error);
+            alert('Registro exitoso, pero ocurrió un error al iniciar sesión automáticamente.');
           }
+        } else {
+          console.error('Error en el registro');
+          alert('Error en el registro');
+        }
       } catch (error) {
-          alert(error.message);
+        console.error('Error en la conexión:', error);
+        alert('Error en la conexión');
       }
+      
+    } else if (authMode === 'signin') {
+      // Recopilamos los datos para el inicio de sesión
+      const email = document.getElementById('signin_correo').value;
+      const password = document.getElementById('signin_password').value;
+      
+      // Preparamos el payload para el login
+      const payload = {
+        email: email,
+        password: password
+      };
+      
+      try {
+        const response = await fetch('https://apifixya.onrender.com/auditors/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Inicio de sesión exitoso:', data);
+          // Guarda el token en localStorage
+          localStorage.setItem('token', data.token);
+          // Redirige a index.html
+          window.location.href = "index.html    ";
+        } else {
+          console.error('Error en el inicio de sesión');
+          alert('Error en el inicio de sesión');
+        }
+      } catch (error) {
+        console.error('Error en la conexión:', error);
+        alert('Error en la conexión');
+      }
+    }
   });
-
+  
+  // Inicializa la vista correcta al cargar la página
   toggleFields();
-});
+  
