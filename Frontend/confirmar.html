@@ -3,22 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pagos - Asignaciones</title>
-
+  <title>Auditoría de Limpieza</title>
   <!-- CSS de Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
-
   <link rel="stylesheet" href="css/main.css">
-  
+  <style>
+    /* Contenedor de imágenes estilo video (16:9) */
+    .service-images {
+      margin-bottom: 1rem;
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* Aspecto 16:9 */
+      margin-bottom: 1rem;
+    }
+    .video-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
   <!-- SIDEBAR -->
   <div class="sidebar">
     <div>
       <div class="profile">
-        <img src="images/Logo.png" alt="Juan de Dios" />
+        <img src="images/Logo.png" alt="Logo" />
         <h3>Juan de Dios</h3>
       </div>
       <ul class="nav flex-column">
@@ -37,9 +54,10 @@
             <i class="bi bi-cash-stack"></i> Pagos
           </a>
         </li>
+        <!-- Icono actualizado a "bi-camera" -->
         <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('auditoria.html')">
-            <i class="bi bi-check-circle"></i> Auditoría de Limpieza
+          <a class="nav-link active" onclick="navigateTo('auditoria-limpieza.html')">
+            <i class="bi bi-camera"></i> Auditoría de Limpieza
           </a>
         </li>
         <li class="nav-item mb-2">
@@ -62,86 +80,74 @@
   <!-- CONTENIDO PRINCIPAL -->
   <div class="main-content">
     <!-- Header -->
-    <div class="header-brand">
+    <div class="header-brand d-flex justify-content-between align-items-center">
       <div>
         <img src="images/Logo.png" alt="WhatClean" class="logo">
       </div>
-      <!-- Botones de notificaciones y perfil -->
-      <div class="user-info">
-        <i class="bi bi-bell" onclick="mostrarNotificaciones()" style="cursor: pointer;">
+      <div class="user-info d-flex align-items-center">
+        <i class="bi bi-bell position-relative me-3" onclick="mostrarNotificaciones()" style="cursor: pointer;">
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
         </i>
         <img src="images/image 2.png" alt="Usuario" onclick="mostrarPerfil()" style="cursor: pointer;">
-        <div class="text-end">
-          <small>Administrador</small><br>
+        <div class="text-end ms-2">
+          <small>Auditor</small><br>
           <span class="fw-bold">Juan de Dios</span>
         </div>
       </div>
     </div>
 
-    <!-- Migas de pan -->
-    <div class="breadcrumb-container mb-3">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">Pagos</a></li>
-          <li class="breadcrumb-item" aria-current="page">Pagos asignaciones</li>
-        </ol>
-      </nav>
-    </div>
+    <!-- Tarjeta de Auditoría de Limpieza -->
+    <div class="card mb-4 mt-3">
+      <div class="card-header">
+        <h4>Auditoría de Limpieza</h4>
+      </div>
+      <div class="card-body">
+        <!-- 1. Imágenes del servicio (estilo video, anchas) -->
+        <div class="service-images">
+          <div class="video-wrapper">
+            <img src="/Frontend/images/Limpiar_casa.png" alt="Imagen del servicio">
+          </div>
+          <div class="video-wrapper">
+            <img src="/Frontend/images/images en una oficina.jpg" alt="Imagen del servicio">
+          </div>
+          <!-- Agrega más contenedores "video-wrapper" según necesites -->
+        </div>
 
-    <!-- Asignaciones Pagadas -->
-    <div class="mb-4">
-      <h4 class="mb-3">Asignaciones pagadas</h4>
-      <div class="card-custom">
-        <div class="card-body">
-          <h6>No. Asignación: 2939821871</h6>
-          <p>Nombre: Carlos Samuel</p>
-          <p>Cantidad: 1,110 MXM</p>
-          <p>Fecha: 12/11/2024</p>
-          <p>Hora: 9:30 a.m</p>
-          <p>Proveedor que realizó el servicio: Gerardo Nuñez Colombia</p>
+        <!-- 2. Botones de acción (debajo de las imágenes) -->
+        <div class="d-flex justify-content-around mb-4">
+          <button class="btn btn-success" onclick="confirmarServicio()">
+            <i class="bi bi-check-circle"></i> Confirmar
+          </button>
+          <button class="btn btn-warning" onclick="marcarPendiente()">
+            <i class="bi bi-hourglass-split"></i> Pendiente
+          </button>
+          <button class="btn btn-danger" onclick="noRealizado()">
+            <i class="bi bi-x-circle"></i> No Realizado
+          </button>
         </div>
-      </div>
-      <div class="card-custom">
-        <div class="card-body">
-          <h6>No. Asignación: 930303290</h6>
-          <p>Nombre: Luis Samuel</p>
-          <p>Cantidad: 1,210 MXM</p>
-          <p>Fecha: 11/12/2024</p>
-          <p>Hora: 10:30 a.m</p>
-          <p>Proveedor que realizó el servicio: Gerardo Nuñez Colombia</p>
-        </div>
-      </div>
-    </div>
 
-    <!-- Pendientes -->
-    <div>
-      <h4 class="mb-3">Pendientes</h4>
-      <div class="card-custom">
-        <div class="card-body">
-          <h6>No. Asignación: 93998320</h6>
-          <p>Nombre: Carlos Samuel</p>
-          <p>Cantidad: 1,110 MXM</p>
-          <p>Pagar antes: 12/11/2024</p>
-          <p>Hora: 9:30 a.m</p>
-          <p>Proveedor que realizó el servicio: Gerardo Nuñez Colombia</p>
+        <!-- 3. Información del servicio/usuario (debajo de los botones) -->
+        <div class="mb-3">
+          <p><strong>Empleado:</strong> Carlos Samuel</p>
+          <p><strong>Cliente:</strong> María García</p>
+          <p><strong>Inicio del Servicio:</strong> 12/11/2024, 09:30 a.m.</p>
+          <p><strong>Fin del Servicio:</strong> 12/11/2024, 11:00 a.m.</p>
+          <p><strong>Tipo de Servicio:</strong> Limpieza General</p>
         </div>
-      </div>
-      <div class="card-custom">
-        <div class="card-body">
-          <h6>No. Asignación: 49560802</h6>
-          <p>Nombre: Miguel Chan</p>
-          <p>Cantidad: 1,330 MXM</p>
-          <p>Pagar antes: 07/11/2024</p>
-          <p>Hora: 9:30 a.m</p>
-          <p>Proveedor que realizó el servicio: Gerardo Nuñez Colombia</p>
+
+        <!-- 4. Descripción (opcional) -->
+        <div class="mb-3">
+          <label for="descripcionServicio" class="form-label">
+            <strong>Descripción (opcional)</strong>
+          </label>
+          <textarea id="descripcionServicio" class="form-control" rows="3" 
+                    placeholder="Agrega una descripción adicional del servicio..."></textarea>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modales -->
+  <!-- MODALES -->
   <!-- Modal Notificaciones -->
   <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -184,9 +190,9 @@
     </div>
   </div>
 
-  <script src="js/main.js"></script>
-  
   <!-- JavaScript de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- JavaScript personalizado -->
+  <script src="js/main.js"></script>
 </body>
 </html>
