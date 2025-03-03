@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
 
   <link rel="stylesheet" href="css/calificar_limpiador.css">
-
   <link rel="stylesheet" href="css/main.css"> 
 </head>
 <body>
@@ -39,18 +38,13 @@
           </a>
         </li>
         <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('auditoria.html')">
-            <i class="bi bi-check-circle"></i> Auditoría de Limpieza
+          <a class="nav-link active" onclick="navigateTo('calificar-limpiador.html')">
+            <i class="bi bi-check-circle"></i> Calificar Servicios
           </a>
         </li>
         <li class="nav-item mb-2">
           <a class="nav-link" onclick="navigateTo('verificar.html')">
             <i class="bi bi-person-check-fill"></i> Verificar Limpiadores
-          </a>
-        </li>
-        <li class="nav-item mb-2">
-          <a class="nav-link" onclick="navigateTo('confirmar.html')">
-            <i class="bi bi-check-circle-fill"></i> Confirmar Servicios
           </a>
         </li>
       </ul>
@@ -65,7 +59,7 @@
     <!-- Header -->
     <div class="header-brand">
       <div>
-        <img src="images/Logo.png" alt="WhatClean" class="logo">
+        <img src="images/LOGO FINAL 2.png" alt="WhatClean" class="logo">
       </div>
       <div class="user-info">
         <i class="bi bi-bell" onclick="mostrarNotificaciones()" style="cursor: pointer;">
@@ -83,18 +77,20 @@
     <div id="lista-limpiadores">
       <h2>Limpiadores con Servicio Finalizado</h2>
       <div class="row">
+        <!-- Tarjeta de Juan -->
         <div class="col-md-4">
           <div class="card" onclick="mostrarDetalle('juan')">
-            <img src="images/limpiador1.jpg" class="card-img-top" alt="Limpiador 1">
+            <img src="images/PERSONA1.png" class="card-img-top" alt="Limpiador 1">
             <div class="card-body">
               <h5 class="card-title">Juan Pérez</h5>
               <p class="card-text">Servicio: Limpieza de oficina</p>
             </div>
           </div>
         </div>
+        <!-- Tarjeta de María -->
         <div class="col-md-4">
           <div class="card" onclick="mostrarDetalle('maria')">
-            <img src="images/limpiador2.jpg" class="card-img-top" alt="Limpiadora 2">
+            <img src="images/PERSONA 2.png" class="card-img-top" alt="Limpiadora 2">
             <div class="card-body">
               <h5 class="card-title">María López</h5>
               <p class="card-text">Servicio: Limpieza de local comercial</p>
@@ -106,29 +102,35 @@
 
     <!-- Vista: Detalle del trabajo realizado -->
     <div id="detalle-limpiador" style="display:none;">
-      <button class="btn btn-secondary btn-regresar" onclick="volverALista()">← Volver a la lista</button>
+      <button class="btn btn-secondary btn-regresar mb-3" onclick="volverALista()">← Volver a la lista</button>
       <h2>Detalle del Trabajo Realizado</h2>
 
-      <div class="card">
+      <!-- Datos del Limpiador -->
+      <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Datos del Limpiador</h5>
           <p><strong>Nombre:</strong> <span id="nombre-limpiador">Juan Pérez</span></p>
-          <p><strong>Contacto:</strong> juanperez@mail.com</p>
+          <p><strong>Contacto:</strong> <span id="contacto-limpiador">juanperez@mail.com</span></p>
         </div>
       </div>
 
-      <div class="card">
+      <!-- Datos del Cliente -->
+      <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Datos del Cliente</h5>
-          <p><strong>Nombre:</strong> Empresa XYZ</p>
-          <p><strong>Contacto:</strong> contacto@empresa.com</p>
+          <p><strong>Nombre:</strong> <span id="nombre-cliente">Empresa XYZ</span></p>
+          <p><strong>Contacto:</strong> <span id="contacto-cliente">contacto@empresa.com</span></p>
+          <p><strong>Inicio del Servicio:</strong> <span id="inicio-servicio">12/11/2024, 09:30 a.m.</span></p>
+          <p><strong>Fin del Servicio:</strong> <span id="fin-servicio">12/11/2024, 11:00 a.m.</span></p>
+          <p><strong>Tipo de Servicio:</strong> <span id="tipo-servicio">Limpieza General</span></p>
         </div>
       </div>
 
+      <!-- Imágenes: Antes y Después -->
       <div class="row mb-3">
         <div class="col-md-6">
           <div class="card">
-            <img src="images/antes.jpg" class="card-img-top" alt="Antes de la limpieza">
+            <img src="images/Limpiar_casa.png" class="card-img-top" alt="Antes de la limpieza">
             <div class="card-body">
               <p class="card-text text-center">Antes de la limpieza</p>
             </div>
@@ -136,7 +138,7 @@
         </div>
         <div class="col-md-6">
           <div class="card">
-            <img src="images/despues.jpg" class="card-img-top" alt="Después de la limpieza">
+            <img src="images/Limpiar_casa.png" class="card-img-top" alt="Después de la limpieza">
             <div class="card-body">
               <p class="card-text text-center">Después de la limpieza</p>
             </div>
@@ -144,6 +146,20 @@
         </div>
       </div>
 
+      <!-- Botones de Acción (debajo de las imágenes) -->
+      <div class="d-flex justify-content-around mb-4">
+        <button class="btn btn-success" onclick="confirmarServicio()">
+          <i class="bi bi-check-circle"></i> Confirmar
+        </button>
+        <button class="btn btn-warning" onclick="marcarPendiente()">
+          <i class="bi bi-hourglass-split"></i> Pendiente
+        </button>
+        <button class="btn btn-danger" onclick="noRealizado()">
+          <i class="bi bi-x-circle"></i> No Realizado
+        </button>
+      </div>
+
+      <!-- Calificar Limpieza -->
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Calificar Limpieza</h5>
@@ -165,10 +181,9 @@
       </div>
     </div>
   </div>
-
-  <script src="js/main.js"></script>
  
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 /* ========== SECCIÓN 1: Funciones Globales (se repiten en varias páginas) ========== */
 
 /**
- * Redirecciona a otra página.
+ * Redirecciona a otra página sin mostrar alertas.
  * @param {string} page - Nombre o ruta de la página destino.
  */
 function navigateTo(page) {
@@ -152,11 +152,15 @@ function clearForm() {
  * @param {string} id - identificador del limpiador
  */
 function mostrarDetalle(id) {
+  // Ajusta los datos según el ID
   if (id === 'juan') {
     document.getElementById('nombre-limpiador').innerText = "Juan Pérez";
+    // ...puedes ajustar más datos si deseas
   } else if (id === 'maria') {
     document.getElementById('nombre-limpiador').innerText = "María López";
+    // ...puedes ajustar más datos si deseas
   }
+  // Muestra la sección de detalle, oculta la lista
   document.getElementById('lista-limpiadores').style.display = "none";
   document.getElementById('detalle-limpiador').style.display = "block";
 }
@@ -175,7 +179,36 @@ function volverALista() {
 function enviarCalificacion() {
   const rating = document.getElementById('calificacion').value;
   const comentarios = document.getElementById('comentarios').value;
-  alert("Calificación enviada:\nEstrellas: " + rating + "\nComentarios: " + comentarios);
+  // Aquí puedes hacer una petición AJAX o fetch a tu backend
+  console.log("Calificación enviada:", { rating, comentarios });
+  alert("¡Calificación enviada!\nEstrellas: " + rating + "\nComentarios: " + comentarios);
+}
+
+/**
+ * Función para confirmar el servicio.
+ */
+function confirmarServicio() {
+  // Lógica para confirmar
+  console.log("Servicio confirmado");
+  alert("Servicio confirmado.");
+}
+
+/**
+ * Función para marcar el servicio como pendiente.
+ */
+function marcarPendiente() {
+  // Lógica para marcar pendiente
+  console.log("Servicio marcado como pendiente");
+  alert("Servicio marcado como pendiente.");
+}
+
+/**
+ * Función para marcar el servicio como no realizado.
+ */
+function noRealizado() {
+  // Lógica para no realizado
+  console.log("Servicio marcado como NO realizado");
+  alert("Servicio marcado como NO realizado.");
 }
 
 /**
@@ -216,22 +249,10 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-/* ========== SECCIÓN 4: Lógica específica de AUDITORÍA ========== */
-/* (Actualmente, auditoría solo tenía navigateTo, mostrarNotificaciones, mostrarPerfil,
-   que ya unificamos en secciones globales. No se requiere código extra aquí.) */
-
-/* ========== SECCIÓN 5: Lógica específica de DASHBOARD ========== */
-/* (Igual que Auditoría, las funciones repetidas se han unificado) */
-
-/* ========== SECCIÓN 6: Lógica específica de PAGOS ========== */
-/* (Igual que Dashboard, las funciones repetidas se han unificado) */
-
-//inicio de secion o crear cuenta//
-// js/main.js
+/* ========== SECCIÓN 4: Lógica específica de REGISTRO/INICIO SESIÓN ========== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Al cargar la página, configuramos los listeners
-  
+  // Configurar listeners para el formulario dinámico, si existe
   const dynamicForm = document.getElementById('dynamicForm');
   if (dynamicForm) {
     dynamicForm.addEventListener('submit', onFormSubmit);
@@ -284,7 +305,7 @@ async function onFormSubmit(e) {
         return;
       }
 
-      // Llamamos a la función de auth.js
+      // Llamamos a la función de auth.js (ejemplo)
       await registerAuditor({ name: fullName, email: correo, password });
       alert('Cuenta creada con éxito. Ahora inicia sesión');
       // Cambiamos a modo "signin"
@@ -300,7 +321,7 @@ async function onFormSubmit(e) {
       const correo = document.getElementById('correo').value;
       const password = document.getElementById('password').value;
 
-      // Llamamos a la función de auth.js
+      // Llamamos a la función de auth.js (ejemplo)
       const token = await loginAuditor(correo, password);
       // Guardamos token en localStorage
       localStorage.setItem('token', token);
@@ -313,4 +334,3 @@ async function onFormSubmit(e) {
     }
   }
 }
-
