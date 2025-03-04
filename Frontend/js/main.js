@@ -334,3 +334,83 @@ async function onFormSubmit(e) {
     }
   }
 }
+  // Inicializa el gráfico en la pestaña "Tareas Aprobadas"
+  const ctx = document.getElementById('tasksChart').getContext('2d');
+  new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+          datasets: [{
+              label: 'Servicios Realizados por Día',
+              data: [12, 20, 35, 25, 45, 55, 70],
+              borderColor: '#007bff',
+              backgroundColor: 'rgba(0, 123, 255, 0.2)',
+              fill: true
+          }]
+      },
+      options: {
+          responsive: true,
+          plugins: {
+              legend: {
+                  position: 'top'
+              }
+          }
+      }
+  });
+  
+  // Array de ejemplo para los servicios
+  const services = Array.from({ length: 50 }, (_, i) => ({
+      id: i + 1,
+      service: `Servicio ${i + 1}`,
+      employee: `Empleado ${Math.floor(i / 5) + 1}`,
+      client: `Cliente ${Math.floor(i / 3) + 1}`,
+      confirmedBy: `Supervisor ${Math.floor(i / 7) + 1}`,
+      time: `${8 + (i % 8)}:00 AM`
+  }));
+  
+  let currentPage = 1;
+  const servicesPerPage = 6;
+  
+  function renderServices(page) {
+      $("#tasksList").empty();
+      const start = (page - 1) * servicesPerPage;
+      const end = start + servicesPerPage;
+      const paginatedServices = services.slice(start, end);
+      
+      paginatedServices.forEach(service => {
+          $("#tasksList").append(`
+              <div class="col-md-4">
+                  <div class="card p-3">
+                      <h5>${service.service}</h5>
+                      <p><strong>Empleado:</strong> ${service.employee}</p>
+                      <p><strong>Cliente:</strong> ${service.client}</p>
+                      <p><strong>Confirmado por:</strong> ${service.confirmedBy}</p>
+                      <p><strong>Hora:</strong> ${service.time}</p>
+                  </div>
+              </div>
+          `);
+      });
+  }
+  
+  function renderPagination() {
+      const totalPages = Math.ceil(services.length / servicesPerPage);
+      $(".pagination").empty();
+      for (let i = 1; i <= totalPages; i++) {
+          $(".pagination").append(`
+              <li class="page-item ${i === currentPage ? 'active' : ''}">
+                  <a class="page-link" href="#">${i}</a>
+              </li>
+          `);
+      }
+      $(".pagination .page-link").on("click", function (e) {
+          e.preventDefault();
+          currentPage = Number($(this).text());
+          renderServices(currentPage);
+          renderPagination();
+      });
+  }
+  
+  $(document).ready(function() {
+      renderServices(currentPage);
+      renderPagination();
+  });

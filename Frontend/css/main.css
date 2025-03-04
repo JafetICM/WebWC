@@ -61,7 +61,7 @@
   }
   nav li:hover,
   nav li.active {
-    background-color: #022d5b;
+    background-color: #022d5b11;
   }
   
   /* LOGIN BUTTON O BOTONES SIMILARES EN EL SIDEBAR */
@@ -213,4 +213,5 @@
       width: 100%;
     }
   }
+  
   

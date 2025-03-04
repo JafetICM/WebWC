@@ -93,3 +93,63 @@ document.addEventListener('DOMContentLoaded', () => {
       if (loadingIndicator) loadingIndicator.style.display = 'none';
     });
 });
+
+
+// Función para renderizar la gráfica de Tareas Aprobadas
+function renderApprovedTasksChart() {
+  // Obtén o define tus datos aquí
+  const ctx = document.getElementById('tasksChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+      datasets: [{
+        label: 'Servicios Realizados por Día',
+        data: [12, 20, 35, 25, 45, 55, 70],
+        borderColor: '#007bff',
+        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' }
+      }
+    }
+  });
+}
+
+// Función para renderizar la gráfica de Tareas Pendientes (en rojo)
+function renderPendingTasksChart() {
+  const ctx = document.getElementById('pendingTasksChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+      datasets: [{
+        label: 'Actividades Pendientes',
+        data: [5, 10, 20, 15, 25, 35, 50],
+        borderColor: '#dc3545',  // rojo
+        backgroundColor: 'rgba(220, 53, 69, 0.2)',
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' }
+      }
+    }
+  });
+}
+
+// Listener para cuando se muestre la pestaña "Tareas Aprobadas"
+$('button[data-bs-target="#tareas-aprobadas"]').on('shown.bs.tab', function () {
+  renderApprovedTasksChart();
+});
+
+// Listener para cuando se muestre la pestaña "Tareas Pendientes"
+$('button[data-bs-target="#tareas-pendientes"]').on('shown.bs.tab', function () {
+  renderPendingTasksChart();
+});

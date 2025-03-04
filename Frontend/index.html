@@ -167,11 +167,45 @@
         <!-- Contenido de "Tareas Aprobadas" -->
         <div class="tab-pane fade p-3" id="tareas-aprobadas" role="tabpanel" aria-labelledby="tareas-aprobadas-tab">
           <!-- Aquí se inyectará dinámicamente el contenido de Tareas Aprobadas -->
+          <div class="container mt-4">
+            <h2 class="text-center mb-4">Servicios Realizados</h2>
+                
+            <div class="chart-container">
+              <canvas id="tasksChart"></canvas>
+            </div>
+                
+            <div class="mt-4 mb-3">
+              <input type="text" id="search" class="form-control" placeholder="Buscar por nombre o servicio...">
+            </div>
+                
+            <div id="tasksList" class="row row-cols-3 mt-4"></div>
+                
+            <nav>
+              <ul class="pagination mt-4"></ul>
+            </nav>
+          </div>
         </div>
 
         <!-- Contenido de "Tareas Pendientes" -->
         <div class="tab-pane fade p-3" id="tareas-pendientes" role="tabpanel" aria-labelledby="tareas-pendientes-tab">
           <!-- Aquí se inyectará dinámicamente el contenido de Tareas Pendientes -->
+          <div class="container mt-4">
+            <h2 class="text-center mb-4">Actividades Pendientes</h2>
+            <!-- Contenedor para la gráfica de actividades pendientes -->
+            <div class="chart-container">
+              <canvas id="pendingTasksChart"></canvas>
+            </div>
+            <!-- Input para búsqueda, opcional -->
+            <div class="mt-4 mb-3">
+              <input type="text" id="searchPending" class="form-control" placeholder="Buscar actividad pendiente...">
+            </div>
+            <!-- Contenedor para las cards -->
+            <div id="pendingList" class="row row-cols-3 mt-4"></div>
+            <!-- Paginación -->
+            <nav>
+              <ul class="pagination mt-4" id="pendingPagination"></ul>
+            </nav>
+          </div>
         </div>
 
         <!-- Contenido de "Servicios Activos" -->
@@ -225,11 +259,14 @@
   </div>
 
   <!-- Scripts -->
-  <!-- Asegúrate de incluir api.js antes de dashboard.js -->
-  <script src="js/main.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/dashboard.js"></script>
-  <!-- Bootstrap 5 JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Librerías necesarias para la pestaña Tareas Aprobadas -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Tus scripts personalizados -->
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>  
 </body>
 </html>
