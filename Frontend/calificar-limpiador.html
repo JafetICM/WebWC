@@ -65,7 +65,7 @@
         <img src="images/image 2.png" alt="Usuario" onclick="mostrarPerfil()" style="cursor: pointer;">
         <div class="text-end">
           <small>Administrador</small><br>
-          <span class="fw-bold">Juan de Dios</span>
+          <span class="fw-bold" id="userName">Cargando...</span>
         </div>
       </div>
     </div>
@@ -160,11 +160,69 @@
     </div>
   </div>
 
+  <!-- Modal Perfil -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">Información del Auditor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Nombre:</strong> <span id="auditorName">Cargando...</span></p>
+          <p><strong>Email:</strong> <span id="auditorEmail">Cargando...</span></p>
+          <p><strong>Teléfono:</strong> <span id="auditorPhone">Cargando...</span></p>
+          <p><strong>Rol:</strong> <span id="auditorRole">Cargando...</span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Scripts globales -->
   <script src="js/main.js"></script>
   <!-- Script específico para calificar -->
   <script src="js/calificar.js"></script>
+  <script>
+    // Función para cargar los datos del auditor desde localStorage
+    function cargarDatosAuditor() {
+      const auditor = JSON.parse(localStorage.getItem("auditor"));
+
+      if (auditor) {
+        // Actualizar el contenido del modal con los datos del auditor
+        document.getElementById("auditorName").textContent = auditor.name;
+        document.getElementById("auditorEmail").textContent = auditor.email;
+        document.getElementById("auditorPhone").textContent = auditor.phone || "No disponible";
+        document.getElementById("auditorRole").textContent = auditor.role || "Auditor";
+
+        // Actualizar el nombre del auditor en el header
+        document.getElementById("userName").textContent = auditor.name;
+      } else {
+        alert("No se encontraron datos del auditor.");
+      }
+    }
+
+    // Función para mostrar el modal de perfil
+    function mostrarPerfil() {
+      // Cargar los datos del auditor antes de mostrar el modal
+      cargarDatosAuditor();
+
+      // Mostrar el modal
+      const profileModal = new bootstrap.Modal(document.getElementById("profileModal"));
+      profileModal.show();
+    }
+
+    // Asignar la función al evento de clic en la imagen de perfil
+    document.querySelector(".user-info img").addEventListener("click", mostrarPerfil);
+
+    // Llamar a la función al cargar la página
+    window.onload = function () {
+      cargarDatosAuditor();
+    };
+  </script>
 </body>
 </html>
