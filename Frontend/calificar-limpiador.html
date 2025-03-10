@@ -10,6 +10,7 @@
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
 
+  <!-- Estilos personalizados -->
   <link rel="stylesheet" href="css/calificar_limpiador.css">
   <link rel="stylesheet" href="css/main.css"> 
 </head>
@@ -73,34 +74,15 @@
       </div>
     </div>
 
-    <!-- Vista: Lista de Limpiadores con servicio finalizado -->
+    <!-- LISTA DE SERVICIOS FINALIZADOS PARA CALIFICAR -->
     <div id="lista-limpiadores">
       <h2>Limpiadores con Servicio Finalizado</h2>
       <div class="row">
-        <!-- Tarjeta de Juan -->
-        <div class="col-md-4">
-          <div class="card" onclick="mostrarDetalle('juan')">
-            <img src="images/PERSONA1.png" class="card-img-top" alt="Limpiador 1">
-            <div class="card-body">
-              <h5 class="card-title">Juan Pérez</h5>
-              <p class="card-text">Servicio: Limpieza de oficina</p>
-            </div>
-          </div>
-        </div>
-        <!-- Tarjeta de María -->
-        <div class="col-md-4">
-          <div class="card" onclick="mostrarDetalle('maria')">
-            <img src="images/PERSONA 2.png" class="card-img-top" alt="Limpiadora 2">
-            <div class="card-body">
-              <h5 class="card-title">María López</h5>
-              <p class="card-text">Servicio: Limpieza de local comercial</p>
-            </div>
-          </div>
-        </div>
+        <!-- Se rellenará dinámicamente en calificar.js -->
       </div>
     </div>
 
-    <!-- Vista: Detalle del trabajo realizado -->
+    <!-- DETALLE DEL TRABAJO REALIZADO -->
     <div id="detalle-limpiador" style="display:none;">
       <button class="btn btn-secondary btn-regresar mb-3" onclick="volverALista()">← Volver a la lista</button>
       <h2>Detalle del Trabajo Realizado</h2>
@@ -109,8 +91,8 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Datos del Limpiador</h5>
-          <p><strong>Nombre:</strong> <span id="nombre-limpiador">Juan Pérez</span></p>
-          <p><strong>Contacto:</strong> <span id="contacto-limpiador">juanperez@mail.com</span></p>
+          <p><strong>Nombre:</strong> <span id="nombre-limpiador"></span></p>
+          <p><strong>Contacto:</strong> <span id="contacto-limpiador"></span></p>
         </div>
       </div>
 
@@ -118,11 +100,11 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Datos del Cliente</h5>
-          <p><strong>Nombre:</strong> <span id="nombre-cliente">Empresa XYZ</span></p>
-          <p><strong>Contacto:</strong> <span id="contacto-cliente">contacto@empresa.com</span></p>
-          <p><strong>Inicio del Servicio:</strong> <span id="inicio-servicio">12/11/2024, 09:30 a.m.</span></p>
-          <p><strong>Fin del Servicio:</strong> <span id="fin-servicio">12/11/2024, 11:00 a.m.</span></p>
-          <p><strong>Tipo de Servicio:</strong> <span id="tipo-servicio">Limpieza General</span></p>
+          <p><strong>Nombre:</strong> <span id="nombre-cliente"></span></p>
+          <p><strong>Contacto:</strong> <span id="contacto-cliente"></span></p>
+          <p><strong>Inicio del Servicio:</strong> <span id="inicio-servicio">--</span></p>
+          <p><strong>Fin del Servicio:</strong> <span id="fin-servicio">--</span></p>
+          <p><strong>Tipo de Servicio:</strong> <span id="tipo-servicio"></span></p>
         </div>
       </div>
 
@@ -130,7 +112,7 @@
       <div class="row mb-3">
         <div class="col-md-6">
           <div class="card">
-            <img src="images/Limpiar_casa.png" class="card-img-top" alt="Antes de la limpieza">
+            <img src="images/placeholder.png" class="card-img-top" alt="Antes de la limpieza" id="imagen-antes">
             <div class="card-body">
               <p class="card-text text-center">Antes de la limpieza</p>
             </div>
@@ -138,7 +120,7 @@
         </div>
         <div class="col-md-6">
           <div class="card">
-            <img src="images/Limpiar_casa.png" class="card-img-top" alt="Después de la limpieza">
+            <img src="images/placeholder.png" class="card-img-top" alt="Después de la limpieza" id="imagen-despues">
             <div class="card-body">
               <p class="card-text text-center">Después de la limpieza</p>
             </div>
@@ -146,7 +128,7 @@
         </div>
       </div>
 
-      <!-- Botones de Acción (debajo de las imágenes) -->
+      <!-- Botones de Acción (Confirmar/Pendiente/No Realizado) -->
       <div class="d-flex justify-content-around mb-4">
         <button class="btn btn-success" onclick="confirmarServicio()">
           <i class="bi bi-check-circle"></i> Confirmar
@@ -159,7 +141,7 @@
         </button>
       </div>
 
-      <!-- Calificar Limpieza -->
+      <!-- Calificar Limpieza (Estrellas y comentarios) -->
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Calificar Limpieza</h5>
@@ -181,9 +163,12 @@
       </div>
     </div>
   </div>
- 
+
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Scripts globales -->
   <script src="js/main.js"></script>
+  <!-- Script específico para calificar -->
+  <script src="js/calificar.js"></script>
 </body>
 </html>
