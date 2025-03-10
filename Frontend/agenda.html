@@ -131,11 +131,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body">
-          <p><strong>Nombre:</strong> Juan de Dios</p>
-          <p><strong>Email:</strong> juandios@example.com</p>
-          <p><strong>Teléfono:</strong> +123456789</p>
-          <p><strong>Rol:</strong> Auditor</p>
-        </div>
+          <p><strong>Nombre:</strong> <span id="auditorName">Cargando...</span></p>
+          <p><strong>Email:</strong> <span id="auditorEmail">Cargando...</span></p>
+          <p><strong>Teléfono:</strong> <span id="auditorPhone">Cargando...</span></p>
+          <p><strong>Rol:</strong> <span id="auditorRole">Cargando...</span></p>
+        </div>        
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
@@ -143,11 +143,15 @@
     </div>
   </div>
 
-  <script src="js/main.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/agenda.js"></script>
-
-  <!-- Bootstrap 5 JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Scripts -->
+    <!-- Librerías necesarias para la pestaña Tareas Aprobadas -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Tus scripts personalizados -->
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>
