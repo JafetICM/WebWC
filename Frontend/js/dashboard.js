@@ -1,3 +1,4 @@
+//Frontend/js/dashboard.js
 document.addEventListener('DOMContentLoaded', () => {
   // Elementos del DOM
   const usersCountElement = document.getElementById('usersCount');

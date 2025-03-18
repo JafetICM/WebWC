@@ -1,5 +1,5 @@
 /*******************************************************
- * main.js
+ * Frontend/js/main.js
  * Archivo unificado de JavaScript para todas las páginas
  *******************************************************/
 

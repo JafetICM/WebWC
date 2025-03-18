@@ -1,3 +1,4 @@
+//Frontend/js/auth.js
 // Función para alternar la visibilidad de los campos según el modo
 function toggleFields() {
   const authMode = document.querySelector('input[name="authMode"]:checked').value;
