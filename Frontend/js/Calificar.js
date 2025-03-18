@@ -1,3 +1,4 @@
+//Frontend/js/Calificar.js
 document.addEventListener("DOMContentLoaded", function () {
     verificarAutenticacion();
     obtenerServiciosFinalizados();

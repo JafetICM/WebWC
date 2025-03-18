@@ -1,4 +1,4 @@
-// api.js
+// Frontend/js/api.js
 
 // Obtener todos los usuarios
 async function getAllUsers(token) {
