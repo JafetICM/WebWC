@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editar Perfil - CleanYa</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+ 
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/editar_perfil.css">
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('../index.html')">
+            <i class="bi bi-calendar"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('../agenda.html')">
+            <i class="bi bi-calendar"></i> Agenda
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('../pagos.html')">
+            <i class="bi bi-cash-stack"></i> Pagos
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('../calificar-limpiador.html')">
+            <i class="bi bi-check-circle"></i> Calificar Servicios
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link" onclick="navigateTo('../verificar.html')">
+            <i class="bi bi-person-check-fill"></i> Verificar Limpiadores
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="login-button mt-auto" onclick="navigateTo('../registro-inicio.html')">
+      Iniciar Sesión
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main>
+    <!-- Header -->
+    <div class="header-brand">
+      <div>
+        <img src="../images/LOGO FINAL 2.png" alt="CleanYa" class="logo">
+      </div>
+      <!-- Botones de notificaciones y perfil -->
+      <div class="user-info">
+        <i class="bi bi-bell" onclick="mostrarNotificaciones()" style="cursor: pointer;">
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+        </i>
+        <img src="../images/image 2.png" alt="Usuario" onclick="mostrarPerfil()" style="cursor: pointer;">
+        <div class="text-end">
+          <small>Administrador</small><br>
+          <span class="fw-bold">Juan de Dios</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="../index.html">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Editar Perfil</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Contenido de la página -->
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-4">
+          <!-- Tarjeta de foto de perfil -->
+          <div class="card profile-card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Foto de Perfil</h5>
+              <div class="profile-image-container">
+                <img src="../images/image 2.png" alt="Foto de perfil" id="profile-image" class="profile-image">
+                <div class="profile-image-overlay">
+                  <i class="bi bi-camera"></i>
+                </div>
+              </div>
+              <input type="file" id="profile-image-upload" class="d-none" accept="image/*">
+              <button class="btn btn-primary mt-3" id="change-photo-btn">Cambiar Foto</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <!-- Formulario de edición de datos -->
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0">Editar Información Personal</h5>
+            </div>
+            <div class="card-body">
+              <form id="profile-form">
+                <div class="mb-3">
+                  <label for="nombre" class="form-label">Nombre Completo</label>
+                  <input type="text" class="form-control" id="nombre" value="Juan de Dios">
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Correo Electrónico</label>
+                  <input type="email" class="form-control" id="email" value="juan@cleanya.com">
+                </div>
+                <div class="mb-3">
+                  <label for="telefono" class="form-label">Teléfono</label>
+                  <input type="tel" class="form-control" id="telefono" value="123-456-7890">
+                </div>
+                <div class="mb-3">
+                  <label for="rol" class="form-label">Rol</label>
+                  <input type="text" class="form-control" id="rol" value="Administrador" disabled>
+                  <small class="text-muted">El rol no puede ser modificado</small>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Nueva Contraseña</label>
+                  <input type="password" class="form-control" id="password" placeholder="Dejar en blanco para mantener la actual">
+                </div>
+                <div class="mb-3">
+                  <label for="confirm-password" class="form-label">Confirmar Contraseña</label>
+                  <input type="password" class="form-control" id="confirm-password">
+                </div>
+                <div class="d-flex justify-content-between">
+                  <button type="button" class="btn btn-secondary" onclick="navigateTo('../index.html')">Cancelar</button>
+                  <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Notificaciones -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationsModalLabel">Notificaciones</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group" id="notificaciones-lista">
+            <!-- Las notificaciones se insertarán aquí dinámicamente -->
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Perfil -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">Información del Auditor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Nombre:</strong> <span id="auditorName">Juan de Dios</span></p>
+          <p><strong>Email:</strong> <span id="auditorEmail">juan@cleanya.com</span></p>
+          <p><strong>Teléfono:</strong> <span id="auditorPhone">123-456-7890</span></p>
+          <p><strong>Rol:</strong> <span id="auditorRole">Administrador</span></p>
+        </div>        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="navigateTo('Proposals/editar_perfil.html')">Editar Perfil</button>
+          <button type="button" class="btn btn-danger" onclick="navigateTo('../registro-inicio.html')">Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/editar_perfil.js"></script>
+  <script>
+    // Script básico para la página de edición de perfil
+    document.addEventListener('DOMContentLoaded', function() {
+      // Manejo de cambio de foto de perfil
+      const profileImageContainer = document.querySelector('.profile-image-container');
+      const profileImageUpload = document.getElementById('profile-image-upload');
+      const changePhotoBtn = document.getElementById('change-photo-btn');
+      const profileImage = document.getElementById('profile-image');
+      
+      changePhotoBtn.addEventListener('click', function() {
+        profileImageUpload.click();
+      });
+      
+      profileImageContainer.addEventListener('click', function() {
+        profileImageUpload.click();
+      });
+      
+      profileImageUpload.addEventListener('change', function(e) {
+        if (e.target.files && e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            profileImage.src = e.target.result;
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      });
+      
+      // Manejo del formulario
+      const profileForm = document.getElementById('profile-form');
+      profileForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validación básica de formulario
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        if (password && password !== confirmPassword) {
+          alert('Las contraseñas no coinciden');
+          return;
+        }
+        
+        // Aquí iría el código para enviar los datos al servidor
+        alert('Cambios guardados correctamente');
+        // Redirigir al dashboard después de guardar
+        navigateTo('../index.html');
+      });
+    });
+  </script>
+</body>
+</html>

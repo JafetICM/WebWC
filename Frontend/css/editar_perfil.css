@@ -1,0 +1,122 @@
+/* Estilos para la página de edición de perfil */
+
+/* Estilos para la tarjeta de perfil */
+.profile-card {
+    margin-bottom: 2rem;
+  }
+  
+  /* Contenedor de la imagen de perfil */
+  .profile-image-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 4px solid #f0f4f7;
+  }
+  
+  /* Imagen de perfil */
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Overlay para la imagen de perfil */
+  .profile-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 51, 102, 0.5); /* Color base #003366 con opacidad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  /* Icono de cámara en el overlay */
+  .profile-image-overlay i {
+    color: white;
+    font-size: 2rem;
+  }
+  
+  /* Mostrar overlay al pasar el cursor */
+  .profile-image-container:hover .profile-image-overlay {
+    opacity: 1;
+  }
+  
+  /* Estilos para la tarjeta de datos */
+  .card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 2rem;
+  }
+  
+  .card-header {
+    background-color: #003366 !important; /* Color principal de la aplicación */
+    color: white !important;
+    font-weight: 500;
+  }
+  
+  /* Estilos para los botones */
+  .btn-primary {
+    background-color: #003366;
+    border-color: #003366;
+  }
+  
+  .btn-primary:hover {
+    background-color: #022d5b;
+    border-color: #022d5b;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  
+  /* Estilos para el breadcrumb */
+  .breadcrumb-container {
+    background-color: #dfe9f4;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .breadcrumb-item a {
+    color: #003366;
+    text-decoration: none;
+  }
+  
+  .breadcrumb-item a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Estilos para el formulario */
+  .form-label {
+    font-weight: 500;
+    color: #495057;
+  }
+  
+  .form-control:focus {
+    border-color: #003366;
+    box-shadow: 0 0 0 0.25rem rgba(0, 51, 102, 0.25);
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .profile-image-container {
+      width: 120px;
+      height: 120px;
+    }
+  }
