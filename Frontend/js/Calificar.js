@@ -1,308 +1,249 @@
 /***************************************************************
- * calificar.js
- * Ejemplo de uso con:
- *   - GET /auditors/me/proposals (lista básica)
- *   - GET /auditors/me/proposals/details?serviceId=... (detalle)
- *   - PUT /proposals/:id (cambiar estado, enviar calificación)
+ * calificar.js - Versión final para mostrar:
+ *   - Foto de perfil del limpiador (en la lista)
+ *   - Nombre/correo del cliente (requiere /users/:id/public)
+ *   - Horas de inicio/fin en proposal
  ***************************************************************/
 
 document.addEventListener("DOMContentLoaded", function () {
-  verificarAutenticacion();
-  obtenerListaPropuestas(); // O como quieras llamarlo
+  obtenerPropuestasFinalizadas();
 });
 
-/**
- * Verifica si el auditor está autenticado: revisa el token en localStorage.
- */
-function verificarAutenticacion() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "registro-inicio.html";
-  }
-}
-
-/**
- * 1) OBTENER LISTA DE PROPUESTAS DEL AUDITOR
- *    Llamará a GET /auditors/me/proposals (con o sin ?serviceId=).
- *    Ajusta la URL si tu endpoint requiere un param adicional.
- */
-async function obtenerListaPropuestas() {
-  const token = localStorage.getItem("token");
-
-  // Si tu API requiere un serviceId, podrías poner ?serviceId=123
-  const url = "https://apifixya.onrender.com/auditors/me/proposals"; 
-
+/** 1) Obtener proposals => filtrar status='Completa' */
+async function obtenerPropuestasFinalizadas() {
+  const url = "https://apifixya.onrender.com/proposals";
   try {
-    const response = await fetch(url, {
-      headers: { "Authorization": `Bearer ${token}` }
-    });
-
+    const response = await fetch(url);
     if (!response.ok) {
-      console.error("Error al obtener propuestas:", response.status);
+      console.error("Error al obtener proposals:", response.status);
       return;
     }
+    const data = await response.json();
+    let proposals = data.proposals || [];
+    proposals = proposals.filter(p => p.status === 'Completa');
+    console.log("Propuestas finalizadas:", proposals);
 
-    // Suponiendo que devuelves un array. Ajusta según la respuesta real.
-    const proposals = await response.json();
-    console.log("Lista de propuestas:", proposals);
-
-    // Renderizar la lista de tarjetas en la sección #lista-limpiadores
     renderizarListaServicios(proposals);
+
   } catch (error) {
     console.error("Error en la conexión:", error);
   }
 }
 
-/**
- * RENDERIZAR LA LISTA
- * - Muestra tarjetas con la info básica de la propuesta
- * - Al hacer clic, mostrará el detalle
- */
-function renderizarListaServicios(proposals) {
+/** 2) Renderizar la lista: */
+async function renderizarListaServicios(proposals) {
   const container = document.querySelector("#lista-limpiadores .row");
   container.innerHTML = "";
 
   if (!proposals || proposals.length === 0) {
-    container.innerHTML = "<p>No hay propuestas pendientes de calificación.</p>";
+    container.innerHTML = "<p>No hay servicios finalizados para calificar.</p>";
     return;
   }
 
-  // Recorremos el array de proposals
-  proposals.forEach(proposal => {
-    // Ajusta los campos según lo que devuelva tu endpoint
-    const proposalId = proposal.id; // Por ejemplo
-    const tipodeservicio = proposal.tipodeservicio || "Sin tipo";
-    const cleanerName = proposal.cleanerName || "Limpiador Desconocido";
-    const imagenDespues = proposal.imagen_despues?.[0] || "images/placeholder.png";
+  const cardElements = await Promise.all(proposals.map(async (proposal) => {
+    let cleanerName   = "Limpiador Desconocido";
+    let cleanerPhoto  = "images/placeholder.png";
+    let serviceName   = "Servicio sin nombre";
+    const imagenDespues = proposal.imagen_despues?.[0] || "images/placeholder.png"; 
+    // (En caso quieras mostrar imagen del "después" en la card, ajusta la variable)
 
-    // Crear la tarjeta
-    const card = document.createElement("div");
-    card.className = "col-md-4";
-    card.innerHTML = `
-      <div class="card" onclick="mostrarDetalle(${proposalId})">
-        <img src="${imagenDespues}" class="card-img-top" alt="Después de la limpieza">
+    // Obtenemos service
+    if (proposal.serviceId) {
+      const respS = await fetch(`https://apifixya.onrender.com/services/${proposal.serviceId}`);
+      if (respS.ok) {
+        const service = await respS.json();
+        serviceName = service.name || "Servicio sin nombre";
+
+        // Obtenemos cleaner
+        if (service.cleanerId) {
+          const respC = await fetch(`https://apifixya.onrender.com/cleaners/${service.cleanerId}/public`);
+          if (respC.ok) {
+            const cleanerData = await respC.json();
+            cleanerName  = cleanerData.name   || "Limpiador Desconocido";
+            cleanerPhoto = cleanerData.imageurl|| "images/placeholder.png";
+          }
+        }
+      }
+    }
+
+    // Card
+    const col = document.createElement("div");
+    col.className = "col-md-4";
+    col.innerHTML = `
+      <div class="card" style="cursor:pointer;" onclick="mostrarDetalle(${proposal.id})">
+        <img src="${cleanerPhoto}" class="card-img-top" alt="Foto de perfil">
         <div class="card-body">
           <h5 class="card-title">${cleanerName}</h5>
-          <p class="card-text">Servicio: ${tipodeservicio}</p>
+          <p class="card-text">
+            Servicio: ${serviceName} <br/>
+            Estado: ${proposal.status}
+          </p>
         </div>
       </div>
     `;
-    container.appendChild(card);
-  });
+    return col;
+  }));
+
+  cardElements.forEach(card => container.appendChild(card));
 }
 
-/**
- * 2) MOSTRAR DETALLE
- *    - Llama a GET /auditors/me/proposals/details?serviceId=...
- *      (o a tu endpoint preferido)
- *    - Rellena la vista de detalle
- */
+/** 3) mostrarDetalle => info de cliente, limpiador, horas, etc. */
 async function mostrarDetalle(proposalId) {
-  // GUARDAMOS el proposalId en una variable global, 
-  // para usarlo luego en "confirmarServicio", etc.
-  window.currentProposalId = proposalId;
-
-  // Si en tu API es "GET /proposals/:id", haz eso:
-  //   const url = `https://apifixya.onrender.com/proposals/${proposalId}`;
-  // Si en tu API es "GET /auditors/me/proposals/details?serviceId=...",
-  //   necesitas un serviceId. Ajusta la lógica para que
-  //   'proposal' tenga un serviceId y lo uses. Ejemplo:
-  
-  /*
-  const serviceId = ... // obtén el serviceId de la proposal guardada 
-                        // o haz otra llamada a GET /proposals/:id 
-  const urlDetails = `https://apifixya.onrender.com/auditors/me/proposals/details?serviceId=${serviceId}`;
-  */
-
-  // En este ejemplo, haremos un "GET /proposals/:id" directo:
-  const token = localStorage.getItem("token");
-  const url = `https://apifixya.onrender.com/proposals/${proposalId}`;
+  resetCalificacion(); // borra rating/comentarios
 
   try {
-    const response = await fetch(url, {
-      headers: { "Authorization": `Bearer ${token}` }
-    });
-    if (!response.ok) {
-      console.error("Error al obtener detalle:", response.status);
+    const proposalResp = await fetch(`https://apifixya.onrender.com/proposals/${proposalId}`);
+    if (!proposalResp.ok) {
+      console.error("Error al obtener proposal:", proposalResp.status);
       return;
     }
-    const proposal = await response.json();
+    const proposal = await proposalResp.json();
     console.log("Detalle proposal:", proposal);
 
-    // Ahora tenemos la propuesta. Si necesitas info de user/cleaner,
-    // la obtendrás dependiendo de si tu API ya lo trae o no.
-    // Ejemplo: Rellenamos la UI:
+    // 3.1) Obtener user (cliente), si existe endpoint /users/:id/public
+    let userData = null;
+    if (proposal.userId) {
+      const uResp = await fetch(`https://apifixya.onrender.com/users/${proposal.userId}/public`); 
+      if (uResp.ok) {
+        userData = await uResp.json();
+      }
+    }
+
+    // 3.2) Obtener service => cleaner
+    let service = null;
+    let cleaner = null;
+    if (proposal.serviceId) {
+      const sResp = await fetch(`https://apifixya.onrender.com/services/${proposal.serviceId}`);
+      if (sResp.ok) {
+        service = await sResp.json();
+
+        if (service.cleanerId) {
+          const cResp = await fetch(`https://apifixya.onrender.com/cleaners/${service.cleanerId}/public`);
+          if (cResp.ok) {
+            cleaner = await cResp.json();
+          }
+        }
+      }
+    }
+
+    // 3.3) Rellenar HTML
     document.getElementById("lista-limpiadores").style.display = "none";
     document.getElementById("detalle-limpiador").style.display = "block";
 
-    // Rellenar campos del limpiador
-    // (Si proposal.cleanerName no existe, tendrías que
-    //  hacer otra llamada a "GET /cleaners/..." o reestructurar la respuesta.)
-    document.getElementById("nombre-limpiador").textContent = proposal.cleanerName || "No especificado";
-    document.getElementById("contacto-limpiador").textContent = proposal.cleanerEmail || "No especificado";
+    // DATOS DEL CLIENTE
+    if (userData) {
+      document.getElementById("nombre-cliente").textContent   = userData.name  || "No especificado";
+      document.getElementById("contacto-cliente").textContent = userData.email || "No especificado";
+    } else {
+      document.getElementById("nombre-cliente").textContent   = "No especificado";
+      document.getElementById("contacto-cliente").textContent = "No especificado";
+    }
 
-    // Rellenar datos del cliente
-    document.getElementById("nombre-cliente").textContent = proposal.clientName || "No especificado";
-    document.getElementById("contacto-cliente").textContent = proposal.clientEmail || "No especificado";
+    // DATOS DEL LIMPIADOR
+    if (cleaner) {
+      document.getElementById("nombre-limpiador").textContent  = cleaner.name  || "No especificado";
+      document.getElementById("contacto-limpiador").textContent= cleaner.email || "No especificado";
+    } else {
+      document.getElementById("nombre-limpiador").textContent  = "No especificado";
+      document.getElementById("contacto-limpiador").textContent= "No especificado";
+    }
 
-    // Fechas y tipo de servicio
+    // Horas (Si tu proposal tiene start_time y end_time, úsalos)
     document.getElementById("inicio-servicio").textContent = proposal.start_time || "--";
-    document.getElementById("fin-servicio").textContent = proposal.end_time   || "--";
-    document.getElementById("tipo-servicio").textContent = proposal.tipodeservicio || "No especificado";
+    document.getElementById("fin-servicio").textContent    = proposal.end_time   || "--";
 
-    // Imágenes
+    // Tipo de servicio => proposal.tipodeservicio?
+    document.getElementById("tipo-servicio").textContent = proposal.tipodeservicio || "N/A";
+
+    // Imágenes “antes” y “después”
     document.getElementById("imagen-antes").src   = proposal.imagen_antes?.[0]   || "images/placeholder.png";
     document.getElementById("imagen-despues").src = proposal.imagen_despues?.[0] || "images/placeholder.png";
 
-  } catch (error) {
-    console.error("Error al mostrar detalle:", error);
+    // Guardamos
+    window.currentProposal = proposal;
+  } catch (err) {
+    console.error("Error en mostrarDetalle:", err);
   }
 }
 
+function resetCalificacion() {
+  document.getElementById("calificacion").value = 0;
+  document.getElementById("comentarios").value  = "";
+  const stars = document.querySelectorAll("#star-rating i");
+  stars.forEach(star => star.classList.remove("selected", "hover"));
+}
+
 /**
- * BOTÓN: Volver a la lista
+ * 4) Confirmar => PUT /proposals/:id => status
+ *    Re-fetch la lista
  */
+async function confirmarServicio() {
+  if (!window.currentProposal) return;
+  await actualizarEstadoPropuesta(window.currentProposal.id, "finished");
+  alert("Servicio confirmado");
+  volverALista();
+  obtenerPropuestasFinalizadas();
+}
+async function marcarPendiente() {
+  if (!window.currentProposal) return;
+  await actualizarEstadoPropuesta(window.currentProposal.id, "pending");
+  alert("Servicio marcado como pendiente");
+  volverALista();
+  obtenerPropuestasFinalizadas();
+}
+async function noRealizado() {
+  if (!window.currentProposal) return;
+  await actualizarEstadoPropuesta(window.currentProposal.id, "not_completed");
+  alert("Servicio no realizado");
+  volverALista();
+  obtenerPropuestasFinalizadas();
+}
 function volverALista() {
   document.getElementById("detalle-limpiador").style.display = "none";
   document.getElementById("lista-limpiadores").style.display = "block";
 }
-
-/***********************************************************
- * CAMBIAR ESTADO DE LA PROPUESTA
- * PUT /proposals/:id con { status: "..." }
- ***********************************************************/
-
-async function confirmarServicio() {
-  if (!window.currentProposalId) return;
-  await actualizarEstadoPropuesta(window.currentProposalId, "completed");
-  alert("Servicio confirmado");
-}
-
-async function marcarPendiente() {
-  if (!window.currentProposalId) return;
-  await actualizarEstadoPropuesta(window.currentProposalId, "pending");
-  alert("Servicio marcado como pendiente");
-}
-
-async function noRealizado() {
-  if (!window.currentProposalId) return;
-  await actualizarEstadoPropuesta(window.currentProposalId, "not_completed");
-  alert("Servicio no realizado");
-}
-
-/**
- * PUT /proposals/:id => { status: nuevoEstado }
- */
 async function actualizarEstadoPropuesta(proposalId, nuevoEstado) {
-  const token = localStorage.getItem("token");
-  const url = `https://apifixya.onrender.com/proposals/${proposalId}`;
-
   try {
-    const response = await fetch(url, {
+    const resp = await fetch(`https://apifixya.onrender.com/proposals/${proposalId}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: nuevoEstado })
     });
-
-    if (!response.ok) {
-      console.error("Error actualizando estado:", response.status);
+    if (!resp.ok) {
+      console.error("Error al actualizar estado:", resp.status);
       return;
     }
-    const updatedProposal = await response.json();
-    console.log("Propuesta actualizada:", updatedProposal);
+    const updated = await resp.json();
+    console.log("Propuesta actualizada:", updated);
   } catch (error) {
     console.error("Error al actualizar propuesta:", error);
   }
 }
 
-/***********************************************************
- * ENVIAR CALIFICACIÓN
- * - DEPENDE de tu API. Ejemplos:
- *   A) Si tu API lo hace con PUT /proposals/:id => { rating, comment }
- *   B) Si tu API tiene POST /ratings/create => { serviceId, rating, comment }
- ***********************************************************/
-
 /**
- * A) Ejemplo: PUT /proposals/:id => { rating, comment }
+ * 5) Enviar calificación => rating, comment
  */
 async function enviarCalificacion() {
-  const rating = document.getElementById("calificacion").value;
-  const comentario = document.getElementById("comentarios").value;
-  if (!window.currentProposalId) return;
-
-  const token = localStorage.getItem("token");
-  const url = `https://apifixya.onrender.com/proposals/${window.currentProposalId}`;
-
+  if (!window.currentProposal) return;
+  const rating     = parseInt(document.getElementById("calificacion").value || "0", 10);
+  const comentario = document.getElementById("comentarios").value || "";
+  
   try {
-    const response = await fetch(url, {
+    const resp = await fetch(`https://apifixya.onrender.com/proposals/${window.currentProposal.id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        rating: parseInt(rating, 10),
-        comment: comentario
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rating, comment: comentario })
     });
-    if (!response.ok) {
-      console.error("Error al enviar calificación:", response.status);
+    if (!resp.ok) {
+      console.error("Error al enviar calificación:", resp.status);
       alert("Error al enviar calificación");
       return;
     }
-    const updated = await response.json();
-    console.log("Calificación enviada, propuesta actualizada:", updated);
+    const updated = await resp.json();
+    console.log("Calificación enviada:", updated);
     alert("Calificación enviada");
   } catch (error) {
     console.error("Error al enviar calificación:", error);
     alert("Error al enviar calificación");
   }
 }
-
-/**
- * B) Ejemplo: POST /ratings/create => { serviceId, rating, comment }
- *  (En caso de que uses un endpoint de ratings separado)
- */
-/*
-async function enviarCalificacion() {
-  const rating = document.getElementById("calificacion").value;
-  const comentario = document.getElementById("comentarios").value;
-
-  // Si necesitas saber el "serviceId" o "proposalId"
-  // haz un fetch a la proposal actual, o guarda la info
-  // en variables globales cuando mostraste el detalle.
-  const serviceId = window.currentServiceId || 123;
-
-  const token = localStorage.getItem("token");
-  const url = `https://apifixya.onrender.com/ratings/create`;
-
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        serviceId: serviceId,
-        rating: parseInt(rating, 10),
-        comment: comentario
-      })
-    });
-    if (!response.ok) {
-      console.error("Error al enviar calificación:", response.status);
-      alert("Error al enviar calificación");
-      return;
-    }
-    const createdRating = await response.json();
-    console.log("Calificación creada:", createdRating);
-    alert("Calificación enviada");
-  } catch (error) {
-    console.error("Error al enviar calificación:", error);
-    alert("Error al enviar calificación");
-  }
-}
-*/
