@@ -148,19 +148,16 @@ function clearForm() {
 /* ========== SECCIÓN 3: Lógica específica de CALIFICAR LIMPIADOR ========== */
 
 /**
- * Muestra detalle del limpiador.
- * @param {string} id - identificador del limpiador
+ * Esta función es un ejemplo de cómo mostrar detalles estáticos.
+ * Nota: El módulo calificar.js tiene la versión completa con fetch a la API.
  */
 function mostrarDetalle(id) {
-  // Ajusta los datos según el ID
+  // Ejemplo estático (para pruebas, si se requiere)
   if (id === 'juan') {
     document.getElementById('nombre-limpiador').innerText = "Juan Pérez";
-    // ...puedes ajustar más datos si deseas
   } else if (id === 'maria') {
     document.getElementById('nombre-limpiador').innerText = "María López";
-    // ...puedes ajustar más datos si deseas
   }
-  // Muestra la sección de detalle, oculta la lista
   document.getElementById('lista-limpiadores').style.display = "none";
   document.getElementById('detalle-limpiador').style.display = "block";
 }
@@ -175,11 +172,11 @@ function volverALista() {
 
 /**
  * Envía calificación (Calificar-limpiador).
+ * Este ejemplo solo muestra un alert, la lógica real se implementa en calificar.js.
  */
 function enviarCalificacion() {
   const rating = document.getElementById('calificacion').value;
   const comentarios = document.getElementById('comentarios').value;
-  // Aquí puedes hacer una petición AJAX o fetch a tu backend
   console.log("Calificación enviada:", { rating, comentarios });
   alert("¡Calificación enviada!\nEstrellas: " + rating + "\nComentarios: " + comentarios);
 }
@@ -188,7 +185,6 @@ function enviarCalificacion() {
  * Función para confirmar el servicio.
  */
 function confirmarServicio() {
-  // Lógica para confirmar
   console.log("Servicio confirmado");
   alert("Servicio confirmado.");
 }
@@ -197,7 +193,6 @@ function confirmarServicio() {
  * Función para marcar el servicio como pendiente.
  */
 function marcarPendiente() {
-  // Lógica para marcar pendiente
   console.log("Servicio marcado como pendiente");
   alert("Servicio marcado como pendiente.");
 }
@@ -206,7 +201,6 @@ function marcarPendiente() {
  * Función para marcar el servicio como no realizado.
  */
 function noRealizado() {
-  // Lógica para no realizado
   console.log("Servicio marcado como NO realizado");
   alert("Servicio marcado como NO realizado.");
 }
@@ -252,7 +246,6 @@ document.addEventListener("DOMContentLoaded", function() {
 /* ========== SECCIÓN 4: Lógica específica de REGISTRO/INICIO SESIÓN ========== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Configurar listeners para el formulario dinámico, si existe
   const dynamicForm = document.getElementById('dynamicForm');
   if (dynamicForm) {
     dynamicForm.addEventListener('submit', onFormSubmit);
@@ -260,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Alterna qué campos se muestran según si es "Crear cuenta" o "Iniciar sesión".
+ * Alterna campos según "Crear cuenta" o "Iniciar sesión".
  */
 function toggleFields() {
   const signupMode = document.querySelector('input[name="authMode"]:checked').value === "signup";
@@ -289,7 +282,6 @@ async function onFormSubmit(e) {
   const signupMode = document.querySelector('input[name="authMode"]:checked').value === "signup";
 
   if (signupMode) {
-    // Crear cuenta
     try {
       const nombre = document.getElementById('nombre').value;
       const apellidoP = document.getElementById('apellidoP').value;
@@ -305,112 +297,111 @@ async function onFormSubmit(e) {
         return;
       }
 
-      // Llamamos a la función de auth.js (ejemplo)
+      // Llamada a función de registro (ejemplo)
       await registerAuditor({ name: fullName, email: correo, password });
       alert('Cuenta creada con éxito. Ahora inicia sesión');
-      // Cambiamos a modo "signin"
       document.querySelector('input[name="authMode"][value="signin"]').checked = true;
       toggleFields();
-
     } catch (err) {
       alert('Error al crear cuenta: ' + err.message);
     }
   } else {
-    // Iniciar sesión
     try {
       const correo = document.getElementById('correo').value;
       const password = document.getElementById('password').value;
 
-      // Llamamos a la función de auth.js (ejemplo)
       const token = await loginAuditor(correo, password);
-      // Guardamos token en localStorage
       localStorage.setItem('token', token);
-
       alert('Sesión iniciada');
-      // Redirigir a dashboard u otra página
       window.location.href = 'index.html';
     } catch (err) {
       alert('Error al iniciar sesión: ' + err.message);
     }
   }
 }
-  // Inicializa el gráfico en la pestaña "Tareas Aprobadas"
-  const ctx = document.getElementById('tasksChart').getContext('2d');
+
+/* ========== Sección adicional: Inicialización de gráficos y paginación ========== */
+
+// Verifica si existe el elemento canvas para evitar errores de getContext
+const canvasElement = document.getElementById('tasksChart');
+if (canvasElement) {
+  const ctx = canvasElement.getContext('2d');
   new Chart(ctx, {
-      type: 'line',
-      data: {
-          labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
-          datasets: [{
-              label: 'Servicios Realizados por Día',
-              data: [12, 20, 35, 25, 45, 55, 70],
-              borderColor: '#007bff',
-              backgroundColor: 'rgba(0, 123, 255, 0.2)',
-              fill: true
-          }]
-      },
-      options: {
-          responsive: true,
-          plugins: {
-              legend: {
-                  position: 'top'
-              }
-          }
+    type: 'line',
+    data: {
+      labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+      datasets: [{
+        label: 'Servicios Realizados por Día',
+        data: [12, 20, 35, 25, 45, 55, 70],
+        borderColor: '#007bff',
+        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top'
+        }
       }
+    }
   });
-  
-  // Array de ejemplo para los servicios
-  const services = Array.from({ length: 50 }, (_, i) => ({
-      id: i + 1,
-      service: `Servicio ${i + 1}`,
-      employee: `Empleado ${Math.floor(i / 5) + 1}`,
-      client: `Cliente ${Math.floor(i / 3) + 1}`,
-      confirmedBy: `Supervisor ${Math.floor(i / 7) + 1}`,
-      time: `${8 + (i % 8)}:00 AM`
-  }));
-  
-  let currentPage = 1;
-  const servicesPerPage = 6;
-  
-  function renderServices(page) {
-      $("#tasksList").empty();
-      const start = (page - 1) * servicesPerPage;
-      const end = start + servicesPerPage;
-      const paginatedServices = services.slice(start, end);
-      
-      paginatedServices.forEach(service => {
-          $("#tasksList").append(`
-              <div class="col-md-4">
-                  <div class="card p-3">
-                      <h5>${service.service}</h5>
-                      <p><strong>Empleado:</strong> ${service.employee}</p>
-                      <p><strong>Cliente:</strong> ${service.client}</p>
-                      <p><strong>Confirmado por:</strong> ${service.confirmedBy}</p>
-                      <p><strong>Hora:</strong> ${service.time}</p>
-                  </div>
-              </div>
-          `);
-      });
-  }
-  
-  function renderPagination() {
-      const totalPages = Math.ceil(services.length / servicesPerPage);
-      $(".pagination").empty();
-      for (let i = 1; i <= totalPages; i++) {
-          $(".pagination").append(`
-              <li class="page-item ${i === currentPage ? 'active' : ''}">
-                  <a class="page-link" href="#">${i}</a>
-              </li>
-          `);
-      }
-      $(".pagination .page-link").on("click", function (e) {
-          e.preventDefault();
-          currentPage = Number($(this).text());
-          renderServices(currentPage);
-          renderPagination();
-      });
-  }
-  
-  $(document).ready(function() {
-      renderServices(currentPage);
-      renderPagination();
+}
+
+// Ejemplo de paginación de servicios (datos simulados)
+const services = Array.from({ length: 50 }, (_, i) => ({
+  id: i + 1,
+  service: `Servicio ${i + 1}`,
+  employee: `Empleado ${Math.floor(i / 5) + 1}`,
+  client: `Cliente ${Math.floor(i / 3) + 1}`,
+  confirmedBy: `Supervisor ${Math.floor(i / 7) + 1}`,
+  time: `${8 + (i % 8)}:00 AM`
+}));
+
+let currentPage = 1;
+const servicesPerPage = 6;
+
+function renderServices(page) {
+  $("#tasksList").empty();
+  const start = (page - 1) * servicesPerPage;
+  const end = start + servicesPerPage;
+  const paginatedServices = services.slice(start, end);
+
+  paginatedServices.forEach(service => {
+    $("#tasksList").append(`
+      <div class="col-md-4">
+        <div class="card p-3">
+          <h5>${service.service}</h5>
+          <p><strong>Empleado:</strong> ${service.employee}</p>
+          <p><strong>Cliente:</strong> ${service.client}</p>
+          <p><strong>Confirmado por:</strong> ${service.confirmedBy}</p>
+          <p><strong>Hora:</strong> ${service.time}</p>
+        </div>
+      </div>
+    `);
   });
+}
+
+function renderPagination() {
+  const totalPages = Math.ceil(services.length / servicesPerPage);
+  $(".pagination").empty();
+  for (let i = 1; i <= totalPages; i++) {
+    $(".pagination").append(`
+      <li class="page-item ${i === currentPage ? 'active' : ''}">
+        <a class="page-link" href="#">${i}</a>
+      </li>
+    `);
+  }
+  $(".pagination .page-link").on("click", function (e) {
+    e.preventDefault();
+    currentPage = Number($(this).text());
+    renderServices(currentPage);
+    renderPagination();
+  });
+}
+
+$(document).ready(function() {
+  renderServices(currentPage);
+  renderPagination();
+});
