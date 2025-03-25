@@ -106,10 +106,10 @@ document.getElementById('dynamicForm').addEventListener('submit', async function
 // Para actualizar los datos del auditor logueado
 async function actualizarPerfil(name, email, password) {
   const token = localStorage.getItem('token');
-  const playload = { };
-  if (name) playload.name = name;
-  if (email) playload.email = email;
-  if (password) playload.password = password;
+  const payload = {};
+  if (name) payload.name = name;
+  if (email) payload.email = email;
+  if (password) payload.password = password;
 
   try {
     const response = await fetch('https://apifixya.onrender.com/auditors/me', {
@@ -119,26 +119,19 @@ async function actualizarPerfil(name, email, password) {
         "Accept": "*/*",
         "Authorization": `Bearer ${token}`
       },
-      body: JSON.stringify(playload)
+      body: JSON.stringify(payload)
     });
 
     if (response.ok) {
-
       const data = await response.json();
       alert("Datos actualizados correctamente.");
       console.log("Perfil actualizado:", data);
       localStorage.setItem("auditor", JSON.stringify(data));
-
-    }else{
-
+    } else {
       alert("Error al actualizar los datos.");
     }
-
-  }catch (error) {
-
+  } catch (error) {
     console.error("Error en la conexión:", error);
-    alert("Error en la conexión.");    
+    alert("Error en la conexión.");
   }
 }
-// Inicializa la vista correcta al cargar la página
-toggleFields();
