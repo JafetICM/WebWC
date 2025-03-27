@@ -1,7 +1,3 @@
-/***************************************************************
- * calificar.js - Ajustado para pruebas locales
- ***************************************************************/
-
 document.addEventListener("DOMContentLoaded", function () {
   obtenerPropuestasFinalizadas();
 });
@@ -225,7 +221,7 @@ async function enviarCalificacion() {
   const comentario = document.getElementById("comentarios").value || "";
   
   try {
-    const resp = await fetch(`/proposals/${window.currentProposal.id}`, {
+    const resp = await fetch(`https://apifixya.onrender.com/proposals/${window.currentProposal.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ rating, comment: comentario })
