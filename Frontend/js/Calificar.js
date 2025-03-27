@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /** 1) Obtener proposals => filtrar status='Completa' */
 async function obtenerPropuestasFinalizadas() {
-  const url = "http://localhost:3000/proposals";
+  const url = "https://apifixya.onrender.com/proposals";
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -45,14 +45,14 @@ async function renderizarListaServicios(proposals) {
 
     // Obtener service
     if (proposal.serviceId) {
-      const respS = await fetch(`http://localhost:3000/services/${proposal.serviceId}`);
+      const respS = await fetch(`https://apifixya.onrender.com/services/${proposal.serviceId}`);
       if (respS.ok) {
         const service = await respS.json();
         serviceName = service.name || "Servicio sin nombre";
 
         // Obtener cleaner (información pública)
         if (service.cleanerId) {
-          const respC = await fetch(`http://localhost:3000/cleaners/${service.cleanerId}/public`);
+          const respC = await fetch(`https://apifixya.onrender.com/cleaners/${service.cleanerId}/public`);
           if (respC.ok) {
             const cleanerData = await respC.json();
             cleanerName  = cleanerData.name || "Limpiador Desconocido";
@@ -89,7 +89,7 @@ async function mostrarDetalle(proposalId) {
 
   try {
     // 3.0) Obtener la propuesta
-    const proposalResp = await fetch(`http://localhost:3000/proposals/${proposalId}`);
+    const proposalResp = await fetch(`https://apifixya.onrender.com/proposals/${proposalId}`);
     if (!proposalResp.ok) {
       console.error("Error al obtener proposal:", proposalResp.status);
       return;
@@ -100,7 +100,7 @@ async function mostrarDetalle(proposalId) {
     // 3.1) Obtener datos del cliente (endpoint público)
     let userData = null;
     if (proposal.userId) {
-      const uResp = await fetch(`http://localhost:3000/users/${proposal.userId}/public`);
+      const uResp = await fetch(`https://apifixya.onrender.com/users/${proposal.userId}/public`);
       if (uResp.ok) {
         userData = await uResp.json();
       }
@@ -110,11 +110,11 @@ async function mostrarDetalle(proposalId) {
     let service = null;
     let cleaner = null;
     if (proposal.serviceId) {
-      const sResp = await fetch(`http://localhost:3000/services/${proposal.serviceId}`);
+      const sResp = await fetch(`https://apifixya.onrender.com/services/${proposal.serviceId}`);
       if (sResp.ok) {
         service = await sResp.json();
         if (service.cleanerId) {
-          const cResp = await fetch(`http://localhost:3000/cleaners/${service.cleanerId}/public`);
+          const cResp = await fetch(`https://apifixya.onrender.com/cleaners/${service.cleanerId}/public`);
           if (cResp.ok) {
             cleaner = await cResp.json();
           }
@@ -173,7 +173,7 @@ function resetCalificacion() {
 /** 4) Funciones para actualizar el estado de la propuesta */
 async function actualizarEstadoPropuesta(proposalId, nuevoEstado) {
   try {
-    const resp = await fetch(`http://localhost:3000/proposals/${proposalId}`, {
+    const resp = await fetch(`https://apifixya.onrender.com/proposals/${proposalId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: nuevoEstado })
@@ -225,7 +225,7 @@ async function enviarCalificacion() {
   const comentario = document.getElementById("comentarios").value || "";
   
   try {
-    const resp = await fetch(`http://localhost:3000/proposals/${window.currentProposal.id}`, {
+    const resp = await fetch(`/proposals/${window.currentProposal.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ rating, comment: comentario })
