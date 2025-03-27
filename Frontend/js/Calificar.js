@@ -1,80 +1,93 @@
 document.addEventListener("DOMContentLoaded", function () {
-  obtenerPropuestasFinalizadas();
+  obtenerPropuestasDesdeServiceId(10470, 10480); // Ajusta 10480 según lo necesites
 });
 
-/** 1) Obtener proposals => filtrar status='Completa' */
-async function obtenerPropuestasFinalizadas() {
-  const url = "https://apifixya.onrender.com/proposals";
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      console.error("Error al obtener proposals:", response.status);
-      return;
+/**
+ * Obtiene propuestas para cada serviceId en el rango [inicialId, maxServiceId]
+ * y luego las renderiza en la lista.
+ */
+async function obtenerPropuestasDesdeServiceId(inicialId, maxServiceId) {
+  let allProposals = [];
+  
+  // Recorrer desde inicialId hasta maxServiceId
+  for (let id = inicialId; id <= maxServiceId; id++) {
+    const url = `https://apifixya.onrender.com/proposals/service/${id}`;
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        // Se asume que data es un arreglo de propuestas
+        if (Array.isArray(data) && data.length > 0) {
+          allProposals = allProposals.concat(data);
+          console.log(`ServiceId ${id} => Propuestas:`, data);
+        } else {
+          console.log(`ServiceId ${id} => No se encontraron propuestas.`);
+        }
+      } else {
+        console.error(`Error al obtener proposals para serviceId ${id}:`, response.status);
+      }
+    } catch (error) {
+      console.error(`Error en la conexión para serviceId ${id}:`, error);
     }
-    const data = await response.json();
-    let proposals = data.proposals || [];
-
-    // Filtrar propuestas con status 'Completa'
-    proposals = proposals.filter(p => p.status === 'Completa');
-    console.log("Propuestas finalizadas:", proposals);
-
-    renderizarListaServicios(proposals);
-  } catch (error) {
-    console.error("Error en la conexión:", error);
   }
+  
+  console.log("Propuestas totales a partir de serviceId 10470:", allProposals);
+  renderizarListaServicios(allProposals);
 }
 
-/** 2) Renderizar la lista de servicios finalizados */
+/** 2) Renderizar la lista de servicios */
 async function renderizarListaServicios(proposals) {
   const container = document.querySelector("#lista-limpiadores .row");
   container.innerHTML = "";
 
   if (!proposals || proposals.length === 0) {
-    container.innerHTML = "<p>No hay servicios finalizados para calificar.</p>";
+    container.innerHTML = "<p>No hay servicios para mostrar.</p>";
     return;
   }
 
-  const cardElements = await Promise.all(proposals.map(async (proposal) => {
-    let cleanerName   = "Limpiador Desconocido";
-    let cleanerPhoto  = "images/placeholder.png";  // Verifica la ruta de la imagen
-    let serviceName   = "Servicio sin nombre";
+  const cardElements = await Promise.all(
+    proposals.map(async (proposal) => {
+      let cleanerName   = "Limpiador Desconocido";
+      let cleanerPhoto  = "images/placeholder.png";
+      let serviceName   = "Servicio sin nombre";
 
-    // Obtener service
-    if (proposal.serviceId) {
-      const respS = await fetch(`https://apifixya.onrender.com/services/${proposal.serviceId}`);
-      if (respS.ok) {
-        const service = await respS.json();
-        serviceName = service.name || "Servicio sin nombre";
+      // Obtener datos del servicio
+      if (proposal.serviceId) {
+        const respS = await fetch(`https://apifixya.onrender.com/services/${proposal.serviceId}`);
+        if (respS.ok) {
+          const service = await respS.json();
+          serviceName = service.name || "Servicio sin nombre";
 
-        // Obtener cleaner (información pública)
-        if (service.cleanerId) {
-          const respC = await fetch(`https://apifixya.onrender.com/cleaners/${service.cleanerId}/public`);
-          if (respC.ok) {
-            const cleanerData = await respC.json();
-            cleanerName  = cleanerData.name || "Limpiador Desconocido";
-            cleanerPhoto = cleanerData.imageurl || "images/placeholder.png";
+          // Obtener datos del limpiador (información pública)
+          if (service.cleanerId) {
+            const respC = await fetch(`https://apifixya.onrender.com/cleaners/${service.cleanerId}/public`);
+            if (respC.ok) {
+              const cleanerData = await respC.json();
+              cleanerName  = cleanerData.name || "Limpiador Desconocido";
+              cleanerPhoto = cleanerData.imageurl || "images/placeholder.png";
+            }
           }
         }
       }
-    }
 
-    // Crear tarjeta (card) para la propuesta
-    const col = document.createElement("div");
-    col.className = "col-md-4";
-    col.innerHTML = `
-      <div class="card" style="cursor:pointer;" onclick="mostrarDetalle(${proposal.id})">
-        <img src="${cleanerPhoto}" class="card-img-top" alt="Foto de perfil">
-        <div class="card-body">
-          <h5 class="card-title">${cleanerName}</h5>
-          <p class="card-text">
-            Servicio: ${serviceName} <br/>
-            Estado: ${proposal.status}
-          </p>
+      // Crear tarjeta (card) para la propuesta
+      const col = document.createElement("div");
+      col.className = "col-md-4";
+      col.innerHTML = `
+        <div class="card" style="cursor:pointer;" onclick="mostrarDetalle(${proposal.id})">
+          <img src="${cleanerPhoto}" class="card-img-top" alt="Foto de perfil">
+          <div class="card-body">
+            <h5 class="card-title">${cleanerName}</h5>
+            <p class="card-text">
+              Servicio: ${serviceName} <br/>
+              Estado: ${proposal.status}
+            </p>
+          </div>
         </div>
-      </div>
-    `;
-    return col;
-  }));
+      `;
+      return col;
+    })
+  );
 
   cardElements.forEach(card => container.appendChild(card));
 }
@@ -84,7 +97,7 @@ async function mostrarDetalle(proposalId) {
   resetCalificacion(); // Limpiar calificación y comentarios
 
   try {
-    // 3.0) Obtener la propuesta
+    // Obtener la propuesta
     const proposalResp = await fetch(`https://apifixya.onrender.com/proposals/${proposalId}`);
     if (!proposalResp.ok) {
       console.error("Error al obtener proposal:", proposalResp.status);
@@ -93,7 +106,7 @@ async function mostrarDetalle(proposalId) {
     const proposal = await proposalResp.json();
     console.log("Detalle proposal:", proposal);
 
-    // 3.1) Obtener datos del cliente (endpoint público)
+    // Obtener datos del cliente (endpoint público)
     let userData = null;
     if (proposal.userId) {
       const uResp = await fetch(`https://apifixya.onrender.com/users/${proposal.userId}/public`);
@@ -102,7 +115,7 @@ async function mostrarDetalle(proposalId) {
       }
     }
 
-    // 3.2) Obtener el servicio y luego al limpiador (información pública)
+    // Obtener el servicio y luego al limpiador (información pública)
     let service = null;
     let cleaner = null;
     if (proposal.serviceId) {
@@ -118,7 +131,7 @@ async function mostrarDetalle(proposalId) {
       }
     }
 
-    // 3.3) Mostrar datos en la vista
+    // Mostrar datos en la vista
     document.getElementById("lista-limpiadores").style.display = "none";
     document.getElementById("detalle-limpiador").style.display = "block";
 
@@ -140,15 +153,14 @@ async function mostrarDetalle(proposalId) {
       document.getElementById("contacto-limpiador").textContent = "No especificado";
     }
 
-    // Fechas: usamos createdAt y updatedAt (observa mayúsculas según el log)
+    // Fechas
     document.getElementById("inicio-servicio").textContent = proposal.createdAt || "--";
     document.getElementById("fin-servicio").textContent = proposal.updatedAt || "--";
 
     // Tipo de servicio
     document.getElementById("tipo-servicio").textContent = proposal.tipodeservicio || "N/A";
 
-    // Imágenes: Si imagen_antes y imagen_despues son null, se usa el placeholder.
-    // Se asume que si se subieron, se guardan como array con la URL en la posición 0.
+    // Imágenes
     document.getElementById("imagen-antes").src = proposal.imagen_antes?.[0] || "images/placeholder.png";
     document.getElementById("imagen-despues").src = proposal.imagen_despues?.[0] || "images/placeholder.png";
 
@@ -190,7 +202,8 @@ async function confirmarServicio() {
   await actualizarEstadoPropuesta(window.currentProposal.id, "Completa");
   alert("Servicio confirmado");
   volverALista();
-  obtenerPropuestasFinalizadas();
+  // Actualizamos la lista tras confirmar
+  obtenerPropuestasDesdeServiceId(10470, 10480);
 }
 
 async function marcarPendiente() {
@@ -198,7 +211,7 @@ async function marcarPendiente() {
   await actualizarEstadoPropuesta(window.currentProposal.id, "pending");
   alert("Servicio marcado como pendiente");
   volverALista();
-  obtenerPropuestasFinalizadas();
+  obtenerPropuestasDesdeServiceId(10470, 10480);
 }
 
 async function noRealizado() {
@@ -206,7 +219,7 @@ async function noRealizado() {
   await actualizarEstadoPropuesta(window.currentProposal.id, "not_completed");
   alert("Servicio no realizado");
   volverALista();
-  obtenerPropuestasFinalizadas();
+  obtenerPropuestasDesdeServiceId(10470, 10480);
 }
 
 function volverALista() {
