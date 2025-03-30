@@ -96,61 +96,83 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Función para renderizar la gráfica de Tareas Aprobadas
-function renderApprovedTasksChart() {
-  // Obtén o define tus datos aquí
-  const ctx = document.getElementById('tasksChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
-      datasets: [{
-        label: 'Servicios Realizados por Día',
-        data: [12, 20, 35, 25, 45, 55, 70],
-        borderColor: '#007bff',
-        backgroundColor: 'rgba(0, 123, 255, 0.2)',
-        fill: true
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'top' }
+async function loadApprovedTasks() {
+  try {
+    const token = localStorage.getItem('token');
+    // Suponiendo que el endpoint /proposals?status=approved devuelve las propuestas aprobadas
+    const data = await getProposals(token, 'approved');
+    // Procesar la respuesta para extraer fechas y contadores
+    const labels = data.proposals.map(item => new Date(item.updatedAt).toLocaleDateString());
+    const counts = {};
+    labels.forEach(label => counts[label] = (counts[label] || 0) + 1);
+    const uniqueLabels = Object.keys(counts);
+    const dataCounts = uniqueLabels.map(label => counts[label]);
+
+    const ctx = document.getElementById('tasksChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: uniqueLabels,
+        datasets: [{
+          label: 'Tareas Aprobadas',
+          data: dataCounts,
+          borderColor: '#007bff',
+          backgroundColor: 'rgba(0, 123, 255, 0.2)',
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } }
       }
-    }
-  });
+    });
+  } catch (error) {
+    console.error('Error cargando tareas aprobadas:', error);
+  }
 }
 
-// Función para renderizar la gráfica de Tareas Pendientes (en rojo)
-function renderPendingTasksChart() {
-  const ctx = document.getElementById('pendingTasksChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
-      datasets: [{
-        label: 'Actividades Pendientes',
-        data: [5, 10, 20, 15, 25, 35, 50],
-        borderColor: '#dc3545',  // rojo
-        backgroundColor: 'rgba(220, 53, 69, 0.2)',
-        fill: true
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'top' }
+async function loadPendingTasks() {
+  try {
+    const token = localStorage.getItem('token');
+    // Supón que /proposals?status=pending devuelve las propuestas pendientes
+    const data = await getProposals(token, 'pending');
+    // Procesa los datos para armar la gráfica (por ejemplo, agrupar por día)
+    const labels = data.proposals.map(item => new Date(item.updatedAt).toLocaleDateString());
+    const counts = {};
+    labels.forEach(label => counts[label] = (counts[label] || 0) + 1);
+    const uniqueLabels = Object.keys(counts);
+    const dataCounts = uniqueLabels.map(label => counts[label]);
+
+    const ctx = document.getElementById('pendingTasksChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: uniqueLabels,
+        datasets: [{
+          label: 'Tareas Pendientes',
+          data: dataCounts,
+          borderColor: '#dc3545',
+          backgroundColor: 'rgba(220, 53, 69, 0.2)',
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } }
       }
-    }
-  });
+    });
+  } catch (error) {
+    console.error('Error cargando tareas pendientes:', error);
+  }
 }
 
-// Listener para cuando se muestre la pestaña "Tareas Aprobadas"
+// Cuando se muestre la pestaña "Tareas Aprobadas"
 $('button[data-bs-target="#tareas-aprobadas"]').on('shown.bs.tab', function () {
-  renderApprovedTasksChart();
+  loadApprovedTasks();
 });
 
-// Listener para cuando se muestre la pestaña "Tareas Pendientes"
+// Cuando se muestre la pestaña "Tareas Pendientes"
 $('button[data-bs-target="#tareas-pendientes"]').on('shown.bs.tab', function () {
-  renderPendingTasksChart();
+  loadPendingTasks();
 });
+
